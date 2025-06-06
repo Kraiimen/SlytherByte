@@ -3,7 +3,7 @@ package com.slytherin.slytherbyte.model.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name = "platform")
 public class Platform {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
