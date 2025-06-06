@@ -3,6 +3,7 @@ package com.slytherin.slytherbyte.model.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "game")
@@ -25,6 +26,9 @@ public class Game {
     @ManyToOne
     @JoinColumn(name = "franchise_id")
     private Franchise franchise;
+
+    @OneToMany(mappedBy = "game")
+    private List<Review> reviews;
 
     public Game() {
     }

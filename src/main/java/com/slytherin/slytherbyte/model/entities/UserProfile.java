@@ -26,6 +26,9 @@ public class UserProfile {
     @OneToMany(mappedBy = "userProfile")
     private List<Collection> collections;
 
+    @OneToMany(mappedBy = "userProfile")
+    private List<Review> reviews;
+
     public UserProfile(){}
 
     public UserProfile(int userProfileId, String profileName, String bio, String picUrl){
