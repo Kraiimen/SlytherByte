@@ -1,4 +1,4 @@
-package com.slytherin.slytherbyte.model.entities;
+package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
 
@@ -24,5 +24,17 @@ public class Franchise {
     public Franchise(int franchiseId, String name) {
         this.franchiseId = franchiseId;
         this.name = name;
+    }
+
+    public int getFranchiseId() {
+        return franchiseId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Game> getGames() {
+        return games;
     }
 }

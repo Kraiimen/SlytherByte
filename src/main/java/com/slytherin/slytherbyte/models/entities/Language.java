@@ -1,4 +1,4 @@
-package com.slytherin.slytherbyte.model.entities;
+package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
 

@@ -1,4 +1,4 @@
-package com.slytherin.slytherbyte.model.entities;
+package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
 
@@ -18,5 +18,13 @@ public class Developer {
     public Developer(int developerId, String name) {
         this.developerId = developerId;
         this.name = name;
+    }
+
+    public int getDeveloperId() {
+        return developerId;
+    }
+
+    public String getName() {
+        return name;
     }
 }

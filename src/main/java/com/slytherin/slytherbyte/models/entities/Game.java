@@ -1,4 +1,4 @@
-package com.slytherin.slytherbyte.model.entities;
+package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
 
@@ -39,5 +39,33 @@ public class Game {
         this.releaseDate = releaseDate;
         this.summary = summary;
         this.franchise = franchise;
+    }
+
+    public int getGameId() {
+        return gameId;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public Franchise getFranchise() {
+        return franchise;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getCoverImageUrl() {
+        return coverImageUrl;
     }
 }

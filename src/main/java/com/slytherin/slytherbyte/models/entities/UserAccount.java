@@ -1,8 +1,6 @@
-package com.slytherin.slytherbyte.model.entities;
+package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name="user_account")

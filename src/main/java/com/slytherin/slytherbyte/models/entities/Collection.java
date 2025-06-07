@@ -1,4 +1,4 @@
-package com.slytherin.slytherbyte.model.entities;
+package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
 
@@ -25,5 +25,21 @@ public class Collection {
         this.name=name;
         this.description=description;
         this.userProfile=userProfile;
+    }
+
+    public int getCollectionId() {
+        return collectionId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
     }
 }
