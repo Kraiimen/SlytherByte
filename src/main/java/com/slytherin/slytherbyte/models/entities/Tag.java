@@ -19,4 +19,12 @@ public class Tag {
         this.tagId = tagId;
         this.name = name;
     }
+
+    public int getTagId() {
+        return tagId;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

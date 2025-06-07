@@ -31,4 +31,24 @@ public class UserAccount {
         this.password=password;
         this.userProfile=userProfile;
     }
+
+    public int getUserAccountId() {
+        return userAccountId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
 }
