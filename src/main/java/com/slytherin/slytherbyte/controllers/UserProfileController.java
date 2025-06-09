@@ -46,23 +46,26 @@ public class UserProfileController {
     @PostMapping
     public ResponseEntity<UserProfileDto> createUserProfile(@RequestBody UserProfileDto userProfileDto) throws EntityNotFoundException, DataException {
         UserProfile userProfile = userProfileDto.toEntity();
-        UserProfileDto upDto=UserProfileDto.toDto(userProfileService.createUserProfile(userProfile, userProfileDto.userAccountId()));
+        UserProfileDto upDto = UserProfileDto.toDto(userProfileService.createUserProfile(userProfile));
+
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(upDto.userProfileId())
                 .toUri();
+
         return ResponseEntity.created(location).body(upDto);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserProfileDto> updateById(@PathVariable("id") int userProfileId, @RequestBody UserProfileDto userProfileDto)
             throws DataException, EntityNotFoundException {
+
         if (userProfileDto.userProfileId() != userProfileId) {
             return ResponseEntity.badRequest().build();
         }
-        UserProfileDto upDto = UserProfileDto
-                .toDto(userProfileService.updateUserProfile(userProfileDto.toEntity(), userProfileDto.userAccountId()));
+
+        UserProfileDto upDto = UserProfileDto.toDto(userProfileService.updateUserProfile(userProfileDto.toEntity()));
         return ResponseEntity.ok(upDto);
     }
 }

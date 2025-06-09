@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface UserProfileService {
     List<UserProfile> findAllUserProfiles() throws DataException;
-    UserProfile createUserProfile(UserProfile userProfile, int userAccountId) throws DataException, EntityNotFoundException;
+    UserProfile createUserProfile(UserProfile userProfile) throws DataException;
     UserProfile findUserProfileById(int userProfileId) throws DataException, EntityNotFoundException;
-    UserProfile updateUserProfile(UserProfile userProfile, int userAccountId) throws DataException, EntityNotFoundException;
+    UserProfile updateUserProfile(UserProfile userProfile) throws DataException, EntityNotFoundException;
 }
