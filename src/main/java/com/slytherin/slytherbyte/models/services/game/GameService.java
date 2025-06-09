@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface GameService {
     Game findGameById(int id) throws DataException, EntityNotFoundException;
+    List<Game> findAllGames() throws DataException;
     List<Game> findGameByFilters(GameFilterCriteria filters) throws DataException;
     Game saveGame(Game newGame, int franchiseId) throws DataException, EntityNotFoundException;
     Game updateGame(Game updatingGame, int franchiseId) throws DataException, EntityNotFoundException;

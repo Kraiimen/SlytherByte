@@ -40,6 +40,15 @@ public class JpaGameService implements GameService {
     }
 
     @Override
+    public List<Game> findAllGames() throws DataException {
+        try {
+            return gameRepo.findAll();
+        } catch (PersistenceException pe) {
+            throw new DataException("Failed to retrieve all games", pe);
+        }
+    }
+
+    @Override
     public List<Game> findGameByFilters(GameFilterCriteria filters) throws DataException {
         try{
         return gameRepo.searchGames(filters);

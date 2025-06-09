@@ -1,4 +1,4 @@
-package com.slytherin.slytherbyte.restcontrollers;
+package com.slytherin.slytherbyte.controllers;
 
 import com.slytherin.slytherbyte.dtos.GameDto;
 import com.slytherin.slytherbyte.models.entities.Game;
@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/games")
@@ -34,8 +32,15 @@ public class GameRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GameDto>> findGameByFilters(@RequestBody GameFilterCriteria filters) throws DataException {
-        List<Game> games = gameService.findGameByFilters(filters);
+    public ResponseEntity<List<GameDto>> findGames(@RequestBody(required = false) GameFilterCriteria filters) throws DataException {
+        List<Game> games = null;
+
+        if(filters != null) {
+            games = gameService.findGameByFilters(filters);
+        } else {
+            games = gameService.findAllGames();
+        }
+
         var dtos = games.stream().map(GameDto::toDto).toList();
         return ResponseEntity.ok(dtos);
     }

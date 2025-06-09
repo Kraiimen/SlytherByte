@@ -77,7 +77,7 @@ public class Game {
             joinColumns = @JoinColumn(name ="game_id"),
             inverseJoinColumns = @JoinColumn(name = "language_id")
     )
-    private List<Language> langages = new ArrayList<>();
+    private List<Language> languages = new ArrayList<>();
 
     public Game() {
     }
@@ -167,7 +167,7 @@ public class Game {
         this.tags = tags;
     }
 
-    public void setLangages(List<Language> langages) {
-        this.langages = langages;
+    public void setLanguages(List<Language> languages) {
+        this.languages = languages;
     }
 }
