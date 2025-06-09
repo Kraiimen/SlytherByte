@@ -82,9 +82,10 @@ public class Game {
     public Game() {
     }
 
-    public Game(int gameId, String coverImageUrl, LocalDate releaseDate, String summary, Franchise franchise) {
+    public Game(int gameId, String coverImageUrl, String title, LocalDate releaseDate, String summary, Franchise franchise) {
         this.gameId = gameId;
         this.coverImageUrl = coverImageUrl;
+        this.title = title;
         this.releaseDate = releaseDate;
         this.summary = summary;
         this.franchise = franchise;

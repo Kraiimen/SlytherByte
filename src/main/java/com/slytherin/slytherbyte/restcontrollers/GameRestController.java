@@ -3,8 +3,7 @@ package com.slytherin.slytherbyte.restcontrollers;
 import com.slytherin.slytherbyte.dtos.GameDto;
 import com.slytherin.slytherbyte.models.entities.Game;
 import com.slytherin.slytherbyte.models.searchcriteria.GameFilterCriteria;
-import com.slytherin.slytherbyte.models.services.StoreService;
-import org.aspectj.apache.bcel.classfile.Module;
+import com.slytherin.slytherbyte.models.services.game.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +18,16 @@ import java.util.Optional;
 @RequestMapping("/api/games")
 @CrossOrigin(origins = "*")
 public class GameRestController {
-    private StoreService storeService;
+    private GameService gameService;
 
     @Autowired
-    public GameRestController(StoreService storeService){
-        this.storeService = storeService;
+    public GameRestController(GameService gameService){
+        this.gameService = gameService;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Game> findGameById(@PathVariable Integer id){
-        Optional<Game> optionalGame = storeService.findGameById(id);
+        Optional<Game> optionalGame = gameService.findGameById(id);
         if(optionalGame.isEmpty()){
             return ResponseEntity.notFound().build();
         }else{
@@ -51,14 +50,14 @@ public class GameRestController {
         GameFilterCriteria filters = new GameFilterCriteria(title, releaseDate, platforms,
                                                             languages, tags, stores, publishers,
                                                             nameSorter, dateSorter);
-        List<Game> games = storeService.findGameByFilters(filters);
+        List<Game> games = gameService.findGameByFilters(filters);
         return ResponseEntity.ok(games);
     }
 
     @PostMapping
     public ResponseEntity<GameDto> createGame(@RequestBody GameDto gameDto){
         Game game = gameDto.toEntity();
-        storeService.saveGame(game);
+        gameService.saveGame(game, gameDto.franchiseId());
         GameDto savedGame = GameDto.toDto(game);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -69,21 +68,21 @@ public class GameRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable int id, @RequestBody GameDto gameDto){
+    public ResponseEntity<?> updateProduct(@PathVariable int id, @RequestBody Game gameDto){
         if(id != gameDto.toEntity().getGameId()){
             return ResponseEntity.badRequest().body("l'id del path de del dto non corrispondono");
         }
-        Optional<Game> op = storeService.findGameById(gameDto.toEntity().getGameId());
+        Optional<Game> op = gameService.findGameById(gameDto.toEntity().getGameId());
         if(op.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        storeService.updateGame(gameDto);
+        gameService.updateGame(game);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable int id){
-        boolean deleted = storeService.deleteGame(id);
+        boolean deleted = gameService.deleteGame(id);
         if(deleted){
             return ResponseEntity.noContent().build();
         }

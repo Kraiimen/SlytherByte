@@ -1,7 +1,7 @@
-package com.slytherin.slytherbyte.models.services;
+package com.slytherin.slytherbyte.models.services.game;
 
-import com.slytherin.slytherbyte.dtos.GameDto;
 import com.slytherin.slytherbyte.models.entities.*;
+import com.slytherin.slytherbyte.models.repositories.JpaFranchiseRepository;
 import com.slytherin.slytherbyte.models.repositories.JpaGameRepository;
 import com.slytherin.slytherbyte.models.searchcriteria.GameFilterCriteria;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,11 +14,13 @@ import java.util.Optional;
 
 @Service
 @Profile("jpa")
-public class JpaStoreService implements StoreService{
+public class JpaGameService implements GameService {
     private JpaGameRepository gameRepo;
+    private JpaFranchiseRepository franchiseRepo;
 
-    public JpaStoreService(JpaGameRepository gameRepo){
+    public JpaGameService(JpaGameRepository gameRepo, JpaFranchiseRepository franchiseRepo){
         this.gameRepo = gameRepo;
+        this.franchiseRepo = franchiseRepo;
     }
 
 
@@ -34,19 +36,24 @@ public class JpaStoreService implements StoreService{
 
     @Override
     @Transactional
-    public Game saveGame(Game newGame) {
-        return gameRepo.save((newGame));
+    public boolean saveGame(Game newGame, int franchiseId) {
+        if(!franchiseRepo.existsById(franchiseId)){
+            return false;
+        }
+        gameRepo.save(newGame);
+        return true;
+
     }
 
     @Override
     @Transactional
-    public Game updateGame(GameDto gameDto) {
-        int id = gameDto.gameId();
+    public boolean updateGame(Game game, int franchiseId) {
+        int id = game.getGameId();
         Game updatedGame = gameRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Il gioco non è stato trovato"));
-        updatedGame.setCoverImageUrl(gameDto.coverImageUrl());
-        updatedGame.setReleaseDate(gameDto.realeaseDate());
-        updatedGame.setSummary(gameDto.summary());
+        updatedGame.setCoverImageUrl(game.getCoverImageUrl());
+        updatedGame.setReleaseDate(game.getReleaseDate());
+        updatedGame.setSummary(game.getSummary());
         return gameRepo.save(updatedGame);
     }
 
