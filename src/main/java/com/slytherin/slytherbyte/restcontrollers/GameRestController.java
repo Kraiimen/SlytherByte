@@ -2,6 +2,8 @@ package com.slytherin.slytherbyte.restcontrollers;
 
 import com.slytherin.slytherbyte.dtos.GameDto;
 import com.slytherin.slytherbyte.models.entities.Game;
+import com.slytherin.slytherbyte.models.exceptions.DataException;
+import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import com.slytherin.slytherbyte.models.searchcriteria.GameFilterCriteria;
 import com.slytherin.slytherbyte.models.services.game.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +28,13 @@ public class GameRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Game> findGameById(@PathVariable Integer id){
-        Optional<Game> optionalGame = gameService.findGameById(id);
-        if(optionalGame.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }else{
-            return ResponseEntity.ok(optionalGame.get());
-        }
+    public ResponseEntity<GameDto> findGameById(@PathVariable Integer id) throws DataException, EntityNotFoundException {
+        Game foundGame = gameService.findGameById(id);
+        return ResponseEntity.ok(GameDto.toDto(foundGame));
     }
 
     @GetMapping
-    public ResponseEntity<List<Game>> findGameByFilters(
+    public ResponseEntity<List<GameDto>> findGameByFilters(
             @RequestParam(required = false) String title,
             @RequestParam(required = false)LocalDate releaseDate,
             @RequestParam(required = false)List<String> platforms,
@@ -46,16 +44,17 @@ public class GameRestController {
             @RequestParam(required = false)List<String> publishers,
             @RequestParam(required = false, defaultValue = "false") boolean nameSorter,
             @RequestParam(required = false, defaultValue = "false") boolean dateSorter
-            ){
+            ) throws DataException {
         GameFilterCriteria filters = new GameFilterCriteria(title, releaseDate, platforms,
                                                             languages, tags, stores, publishers,
                                                             nameSorter, dateSorter);
         List<Game> games = gameService.findGameByFilters(filters);
-        return ResponseEntity.ok(games);
+        var dtos = games.stream().map(GameDto::toDto).toList();
+        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping
-    public ResponseEntity<GameDto> createGame(@RequestBody GameDto gameDto){
+    public ResponseEntity<GameDto> createGame(@RequestBody GameDto gameDto) throws DataException, EntityNotFoundException {
         Game game = gameDto.toEntity();
         gameService.saveGame(game, gameDto.franchiseId());
         GameDto savedGame = GameDto.toDto(game);
@@ -68,20 +67,16 @@ public class GameRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable int id, @RequestBody Game gameDto){
-        if(id != gameDto.toEntity().getGameId()){
-            return ResponseEntity.badRequest().body("l'id del path de del dto non corrispondono");
+    public ResponseEntity<?> updateProduct(@PathVariable int id, @RequestBody GameDto gameDto) throws DataException, EntityNotFoundException {
+        if(id != gameDto.gameId()){
+            return ResponseEntity.badRequest().body("Path id and game id don't match");
         }
-        Optional<Game> op = gameService.findGameById(gameDto.toEntity().getGameId());
-        if(op.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        gameService.updateGame(game);
+        gameService.updateGame(gameDto.toEntity(), gameDto.franchiseId());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable int id){
+    public ResponseEntity<Void> deleteById(@PathVariable int id) throws DataException {
         boolean deleted = gameService.deleteGame(id);
         if(deleted){
             return ResponseEntity.noContent().build();

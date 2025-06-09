@@ -1,10 +1,12 @@
 package com.slytherin.slytherbyte.models.services.game;
 
 import com.slytherin.slytherbyte.models.entities.*;
+import com.slytherin.slytherbyte.models.exceptions.DataException;
+import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import com.slytherin.slytherbyte.models.repositories.JpaFranchiseRepository;
 import com.slytherin.slytherbyte.models.repositories.JpaGameRepository;
 import com.slytherin.slytherbyte.models.searchcriteria.GameFilterCriteria;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -25,36 +27,51 @@ public class JpaGameService implements GameService {
 
 
     @Override
-    public Optional<Game> findGameById(int id) {
-        return gameRepo.findById(id);
-    }
-
-    @Override
-    public List<Game> findGameByFilters(GameFilterCriteria filters) {
-        return gameRepo.searchGames(filters);
-    }
-
-    @Override
-    @Transactional
-    public boolean saveGame(Game newGame, int franchiseId) {
-        if(!franchiseRepo.existsById(franchiseId)){
-            return false;
+    public Game findGameById(int id) throws DataException, EntityNotFoundException {
+        try{
+            Optional<Game> og = gameRepo.findById(id);
+            if(og.isEmpty()){
+                throw new EntityNotFoundException(Game.class, id);
+            }
+            return og.get();
+        }catch(PersistenceException pe){
+            throw new DataException("Failed to find game with id: " + id, pe);
         }
-        gameRepo.save(newGame);
-        return true;
 
     }
 
     @Override
+    public List<Game> findGameByFilters(GameFilterCriteria filters) throws DataException {
+        try{
+        return gameRepo.searchGames(filters);
+        }catch(PersistenceException pe){
+            throw new DataException("Failed to retrieve games by filter", pe);
+        }
+    }
+
+    @Override
     @Transactional
-    public boolean updateGame(Game game, int franchiseId) {
-        int id = game.getGameId();
-        Game updatedGame = gameRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Il gioco non è stato trovato"));
-        updatedGame.setCoverImageUrl(game.getCoverImageUrl());
-        updatedGame.setReleaseDate(game.getReleaseDate());
-        updatedGame.setSummary(game.getSummary());
-        return gameRepo.save(updatedGame);
+    public Game saveGame(Game newGame, int franchiseId) throws  DataException, EntityNotFoundException{
+        try{
+            if(!franchiseRepo.existsById(franchiseId)){
+                throw new EntityNotFoundException(Franchise.class, franchiseId);
+            }
+            return gameRepo.save(newGame);
+        }catch(PersistenceException pe){
+            throw new DataException("Failed to save new game");
+        }
+    }
+
+    @Override
+    @Transactional
+    public Game updateGame(Game game, int franchiseId) throws EntityNotFoundException {
+        if(!gameRepo.existsById(game.getGameId())){
+            throw new EntityNotFoundException(Game.class, game.getGameId());
+        }
+        Franchise f = franchiseRepo.findById(franchiseId)
+                .orElseThrow(()->  new EntityNotFoundException(Franchise.class, franchiseId));
+        game.setFranchise(f);
+        return gameRepo.save(game);
     }
 
     @Override
