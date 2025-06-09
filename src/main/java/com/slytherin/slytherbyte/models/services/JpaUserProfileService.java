@@ -1,10 +1,13 @@
 package com.slytherin.slytherbyte.models.services;
 
+import com.slytherin.slytherbyte.models.entities.UserAccount;
 import com.slytherin.slytherbyte.models.entities.UserProfile;
-import com.slytherin.slytherbyte.models.repos.UserProfileRepo;
+import com.slytherin.slytherbyte.models.exceptions.DataException;
+import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
+import com.slytherin.slytherbyte.models.repositories.JpaUserAccountRepository;
+import com.slytherin.slytherbyte.models.repositories.JpaUserProfileRepository;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,45 +15,66 @@ import java.util.Optional;
 
 @Service
 public class JpaUserProfileService implements UserProfileService {
-    private UserProfileRepo userProfileRepo;
+    private JpaUserProfileRepository userProfileRepo;
+    private JpaUserAccountRepository userAccountRepo;
 
-    public JpaUserProfileService(UserProfileRepo userProfileRepo){
+    public JpaUserProfileService(JpaUserProfileRepository userProfileRepo, JpaUserAccountRepository userAccountRepo){
         this.userProfileRepo=userProfileRepo;
+        this.userAccountRepo=userAccountRepo;
     }
 
     @Override
-    public List<UserProfile> findAllUserProfiles() {
-        return userProfileRepo.findAll();
-    }
-
-    @Override
-    public Optional<UserProfile> findUserProfileById(int userProfileId) {
-        return userProfileRepo.findById(userProfileId);
-    }
-
-    @Override
-    @Transactional
-    public UserProfile createUserProfile(UserProfile userProfile) {
+    public List<UserProfile> findAllUserProfiles() throws DataException{
         try{
-            userProfileRepo.save(userProfile);
-            return userProfile;
+            return userProfileRepo.findAll();
         } catch (PersistenceException persistenceException){
-            throw new DataIntegrityViolationException("Error: failed to create user profile", persistenceException);
+            throw new DataException("Error: no profiles found", persistenceException);
+        }
+    }
+
+    @Override
+    public UserProfile findUserProfileById(int userProfileId) throws DataException, EntityNotFoundException {
+        try{
+            Optional<UserProfile> oup=userProfileRepo.findById(userProfileId);
+            if(oup.isEmpty()){
+                throw new EntityNotFoundException(UserProfile.class, userProfileId);
+            }
+            return oup.get();
+        } catch (PersistenceException persistenceException){
+            throw new DataException("Error: no profiles with id " + userProfileId, persistenceException);
         }
     }
 
     @Override
     @Transactional
-    public boolean updateUserProfile(UserProfile userProfile) {
-        try {
-            Optional<UserProfile> up=userProfileRepo.findById(userProfile.getUserProfileId());
-            if(up.isEmpty()){
-                return false;
+    public UserProfile createUserProfile(UserProfile userProfile, int userAccountId) throws DataException, EntityNotFoundException {
+        try{
+            Optional<UserAccount> oua = userAccountRepo.findById(userAccountId);
+            if(oua.isEmpty()){
+                throw new EntityNotFoundException(UserProfile.class, userProfile.getUserProfileId());
             }
-            userProfileRepo.save(userProfile);
-            return true;
+            userProfile.setUserAccount(oua.get());
+            return userProfileRepo.save(userProfile);
+        } catch (PersistenceException persistenceException){
+            throw new DataException("Error: failed to create user profile", persistenceException);
+        }
+    }
+
+    @Override
+    @Transactional
+    public UserProfile updateUserProfile(UserProfile userProfile, int userAccountId) throws DataException, EntityNotFoundException {
+        try {
+            if(!userProfileRepo.existsById(userProfile.getUserProfileId())){
+                throw new EntityNotFoundException(UserProfile.class, userProfile.getUserProfileId());
+            }
+            Optional<UserAccount> oua=userAccountRepo.findById(userAccountId);
+            if(oua.isEmpty()){
+                throw new EntityNotFoundException(UserAccount.class, userAccountId);
+            }
+            userProfile.setUserAccount(oua.get());
+            return userProfileRepo.save(userProfile);
         } catch(PersistenceException persistenceException){
-            throw new DataIntegrityViolationException("Error: failed to update user profile", persistenceException);
+            throw new DataException("Error: failed to update user profile", persistenceException);
         }
     }
 }

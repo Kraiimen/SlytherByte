@@ -32,11 +32,12 @@ public class UserProfile {
     public UserProfile() {
     }
 
-    public UserProfile(int userProfileId, String profileName, String bio, String profilePicUrl) {
+    public UserProfile(int userProfileId, String profileName, String bio, String profilePicUrl, UserAccount userAccount) {
         this.userProfileId = userProfileId;
         this.profileName = profileName;
         this.bio = bio;
         this.profilePicUrl = profilePicUrl;
+        this.userAccount = userAccount;
     }
 
     public int getUserProfileId() {
@@ -63,7 +64,13 @@ public class UserProfile {
         return userAccount;
     }
 
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
+    }
+
     public List<Review> getReviews() {
         return reviews;
     }
+
+
 }
