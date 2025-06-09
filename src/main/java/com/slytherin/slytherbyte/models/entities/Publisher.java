@@ -19,4 +19,12 @@ public class Publisher {
         this.publisherId = publisherId;
         this.name = name;
     }
+
+    public int getPublisherId() {
+        return publisherId;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

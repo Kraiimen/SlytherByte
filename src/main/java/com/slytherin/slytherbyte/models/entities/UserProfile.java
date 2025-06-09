@@ -5,20 +5,20 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="user_profile")
+@Table(name = "user_profile")
 public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_profile_id")
+    @Column(name = "user_profile_id")
     private int userProfileId;
 
-    @Column(name="profile_name")
+    @Column(name = "profile_name")
     private String profileName;
 
     private String bio;
 
-    @Column(name="profile_pic_url")
-    private String picUrl;
+    @Column(name = "profile_pic_url")
+    private String profilePicUrl;
 
     @OneToOne(mappedBy = "userProfile")
     private UserAccount userAccount;
@@ -29,13 +29,14 @@ public class UserProfile {
     @OneToMany(mappedBy = "userProfile")
     private List<Review> reviews;
 
-    public UserProfile(){}
+    public UserProfile() {
+    }
 
-    public UserProfile(int userProfileId, String profileName, String bio, String picUrl){
-        this.userProfileId=userProfileId;
-        this.profileName=profileName;
-        this.bio=bio;
-        this.picUrl=picUrl;
+    public UserProfile(int userProfileId, String profileName, String bio, String profilePicUrl) {
+        this.userProfileId = userProfileId;
+        this.profileName = profileName;
+        this.bio = bio;
+        this.profilePicUrl = profilePicUrl;
     }
 
     public int getUserProfileId() {
@@ -50,8 +51,8 @@ public class UserProfile {
         return bio;
     }
 
-    public String getPicUrl() {
-        return picUrl;
+    public String getProfilePicUrl() {
+        return profilePicUrl;
     }
 
     public List<Collection> getCollections() {

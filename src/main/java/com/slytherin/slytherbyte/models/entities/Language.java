@@ -19,4 +19,12 @@ public class Language {
         this.languageId = languageId;
         this.name = name;
     }
+
+    public int getLanguageId() {
+        return languageId;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

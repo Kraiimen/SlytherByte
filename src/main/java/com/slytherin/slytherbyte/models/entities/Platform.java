@@ -18,4 +18,12 @@ public class Platform {
         this.platformId=platformId;
         this.name=name;
     }
+
+    public int getPlatformId() {
+        return platformId;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

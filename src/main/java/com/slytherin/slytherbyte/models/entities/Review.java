@@ -2,6 +2,8 @@ package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "review")
 public class Review {
@@ -10,11 +12,9 @@ public class Review {
     @Column(name = "review_id")
     private  int reviewId;
 
-    @Column(name = "title")
     private String title;
 
-    @Column(name = "date")
-    private String date;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "user_profile_id")
@@ -26,11 +26,31 @@ public class Review {
 
     public Review(){}
 
-    public Review(int reviewId, String title, String date, UserProfile userProfile, Game game){
+    public Review(int reviewId, String title, LocalDate date, UserProfile userProfile, Game game){
         this.reviewId = reviewId;
         this.title = title;
         this.date = date;
         this.userProfile = userProfile;
         this.game = game;
+    }
+
+    public int getReviewId() {
+        return reviewId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

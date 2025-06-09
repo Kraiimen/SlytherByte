@@ -28,4 +28,20 @@ public class Store {
         this.iconUrl = iconUrl;
         this.siteUrl = siteUrl;
     }
+
+    public int getStoreId() {
+        return storeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public String getSiteUrl() {
+        return siteUrl;
+    }
 }
