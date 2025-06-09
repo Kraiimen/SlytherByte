@@ -28,7 +28,7 @@ public class Game {
     @JoinColumn(name = "franchise_id")
     private Franchise franchise;
 
-    @OneToMany(mappedBy = "game_id")
+    @OneToMany(mappedBy = "game")
     private List<Review> reviews;
 
     @ManyToMany

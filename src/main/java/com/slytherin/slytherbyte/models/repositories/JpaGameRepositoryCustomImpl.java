@@ -1,12 +1,10 @@
 package com.slytherin.slytherbyte.models.repositories;
 
 import com.slytherin.slytherbyte.models.entities.Game;
+import com.slytherin.slytherbyte.models.entities.Tag;
 import com.slytherin.slytherbyte.models.searchcriteria.GameFilterCriteria;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -28,47 +26,55 @@ public class JpaGameRepositoryCustomImpl implements JpaGameRepositoryCustom {
         List<Predicate> queryFilters = new ArrayList<>();
 
         if(filters.getTitle() != null){
-            queryFilters.add(criteriaBuilder.equal(root.get("game").get("title"), filters.getTitle()));
+            queryFilters.add(criteriaBuilder.like(root.get("title"), filters.getTitle()));
         }
         if(filters.getReleaseDate() != null){
-            queryFilters.add(criteriaBuilder.greaterThanOrEqualTo(root.<LocalDate>get("game").get("releaseDate"), filters.getReleaseDate()));
+            queryFilters.add(criteriaBuilder.greaterThanOrEqualTo(root.get("releaseDate"), filters.getReleaseDate()));
         }
-        if(!filters.getPlatforms().isEmpty()){
+        if(filters.getPlatforms() != null && !filters.getPlatforms().isEmpty()){
             for(String platform : filters.getPlatforms()){
-                queryFilters.add(criteriaBuilder.isMember(platform, root.get("game").get("platforms")));
+                queryFilters.add(criteriaBuilder.isMember(platform, root.get("platforms")));
             }
         }
-        if(!filters.getLanguages().isEmpty()){
+        if(filters.getLanguages() != null && !filters.getLanguages().isEmpty()){
             for(String language : filters.getLanguages()){
-                queryFilters.add(criteriaBuilder.isMember(language, root.get("game").get("languages")));
+                queryFilters.add(criteriaBuilder.isMember(language, root.get("languages")));
             }
         }
-        if(!filters.getTags().isEmpty()){
-            for(String tag : filters.getTags()){
-                queryFilters.add(criteriaBuilder.isMember(tag, root.get("game").get("tags")));
-            }
+        if(filters.getTags() != null && !filters.getTags().isEmpty()){
+            Join<Game, Tag> join = root.join("tags");
+            query.groupBy(root.get("gameId"));
+            query.having(
+                    criteriaBuilder.equal(criteriaBuilder.countDistinct(join.get("name")), filters.getTags().size()),
+                            criteriaBuilder.and(join.get("name").in(filters.getTags()))
+            );
+
         }
-        if(!filters.getStores().isEmpty()){
+        if(filters.getStores() != null && !filters.getStores().isEmpty()){
             for(String store : filters.getStores()){
-                queryFilters.add(criteriaBuilder.isMember(store, root.get("game").get(store)));
+                queryFilters.add(criteriaBuilder.isMember(store, root.get("stores")));
             }
         }
-        if(!filters.getPublishers().isEmpty()){
+        if(filters.getPublishers() != null && !filters.getPublishers().isEmpty()){
             for(String publisher : filters.getLanguages()){
-                queryFilters.add(criteriaBuilder.isMember(publisher, root.get("game").get("publishers")));
+                queryFilters.add(criteriaBuilder.isMember(publisher, root.get("publishers")));
             }
         }
         query.select(root).where(criteriaBuilder.and(queryFilters.toArray(new Predicate[0])));
 
-        if(!filters.isNameSorter()){
-            query.orderBy(criteriaBuilder.asc(root.get("name")));
-        }else{
-            query.orderBy(criteriaBuilder.desc(root.get("name")));
+        if (filters.isNameSorter() != null) {
+            if(!filters.isNameSorter()){
+                query.orderBy(criteriaBuilder.asc(root.get("title")));
+            }else{
+                query.orderBy(criteriaBuilder.desc(root.get("title")));
+            }
         }
-        if(!filters.isDateSorter()){
-            query.orderBy(criteriaBuilder.asc(root.get("releaseDate")));
-        }else{
-            query.orderBy(criteriaBuilder.desc(root.get("releaseDate")));
+        if (filters.isDateSorter() != null) {
+            if (!filters.isDateSorter()) {
+                query.orderBy(criteriaBuilder.asc(root.get("releaseDate")));
+            } else {
+                query.orderBy(criteriaBuilder.desc(root.get("releaseDate")));
+            }
         }
 
         return entityManager.createQuery(query).getResultList();

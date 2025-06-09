@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Profile("jpa")
 public class JpaGameService implements GameService {
     private JpaGameRepository gameRepo;
     private JpaFranchiseRepository franchiseRepo;

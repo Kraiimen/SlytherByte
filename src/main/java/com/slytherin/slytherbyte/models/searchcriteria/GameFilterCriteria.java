@@ -11,14 +11,14 @@ public class GameFilterCriteria {
     private List<String> tags;
     private List<String> stores;
     private List<String> publishers;
-    private boolean nameSorter;
-    private boolean dateSorter;
+    private Boolean nameSorter;
+    private Boolean dateSorter;
 
     public GameFilterCriteria(String title, LocalDate realeaseDate,
                               List<String> platforms, List<String> languages,
                               List<String> tags, List<String> stores,
-                              List<String> publishers, boolean nameSorter,
-                              boolean dateSorter) {
+                              List<String> publishers, Boolean nameSorter,
+                              Boolean dateSorter) {
         this.title = title;
         this.realeaseDate = realeaseDate;
         this.platforms = platforms;
@@ -58,11 +58,11 @@ public class GameFilterCriteria {
         return publishers;
     }
 
-    public boolean isNameSorter() {
+    public Boolean isNameSorter() {
         return nameSorter;
     }
 
-    public boolean isDateSorter() {
+    public Boolean isDateSorter() {
         return dateSorter;
     }
 }

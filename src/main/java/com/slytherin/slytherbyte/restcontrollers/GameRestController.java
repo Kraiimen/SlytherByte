@@ -34,20 +34,7 @@ public class GameRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GameDto>> findGameByFilters(
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false)LocalDate releaseDate,
-            @RequestParam(required = false)List<String> platforms,
-            @RequestParam(required = false)List<String> languages,
-            @RequestParam(required = false)List<String> tags,
-            @RequestParam(required = false)List<String> stores,
-            @RequestParam(required = false)List<String> publishers,
-            @RequestParam(required = false, defaultValue = "false") boolean nameSorter,
-            @RequestParam(required = false, defaultValue = "false") boolean dateSorter
-            ) throws DataException {
-        GameFilterCriteria filters = new GameFilterCriteria(title, releaseDate, platforms,
-                                                            languages, tags, stores, publishers,
-                                                            nameSorter, dateSorter);
+    public ResponseEntity<List<GameDto>> findGameByFilters(@RequestBody GameFilterCriteria filters) throws DataException {
         List<Game> games = gameService.findGameByFilters(filters);
         var dtos = games.stream().map(GameDto::toDto).toList();
         return ResponseEntity.ok(dtos);
