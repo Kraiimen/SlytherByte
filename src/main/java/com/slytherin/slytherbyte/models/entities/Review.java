@@ -16,13 +16,17 @@ public class Review {
 
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "user_profile_id")
+    @ManyToOne()
+    @JoinColumn(name="user_profile_id")
     private UserProfile userProfile;
 
     @ManyToOne
     @JoinColumn(name = "game_id")
     private Game game;
+
+    @OneToOne
+    @JoinColumn(name="user_game_id")
+    private UserGame userGame;
 
     public Review(){}
 

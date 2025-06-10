@@ -20,19 +20,19 @@ public class UserAccount {
     @JoinColumn(name="user_profile_id")
     private UserProfile userProfile;
 
-    @Column(name="is_admin")
-    private boolean isAdmin;
+    @Column(name="authority")
+    private String authority;
 
     public UserAccount(){}
 
     public UserAccount(int userAccountId, String username, String email,
-                       String password, UserProfile userProfile, boolean isAdmin){
+                       String password, UserProfile userProfile, String authority){
         this.userAccountId=userAccountId;
         this.username=username;
         this.email=email;
         this.password=password;
         this.userProfile=userProfile;
-        this.isAdmin = isAdmin;
+        this.authority=authority;
     }
 
     public int getUserAccountId() {
@@ -55,7 +55,7 @@ public class UserAccount {
         return userProfile;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public String getAuthority() {
+        return authority;
     }
 }
