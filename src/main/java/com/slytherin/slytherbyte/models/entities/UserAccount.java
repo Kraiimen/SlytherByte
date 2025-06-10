@@ -74,8 +74,9 @@ public class UserAccount implements UserDetails, GrantedAuthority {
         return userAccountId;
     }
 
+    @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     public String getEmail() {

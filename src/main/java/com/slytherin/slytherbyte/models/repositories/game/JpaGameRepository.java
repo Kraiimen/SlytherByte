@@ -1,4 +1,4 @@
-package com.slytherin.slytherbyte.models.repositories;
+package com.slytherin.slytherbyte.models.repositories.game;
 
 import com.slytherin.slytherbyte.models.entities.Game;
 import org.springframework.data.jpa.repository.JpaRepository;

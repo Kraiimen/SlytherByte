@@ -1,7 +1,7 @@
-package com.slytherin.slytherbyte.models.repositories;
+package com.slytherin.slytherbyte.models.repositories.game;
 
 import com.slytherin.slytherbyte.models.entities.*;
-import com.slytherin.slytherbyte.models.searchcriteria.GameFilterCriteria;
+import com.slytherin.slytherbyte.models.repositories.searchcriteria.GameFilterCriteria;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;

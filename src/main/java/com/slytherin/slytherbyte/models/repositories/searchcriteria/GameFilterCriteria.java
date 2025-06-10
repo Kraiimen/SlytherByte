@@ -1,4 +1,4 @@
-package com.slytherin.slytherbyte.models.searchcriteria;
+package com.slytherin.slytherbyte.models.repositories.searchcriteria;
 
 import java.time.LocalDate;
 import java.util.List;

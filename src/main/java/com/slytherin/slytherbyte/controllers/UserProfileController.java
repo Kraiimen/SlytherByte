@@ -4,7 +4,7 @@ import com.slytherin.slytherbyte.dtos.UserProfileDto;
 import com.slytherin.slytherbyte.models.entities.UserProfile;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
-import com.slytherin.slytherbyte.models.services.UserProfileService;
+import com.slytherin.slytherbyte.models.services.userprofile.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")

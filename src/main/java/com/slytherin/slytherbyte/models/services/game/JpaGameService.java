@@ -3,12 +3,11 @@ package com.slytherin.slytherbyte.models.services.game;
 import com.slytherin.slytherbyte.models.entities.*;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
-import com.slytherin.slytherbyte.models.repositories.JpaFranchiseRepository;
-import com.slytherin.slytherbyte.models.repositories.JpaGameRepository;
-import com.slytherin.slytherbyte.models.searchcriteria.GameFilterCriteria;
+import com.slytherin.slytherbyte.models.repositories.franchise.JpaFranchiseRepository;
+import com.slytherin.slytherbyte.models.repositories.game.JpaGameRepository;
+import com.slytherin.slytherbyte.models.repositories.searchcriteria.GameFilterCriteria;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

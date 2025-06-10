@@ -4,7 +4,7 @@ import com.slytherin.slytherbyte.dtos.GameDto;
 import com.slytherin.slytherbyte.models.entities.Game;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
-import com.slytherin.slytherbyte.models.searchcriteria.GameFilterCriteria;
+import com.slytherin.slytherbyte.models.repositories.searchcriteria.GameFilterCriteria;
 import com.slytherin.slytherbyte.models.services.game.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
