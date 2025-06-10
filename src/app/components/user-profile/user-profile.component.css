@@ -1,0 +1,46 @@
+.main-profile-frame {
+    max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 16px;
+        background-color: #f9f9f9;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        height: 100vh;
+        width: 900px;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: ;
+        justify-content: space-around;
+}
+.profile-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    grid-template-columns: 1fr;
+    gap: 10px; 
+}
+.user-stats {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: last baseline;
+}
+.user-profile-picture {
+    grid-row: span 2;
+    background-color: #ddd;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    justify-self: start; 
+}
+.profile-name {
+    font-size: 1.4em;
+    align-items: self-position
+    
+}
+
+.profile-bio {
+    font-size: 1.2em;
+    width: 200px;
+}
