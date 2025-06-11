@@ -15,7 +15,7 @@ public class UserGame {
     private String status;
 
     @Column(name="is_owned")
-    private boolean isOwned;
+    private Boolean isOwned;
 
     @OneToOne
     @JoinColumn(name="review_id")
@@ -34,13 +34,14 @@ public class UserGame {
 
     public UserGame(){}
 
-    public UserGame(int userGameId, String status, boolean isOwned, Review review, LocalDate completionDate, Game game) {
+    public UserGame(int userGameId, String status, Boolean isOwned, Review review, LocalDate completionDate, Game game, UserProfile userProfile) {
         this.userGameId = userGameId;
         this.status = status;
         this.isOwned = isOwned;
         this.review = review;
         this.completionDate = completionDate;
         this.game = game;
+        this.userProfile = userProfile;
     }
 
     public int getUserGameId() {
@@ -51,7 +52,7 @@ public class UserGame {
         return status;
     }
 
-    public boolean isOwned() {
+    public Boolean isOwned() {
         return isOwned;
     }
 
@@ -61,6 +62,13 @@ public class UserGame {
 
     public LocalDate getCompletionDate() {
         return completionDate;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
     }
 
     public Game getGame() {

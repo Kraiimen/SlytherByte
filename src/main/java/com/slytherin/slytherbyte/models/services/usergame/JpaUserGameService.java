@@ -1,12 +1,14 @@
-package com.slytherin.slytherbyte.models.services;
+package com.slytherin.slytherbyte.models.services.usergame;
 
 import com.slytherin.slytherbyte.models.entities.Game;
 import com.slytherin.slytherbyte.models.entities.UserGame;
+import com.slytherin.slytherbyte.models.entities.UserProfile;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import com.slytherin.slytherbyte.models.repositories.JpaUserGameRepository;
+import com.slytherin.slytherbyte.models.repositories.game.JpaGameRepository;
+import com.slytherin.slytherbyte.models.repositories.userprofile.JpaUserProfileRepository;
 import jakarta.persistence.PersistenceException;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +17,14 @@ import java.util.Optional;
 @Service
 public class JpaUserGameService implements UserGameService {
     private JpaUserGameRepository userGameRepo;
+    private JpaGameRepository gameRepo;
+    private JpaUserProfileRepository userProfileRepo;
 
-    public JpaUserGameService(JpaUserGameRepository userGameRepo) {
+    public JpaUserGameService(JpaUserGameRepository userGameRepo, JpaGameRepository gameRepo,
+                              JpaUserProfileRepository userProfileRepo) {
         this.userGameRepo = userGameRepo;
+        this.gameRepo = gameRepo;
+        this.userProfileRepo = userProfileRepo;
     }
 
     @Override
@@ -42,8 +49,16 @@ public class JpaUserGameService implements UserGameService {
     }
 
     @Override
-    public UserGame createUserGame(UserGame userGame, int gameId) throws DataException, EntityNotFoundException {
+    public UserGame createUserGame(UserGame userGame, int gameId, int userProfileId) throws DataException, EntityNotFoundException {
         try {
+            Game g = gameRepo.findById(gameId)
+                    .orElseThrow(() -> new EntityNotFoundException(Game.class, gameId));
+
+            UserProfile up = userProfileRepo.findById(userProfileId)
+                    .orElseThrow((() -> new EntityNotFoundException(UserProfile.class, userProfileId)));
+
+            userGame.setUserProfile(up);
+            userGame.setGame(g);
            return userGameRepo.save(userGame);
         } catch (PersistenceException persistenceException) {
             throw new DataException("Error: failed to add game to user profile", persistenceException);

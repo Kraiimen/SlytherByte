@@ -4,7 +4,7 @@ import com.slytherin.slytherbyte.dtos.UserGameDto;
 import com.slytherin.slytherbyte.models.entities.UserGame;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
-import com.slytherin.slytherbyte.models.services.UserGameService;
+import com.slytherin.slytherbyte.models.services.usergame.UserGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +39,9 @@ public class UserGameController {
     }
 
     @PostMapping
-    public ResponseEntity<UserGameDto> createUserGame(UserGameDto userGameDto) throws DataException {
+    public ResponseEntity<UserGameDto> createUserGame(@RequestBody UserGameDto userGameDto) throws DataException, EntityNotFoundException {
         UserGame userGame = userGameDto.toEntity();
-        UserGameDto ugDto = UserGameDto.toDto(userGameService.createUserGame(userGame, userGameDto.gameId()));
+        UserGameDto ugDto = UserGameDto.toDto(userGameService.createUserGame(userGame, userGameDto.gameId(), userGameDto.userProfileId()));
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
