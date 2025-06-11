@@ -6,6 +6,6 @@ public class EntityNotFoundException extends Exception {
     }
 
     public EntityNotFoundException(Class<?> entityClass, int id) {
-        super(String.format("L'entità %s con id %d non esiste", entityClass.getSimpleName(), id));
+        super(String.format("The entity %s with id %d does not exist", entityClass.getSimpleName(), id));
     }
 }

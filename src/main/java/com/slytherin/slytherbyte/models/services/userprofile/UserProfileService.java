@@ -1,11 +1,10 @@
-package com.slytherin.slytherbyte.models.services;
+package com.slytherin.slytherbyte.models.services.userprofile;
 
 import com.slytherin.slytherbyte.models.entities.UserProfile;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserProfileService {
     List<UserProfile> findAllUserProfiles() throws DataException;

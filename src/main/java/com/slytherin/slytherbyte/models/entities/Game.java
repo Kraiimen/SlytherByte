@@ -3,6 +3,7 @@ package com.slytherin.slytherbyte.models.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,15 +31,61 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "game")
-    private List<UserGame> userGames;
+    @ManyToMany
+    @JoinTable(
+            name = "game_platforms",
+            joinColumns = @JoinColumn(name ="game_id"),
+            inverseJoinColumns = @JoinColumn(name = "platform_id")
+    )
+    private List<Platform> platforms = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "game_stores",
+            joinColumns = @JoinColumn(name ="game_id"),
+            inverseJoinColumns = @JoinColumn(name = "store_id")
+    )
+    private List<Store> stores = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "game_developers",
+            joinColumns = @JoinColumn(name ="game_id"),
+            inverseJoinColumns = @JoinColumn(name = "developer_id")
+    )
+    private List<Developer> developers = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "game_publishers",
+            joinColumns = @JoinColumn(name ="game_id"),
+            inverseJoinColumns = @JoinColumn(name = "publisher_id")
+    )
+    private List<Publisher> publishers = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "game_tags",
+            joinColumns = @JoinColumn(name ="game_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "game_languages",
+            joinColumns = @JoinColumn(name ="game_id"),
+            inverseJoinColumns = @JoinColumn(name = "language_id")
+    )
+    private List<Language> languages = new ArrayList<>();
 
     public Game() {
     }
 
-    public Game(int gameId, String coverImageUrl, LocalDate releaseDate, String summary, Franchise franchise) {
+    public Game(int gameId, String coverImageUrl, String title, LocalDate releaseDate, String summary, Franchise franchise) {
         this.gameId = gameId;
         this.coverImageUrl = coverImageUrl;
+        this.title = title;
         this.releaseDate = releaseDate;
         this.summary = summary;
         this.franchise = franchise;
@@ -70,5 +117,57 @@ public class Game {
 
     public String getCoverImageUrl() {
         return coverImageUrl;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
+
+    public void setCoverImageUrl(String coverImageUrl) {
+        this.coverImageUrl = coverImageUrl;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public void setFranchise(Franchise franchise) {
+        this.franchise = franchise;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void setPlatforms(List<Platform> platforms) {
+        this.platforms = platforms;
+    }
+
+    public void setStores(List<Store> stores) {
+        this.stores = stores;
+    }
+
+    public void setDevelopers(List<Developer> developers) {
+        this.developers = developers;
+    }
+
+    public void setPublishers(List<Publisher> publishers) {
+        this.publishers = publishers;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public void setLanguages(List<Language> languages) {
+        this.languages = languages;
     }
 }

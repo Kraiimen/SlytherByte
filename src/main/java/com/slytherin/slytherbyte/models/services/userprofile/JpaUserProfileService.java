@@ -1,11 +1,9 @@
-package com.slytherin.slytherbyte.models.services;
+package com.slytherin.slytherbyte.models.services.userprofile;
 
-import com.slytherin.slytherbyte.models.entities.UserAccount;
 import com.slytherin.slytherbyte.models.entities.UserProfile;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
-import com.slytherin.slytherbyte.models.repositories.JpaUserAccountRepository;
-import com.slytherin.slytherbyte.models.repositories.JpaUserProfileRepository;
+import com.slytherin.slytherbyte.models.repositories.userprofile.JpaUserProfileRepository;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
