@@ -16,7 +16,7 @@ public class Review {
 
     private LocalDate date;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name="user_profile_id")
     private UserProfile userProfile;
 
@@ -24,8 +24,7 @@ public class Review {
     @JoinColumn(name = "game_id")
     private Game game;
 
-    @OneToOne
-    @JoinColumn(name="user_game_id")
+    @OneToOne(mappedBy = "review")
     private UserGame userGame;
 
     public Review(){}

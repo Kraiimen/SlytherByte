@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(("/api/user-games"))
+@RequestMapping("/api/user-games")
 public class UserGameController {
     private UserGameService userGameService;
 
@@ -33,15 +33,15 @@ public class UserGameController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserGameDto> getById(@PathVariable("id") int userGameId) throws DataException, EntityNotFoundException {
-        UserGame ug=userGameService.findUserGameById(userGameId);
-        UserGameDto ugDto=UserGameDto.toDto(ug);
+        UserGame ug = userGameService.findUserGameById(userGameId);
+        UserGameDto ugDto = UserGameDto.toDto(ug);
         return ResponseEntity.ok(ugDto);
     }
 
     @PostMapping
     public ResponseEntity<UserGameDto> createUserGame(UserGameDto userGameDto) throws DataException {
-        UserGame userGame=userGameDto.toEntity();
-        UserGameDto ugDto=UserGameDto.toDto(userGameService.createUserGame(userGame));
+        UserGame userGame = userGameDto.toEntity();
+        UserGameDto ugDto = UserGameDto.toDto(userGameService.createUserGame(userGame, userGameDto.gameId()));
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -53,18 +53,18 @@ public class UserGameController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserGameDto> updateById(@PathVariable ("id") int userGameId, @RequestBody UserGameDto userGameDto) throws DataException, EntityNotFoundException {
-        if(userGameDto.userGameId()!=userGameId){
+    public ResponseEntity<UserGameDto> updateById(@PathVariable("id") int userGameId, @RequestBody UserGameDto userGameDto) throws DataException, EntityNotFoundException {
+        if (userGameDto.userGameId() != userGameId) {
             return ResponseEntity.badRequest().build();
         }
 
-        UserGameDto ugDto=UserGameDto.toDto(userGameService.updateUserGame(userGameDto.toEntity()));
+        UserGameDto ugDto = UserGameDto.toDto(userGameService.updateUserGame(userGameDto.toEntity()));
         return ResponseEntity.ok(ugDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable ("id") int userGameId) throws DataException, EntityNotFoundException {
-        UserGame ug= userGameService.findUserGameById(userGameId);
+    public ResponseEntity<Void> deleteById(@PathVariable("id") int userGameId) throws DataException, EntityNotFoundException {
+        UserGame ug = userGameService.findUserGameById(userGameId);
         userGameService.deleteUseGame(ug);
         return ResponseEntity.noContent().build();
     }

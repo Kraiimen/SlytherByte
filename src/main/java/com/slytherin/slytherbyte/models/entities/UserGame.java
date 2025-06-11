@@ -24,7 +24,7 @@ public class UserGame {
     @Column(name="completion_date")
     private LocalDate completionDate;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="game_id")
     private Game game;
 
@@ -65,5 +65,8 @@ public class UserGame {
 
     public Game getGame() {
         return game;
+    }
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

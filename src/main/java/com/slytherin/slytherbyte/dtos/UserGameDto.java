@@ -1,7 +1,5 @@
 package com.slytherin.slytherbyte.dtos;
 
-import com.slytherin.slytherbyte.models.entities.Game;
-import com.slytherin.slytherbyte.models.entities.Review;
 import com.slytherin.slytherbyte.models.entities.UserGame;
 
 import java.time.LocalDate;
