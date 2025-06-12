@@ -3,9 +3,15 @@ package com.slytherin.slytherbyte.controllers;
 import com.slytherin.slytherbyte.models.exceptions.AuthenticationException;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -19,9 +25,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<?> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
+        Map<String, String> errors = e.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(f -> f.getField() + ": "+ f.getDefaultMessage())
+                .collect(Collectors.toMap(s -> s.split(":")[0], s -> s.split(":")[1]));
+        return ResponseEntity.badRequest().body(Map.of("errors", errors));
+    }
+
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
-        return ResponseEntity.badRequest().body("Authentication failed: " + e.getMessage());
+    public ResponseEntity<?> handleAuthenticationException(AuthenticationException e) {
+        return ResponseEntity.badRequest().body(Map.of("errors", e.getErrors()));
     }
 
     @ExceptionHandler(Exception.class)

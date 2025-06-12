@@ -29,14 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest, BindingResult br) throws Exception {
-        if (br.hasErrors()) {
-            Map<String, String> errors = br.getFieldErrors().stream()
-                    .map(f -> f.getField() + ": "+ f.getDefaultMessage())
-                    .collect(Collectors.toMap(s -> s.split(":")[0], s -> s.split(":")[1]));
-            return ResponseEntity.badRequest().body(Map.of("errors", errors));
-        }
-
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) throws Exception {
         authService.register(registerRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

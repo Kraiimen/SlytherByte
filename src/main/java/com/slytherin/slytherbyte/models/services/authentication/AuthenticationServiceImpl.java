@@ -15,7 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -36,17 +40,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public void register(RegisterRequest input) throws AuthenticationException {
-        checkEmail(input.getEmail());
-        checkPasswordLength(input.getPassword());
-        checkPasswords(input.getPassword(), input.getRepeatedPassword());
-
-        UserAccount ua = buildNewUser(input);
-        userAccountRepo.save(ua);
-    }
-
-    @Override
-    @Transactional
     public AuthenticationResponse login(AuthenticationRequest input) {
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword())
@@ -57,6 +50,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         String jwtToken = jwtService.generateToken(new HashMap<>(), ua);
         return new AuthenticationResponse(jwtToken);
+    }
+
+    @Override
+    @Transactional
+    public void register(RegisterRequest input) throws AuthenticationException {
+        checkIfEmailIsTaken(input.getEmail());
+        checkIfPasswordIsValid(input.getPassword());
+        checkIfPasswordsAreEqual(input.getPassword(), input.getRepeatedPassword());
+
+        UserAccount ua = buildNewUser(input);
+        userAccountRepo.save(ua);
     }
 
     @Transactional
@@ -76,33 +80,38 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
     }
 
-    private void checkEmail(String email) throws AuthenticationException {
+    private void checkIfEmailIsTaken(String email) throws AuthenticationException {
         if (userAccountRepo.findByEmail(email).isPresent()) {
-            throw new AuthenticationException("Email is already taken");
+            throw new AuthenticationException(Map.of("email", Map.of("taken", "Email is already taken")));
         }
     }
 
-    private void checkPasswords(String password, String repeatedPassword) throws AuthenticationException {
+    private void checkIfPasswordsAreEqual(String password, String repeatedPassword) throws AuthenticationException {
         if (!password.equals(repeatedPassword)) {
-            throw new AuthenticationException("Passwords do not match");
+            throw new AuthenticationException(Map.of("repeatedPassword", Map.of("mismatch", "Passwords do not match")));
         }
     }
 
-    private void checkPasswordLength(String password) throws AuthenticationException {
+    private void checkIfPasswordIsValid(String password) throws AuthenticationException {
+        Map<String, String> errors = new HashMap<>();
         if (password.length() < 8 || password.length() > 16) {
-            throw new AuthenticationException("Password must be between 8 and 16 characters");
+            errors.put("length", "Password must be between 8 and 16 characters");
         }
 
-        if (!password.contains("[A-Z]")) {
-            throw new AuthenticationException("Password must contain at least one uppercase letter");
+        if (!Pattern.matches(".*[A-Z].*", password)) {
+            errors.put("uppercase", "Password must contain at least one uppercase letter");
         }
 
-        if (!password.contains("[0-9]")) {
-            throw new AuthenticationException("Password must contain at least one digit");
+        if (!Pattern.matches(".*[0-9].*", password)) {
+            errors.put("digit", "Password must contain at least one digit");
         }
 
-        if (!password.contains("^[a-zA-Z0-9]+$")) {
-            throw new AuthenticationException("Password must contain at least one special character");
+        if (!Pattern.matches(".*[^a-zA-Z0-9].*", password)) {
+            errors.put("specialCharacter", "Password must contain at least one special character");
+        }
+
+        if (!errors.isEmpty()) {
+            throw new AuthenticationException(Map.of("password", errors));
         }
     }
 }

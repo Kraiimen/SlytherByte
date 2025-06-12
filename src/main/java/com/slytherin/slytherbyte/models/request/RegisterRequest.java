@@ -10,11 +10,9 @@ public class RegisterRequest {
     private String email;
 
     @NotEmpty(message = "Password is mandatory")
-    @Size(min = 8, max = 16, message = "Password must be at between 8 and 16 characters")
     private String password;
 
     @NotEmpty(message = "Repeated password is mandatory")
-    @Size(min = 8, max = 16, message = "Repeated password must be between 8 and 16 characters")
     private String repeatedPassword;
 
     public RegisterRequest(String email, String password) {

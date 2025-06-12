@@ -18,7 +18,7 @@ public class JpaGameService implements GameService {
     private JpaGameRepository gameRepo;
     private JpaFranchiseRepository franchiseRepo;
 
-    public JpaGameService(JpaGameRepository gameRepo, JpaFranchiseRepository franchiseRepo){
+    public JpaGameService(JpaGameRepository gameRepo, JpaFranchiseRepository franchiseRepo) {
         this.gameRepo = gameRepo;
         this.franchiseRepo = franchiseRepo;
     }
@@ -26,13 +26,13 @@ public class JpaGameService implements GameService {
 
     @Override
     public Game findGameById(int id) throws DataException, EntityNotFoundException {
-        try{
+        try {
             Optional<Game> og = gameRepo.findById(id);
-            if(og.isEmpty()){
+            if (og.isEmpty()) {
                 throw new EntityNotFoundException(Game.class, id);
             }
             return og.get();
-        }catch(PersistenceException pe){
+        } catch (PersistenceException pe) {
             throw new DataException("Failed to find game with id: " + id, pe);
         }
 
@@ -49,22 +49,22 @@ public class JpaGameService implements GameService {
 
     @Override
     public List<Game> findGameByFilters(GameFilterCriteria filters) throws DataException {
-        try{
-        return gameRepo.searchGames(filters);
-        }catch(PersistenceException pe){
+        try {
+            return gameRepo.searchGames(filters);
+        } catch (PersistenceException pe) {
             throw new DataException("Failed to retrieve games by filter", pe);
         }
     }
 
     @Override
     @Transactional
-    public Game saveGame(Game newGame, int franchiseId) throws  DataException, EntityNotFoundException{
-        try{
-            if(!franchiseRepo.existsById(franchiseId)){
+    public Game saveGame(Game newGame, int franchiseId) throws DataException, EntityNotFoundException {
+        try {
+            if (!franchiseRepo.existsById(franchiseId)) {
                 throw new EntityNotFoundException(Franchise.class, franchiseId);
             }
             return gameRepo.save(newGame);
-        }catch(PersistenceException pe){
+        } catch (PersistenceException pe) {
             throw new DataException("Failed to save new game");
         }
     }
@@ -72,11 +72,11 @@ public class JpaGameService implements GameService {
     @Override
     @Transactional
     public Game updateGame(Game game, int franchiseId) throws EntityNotFoundException {
-        if(!gameRepo.existsById(game.getGameId())){
+        if (!gameRepo.existsById(game.getGameId())) {
             throw new EntityNotFoundException(Game.class, game.getGameId());
         }
         Franchise f = franchiseRepo.findById(franchiseId)
-                .orElseThrow(()->  new EntityNotFoundException(Franchise.class, franchiseId));
+                .orElseThrow(() -> new EntityNotFoundException(Franchise.class, franchiseId));
         game.setFranchise(f);
         return gameRepo.save(game);
     }
@@ -85,10 +85,10 @@ public class JpaGameService implements GameService {
     @Transactional
     public boolean deleteGame(int id) {
         Optional<Game> og = gameRepo.findById(id);
-        if(og.isPresent()){
+        if (og.isPresent()) {
             gameRepo.delete(og.get());
             return true;
-        }else{
+        } else {
             return false;
         }
     }
