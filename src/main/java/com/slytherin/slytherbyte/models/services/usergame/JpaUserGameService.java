@@ -1,12 +1,14 @@
 package com.slytherin.slytherbyte.models.services.usergame;
 
 import com.slytherin.slytherbyte.models.entities.Game;
+import com.slytherin.slytherbyte.models.entities.Review;
 import com.slytherin.slytherbyte.models.entities.UserGame;
 import com.slytherin.slytherbyte.models.entities.UserProfile;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import com.slytherin.slytherbyte.models.repositories.JpaUserGameRepository;
 import com.slytherin.slytherbyte.models.repositories.game.JpaGameRepository;
+import com.slytherin.slytherbyte.models.repositories.review.JpaReviewRepository;
 import com.slytherin.slytherbyte.models.repositories.userprofile.JpaUserProfileRepository;
 import jakarta.persistence.PersistenceException;
 import org.springframework.stereotype.Service;
@@ -19,12 +21,14 @@ public class JpaUserGameService implements UserGameService {
     private JpaUserGameRepository userGameRepo;
     private JpaGameRepository gameRepo;
     private JpaUserProfileRepository userProfileRepo;
+    private JpaReviewRepository reviewRepo;
 
     public JpaUserGameService(JpaUserGameRepository userGameRepo, JpaGameRepository gameRepo,
-                              JpaUserProfileRepository userProfileRepo) {
+                              JpaUserProfileRepository userProfileRepo, JpaReviewRepository reviewRepo) {
         this.userGameRepo = userGameRepo;
         this.gameRepo = gameRepo;
         this.userProfileRepo = userProfileRepo;
+        this.reviewRepo=reviewRepo;
     }
 
     @Override
@@ -49,13 +53,20 @@ public class JpaUserGameService implements UserGameService {
     }
 
     @Override
-    public UserGame createUserGame(UserGame userGame, int gameId, int userProfileId) throws DataException, EntityNotFoundException {
+    public UserGame createUserGame(UserGame userGame, int gameId,
+                                   int userProfileId, Integer reviewId) throws DataException, EntityNotFoundException {
         try {
             Game g = gameRepo.findById(gameId)
                     .orElseThrow(() -> new EntityNotFoundException(Game.class, gameId));
 
             UserProfile up = userProfileRepo.findById(userProfileId)
-                    .orElseThrow((() -> new EntityNotFoundException(UserProfile.class, userProfileId)));
+                    .orElseThrow(() -> new EntityNotFoundException(UserProfile.class, userProfileId));
+
+            if(reviewId!=null) {
+                Review r = reviewRepo.findById(reviewId)
+                        .orElseThrow(() -> new EntityNotFoundException(Review.class, reviewId));
+                userGame.setReview(r);
+            }
 
             userGame.setUserProfile(up);
             userGame.setGame(g);
@@ -66,11 +77,23 @@ public class JpaUserGameService implements UserGameService {
     }
 
     @Override
-    public UserGame updateUserGame(UserGame userGame) throws DataException, EntityNotFoundException {
+    public UserGame updateUserGame(UserGame userGame, int gameId,
+                                   int userProfileId, Integer reviewId) throws DataException, EntityNotFoundException {
         try {
-            if (!userGameRepo.existsById(userGame.getUserGameId())) {
-                throw new EntityNotFoundException(UserGame.class, userGame.getUserGameId());
+            Game g = gameRepo.findById(gameId)
+                    .orElseThrow(() -> new EntityNotFoundException(Game.class, gameId));
+
+            UserProfile up = userProfileRepo.findById(userProfileId)
+                    .orElseThrow(() -> new EntityNotFoundException(UserProfile.class, userProfileId));
+
+            if(reviewId!=null) {
+                Review r = reviewRepo.findById(reviewId)
+                        .orElseThrow(() -> new EntityNotFoundException(Review.class, reviewId));
+                userGame.setReview(r);
             }
+
+            userGame.setUserProfile(up);
+            userGame.setGame(g);
             return userGameRepo.save(userGame);
         } catch (PersistenceException persistenceException) {
             throw new DataException("Error: failed to update game", persistenceException);

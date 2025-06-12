@@ -1,6 +1,7 @@
 package com.slytherin.slytherbyte.controllers;
 
 import com.slytherin.slytherbyte.dtos.UserGameDto;
+import com.slytherin.slytherbyte.models.entities.Review;
 import com.slytherin.slytherbyte.models.entities.UserGame;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
@@ -41,7 +42,7 @@ public class UserGameController {
     @PostMapping
     public ResponseEntity<UserGameDto> createUserGame(@RequestBody UserGameDto userGameDto) throws DataException, EntityNotFoundException {
         UserGame userGame = userGameDto.toEntity();
-        UserGameDto ugDto = UserGameDto.toDto(userGameService.createUserGame(userGame, userGameDto.gameId(), userGameDto.userProfileId()));
+        UserGameDto ugDto = UserGameDto.toDto(userGameService.createUserGame(userGame, userGameDto.gameId(), userGameDto.userProfileId(), userGameDto.reviewId()));
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -55,10 +56,12 @@ public class UserGameController {
     @PutMapping("/{id}")
     public ResponseEntity<UserGameDto> updateById(@PathVariable("id") int userGameId, @RequestBody UserGameDto userGameDto) throws DataException, EntityNotFoundException {
         if (userGameDto.userGameId() != userGameId) {
+            System.out.println("sta minchia");
             return ResponseEntity.badRequest().build();
         }
-
-        UserGameDto ugDto = UserGameDto.toDto(userGameService.updateUserGame(userGameDto.toEntity()));
+        UserGame userGame = userGameDto.toEntity();
+        UserGameDto ugDto = UserGameDto.toDto(userGameService.updateUserGame(userGame, userGameDto.gameId(), userGameDto.userProfileId(),
+                userGameDto.reviewId()));
         return ResponseEntity.ok(ugDto);
     }
 

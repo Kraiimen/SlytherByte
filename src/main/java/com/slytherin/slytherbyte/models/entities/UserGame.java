@@ -77,4 +77,8 @@ public class UserGame {
     public void setGame(Game game) {
         this.game = game;
     }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
 }
