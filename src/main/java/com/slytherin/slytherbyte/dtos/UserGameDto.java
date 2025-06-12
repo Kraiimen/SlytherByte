@@ -5,7 +5,7 @@ import com.slytherin.slytherbyte.models.entities.UserGame;
 import java.time.LocalDate;
 
 public record UserGameDto(int userGameId, int userProfileId, String status, Boolean isOwned,
-                          Integer reviewId, LocalDate completionDate, Integer gameId) {
+                          Integer reviewId, LocalDate completionDate, int gameId) {
 
     public static UserGameDto toDto(UserGame userGame) {
         Integer reviewId = null;
