@@ -1,6 +1,5 @@
 package com.slytherin.slytherbyte.dtos;
 
-import com.slytherin.slytherbyte.models.entities.UserAccount;
 import com.slytherin.slytherbyte.models.entities.UserProfile;
 
 public record UserProfileDto(int userProfileId, String profileName, String bio, String profilePicUrl) {

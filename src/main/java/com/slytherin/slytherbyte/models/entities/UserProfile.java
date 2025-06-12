@@ -20,6 +20,9 @@ public class UserProfile {
     @Column(name = "profile_pic_url")
     private String profilePicUrl;
 
+    @OneToMany(mappedBy = "userProfile")
+    private List<UserGame> userGames;
+
     @OneToOne(mappedBy = "userProfile")
     private UserAccount userAccount;
 
@@ -61,6 +64,10 @@ public class UserProfile {
 
     public UserAccount getUserAccount() {
         return userAccount;
+    }
+
+    public List<UserGame> getUserGames() {
+        return userGames;
     }
 
     public List<Review> getReviews() {

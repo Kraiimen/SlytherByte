@@ -25,15 +25,28 @@ public class UserProfileController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserProfileDto>> getAll() {
+    public ResponseEntity<List<UserProfileDto>> getAll(@RequestParam(required = false) String nameLike) throws EntityNotFoundException {
         try {
-            List<UserProfile> userProfiles = userProfileService.findAllUserProfiles();
-            return ResponseEntity.ok(userProfiles.stream().map(UserProfileDto::toDto).toList());
+            if( nameLike==null || nameLike.isEmpty()){
+                List<UserProfile> userProfiles = userProfileService.findAllUserProfiles();
+                return ResponseEntity.ok(userProfiles.stream().map(UserProfileDto::toDto).toList());
+            }
+            char first=nameLike.charAt(0);
+            if(first=='@'){
+                nameLike=nameLike.replace("@", "");
+                List<UserProfile> userProfiles=userProfileService.findAllUserProfilesByUsername(nameLike);
+                if(userProfiles.isEmpty()){
+                    return ResponseEntity.noContent().build();
+                }
+                List<UserProfileDto> upDto=userProfiles.stream().map(UserProfileDto::toDto).toList();
+                return ResponseEntity.ok(upDto);
+            }
+            List<UserProfile> userProfiles=userProfileService.findAllUserProfilesByName(nameLike);
+            List<UserProfileDto> upDto=userProfiles.stream().map(UserProfileDto::toDto).toList();
+            return ResponseEntity.ok(upDto);
         } catch (DataException e) {
             throw new RuntimeException(e);
         }
-
-        // TODO: create query params to find user by name like
     }
 
     @GetMapping("/{id}")
