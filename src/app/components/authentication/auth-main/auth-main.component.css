@@ -1,0 +1,68 @@
+:host {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../../resources/images/authBg.PNG');
+    background-size: cover;
+}
+
+div {
+    height: max-content;
+    width: 40rem;
+    display: grid;
+    grid-template-rows: .5fr 3fr .5fr;
+    row-gap: 1rem;
+    background-color: #242629;
+    border-radius: 20px;
+}
+
+header {
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1.5rem 2rem 1rem 2rem;
+}
+header :first-child {
+    height: 38px;
+    width: 38px;
+    margin-right: 1rem;
+}
+header :last-child {
+    color: #fffffe;
+    font-family: "Press Start 2P", system-ui;
+    font-weight: 400;
+    font-size: 1.3rem;
+}
+
+a {
+    width: fit-content;
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+    color: #7f5af0;
+    font-family: "Orbitron", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover {
+    color: #7f5af0cb;
+}
+
+@media screen and (max-width: 768px) {
+    header{
+        justify-content: center;
+    }
+    div {
+        width: 90%;
+    }
+    header :last-child {
+        font-size: 1.1rem;
+    }
+    a {
+        font-size: 0.9rem;
+    }
+}
