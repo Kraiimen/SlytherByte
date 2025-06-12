@@ -71,7 +71,24 @@ public class JpaReviewService implements ReviewService {
 
     @Override
     public Review updateReview(Review review, int gameId, int userProfileId) throws DataException, EntityNotFoundException {
-        return null;
+        try{
+            if (!reviewRepo.existsById(review.getReviewId())){
+                throw new EntityNotFoundException(Review.class, review.getReviewId());
+            }
+            Optional<Game> gm = gameRepo.findById(gameId);
+            if (gm.isEmpty()){
+                throw new EntityNotFoundException(Game.class, gameId);
+            }
+            Optional<UserProfile> up = profileRepo.findById(userProfileId);
+            if (up.isEmpty()){
+                throw new EntityNotFoundException(UserProfile.class, userProfileId);
+            }
+            review.setUserProfile(up.get());
+            review.setGame(gm.get());
+            return reviewRepo.save(review);
+        } catch(PersistenceException pe){
+            throw new DataException("Failed to update the review", pe);
+        }
     }
 
     @Override
