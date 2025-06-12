@@ -14,6 +14,8 @@ public class Review {
 
     private String title;
 
+    private String description;
+
     private LocalDate date;
 
     @ManyToOne
@@ -26,9 +28,10 @@ public class Review {
 
     public Review(){}
 
-    public Review(int reviewId, String title, LocalDate date, UserProfile userProfile, Game game){
+    public Review(int reviewId, String title, String description, LocalDate date, UserProfile userProfile, Game game){
         this.reviewId = reviewId;
         this.title = title;
+        this.description = description;
         this.date = date;
         this.userProfile = userProfile;
         this.game = game;
@@ -42,6 +45,10 @@ public class Review {
         return title;
     }
 
+    public String getDescription(){
+        return description;
+    }
+
     public LocalDate getDate() {
         return date;
     }
@@ -50,7 +57,14 @@ public class Review {
         return userProfile;
     }
 
+    public void setUserProfile(UserProfile userProfile){
+        this.userProfile = userProfile;
+    }
+
     public Game getGame() {
         return game;
+    }
+    public void setGame(Game game){
+        this.game = game;
     }
 }
