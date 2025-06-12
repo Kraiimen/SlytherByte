@@ -1,5 +1,6 @@
 package com.slytherin.slytherbyte.controllers;
 
+import com.slytherin.slytherbyte.models.exceptions.AuthenticationException;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFound(EntityNotFoundException e){
         return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
+        return ResponseEntity.badRequest().body("Authentication failed: " + e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)

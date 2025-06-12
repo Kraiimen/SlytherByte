@@ -2,6 +2,7 @@ package com.slytherin.slytherbyte.models.services.authentication;
 
 import com.slytherin.slytherbyte.models.entities.UserAccount;
 import com.slytherin.slytherbyte.models.entities.UserProfile;
+import com.slytherin.slytherbyte.models.exceptions.AuthenticationException;
 import com.slytherin.slytherbyte.models.repositories.useraccount.JpaUserAccountRepository;
 import com.slytherin.slytherbyte.models.repositories.userprofile.JpaUserProfileRepository;
 import com.slytherin.slytherbyte.models.request.AuthenticationRequest;
@@ -35,10 +36,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public void register(RegisterRequest input) throws Exception {
+    public void register(RegisterRequest input) throws AuthenticationException {
         if (isEmailTaken(input.getEmail())) {
-            throw new Exception("Email is already taken");
+            throw new AuthenticationException("Email is already taken");
         }
+
+        if(!checkPasswords(input.getPassword(), input.getRepeatedPassword())) {
+            throw new AuthenticationException("Passwords do not match");
+        }
+
         UserAccount ua = buildNewUser(input);
         userAccountRepo.save(ua);
     }
@@ -76,5 +82,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 up,
                 "ROLE_USER"
         );
+    }
+
+    private boolean checkPasswords(String password, String repeatedPassword) {
+        return passwordEncoder.matches(password, repeatedPassword);
     }
 }

@@ -13,6 +13,10 @@ public class RegisterRequest {
     @Size(min = 8, max = 16, message = "Password must be at least 8 characters long")
     private String password;
 
+    @NotEmpty(message = "Repeated password is mandatory")
+    @Size(min = 8, max = 16, message = "Repeated password must be at least 8 characters long")
+    private String repeatedPassword;
+
     public RegisterRequest(String email, String password) {
         this.email = email;
         this.password = password;
@@ -24,5 +28,9 @@ public class RegisterRequest {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getRepeatedPassword() {
+        return repeatedPassword;
     }
 }
