@@ -37,13 +37,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     @Transactional
     public void register(RegisterRequest input) throws AuthenticationException {
-        if (isEmailTaken(input.getEmail())) {
-            throw new AuthenticationException("Email is already taken");
-        }
-
-        if(!checkPasswords(input.getPassword(), input.getRepeatedPassword())) {
-            throw new AuthenticationException("Passwords do not match");
-        }
+        checkEmail(input.getEmail());
+        checkPasswordLength(input.getPassword());
+        checkPasswords(input.getPassword(), input.getRepeatedPassword());
 
         UserAccount ua = buildNewUser(input);
         userAccountRepo.save(ua);
@@ -63,10 +59,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return new AuthenticationResponse(jwtToken);
     }
 
-    private boolean isEmailTaken(String email) {
-        return userAccountRepo.findByEmail(email).isPresent();
-    }
-
     @Transactional
     private UserAccount buildNewUser(RegisterRequest input) {
         String username = input.getEmail().split("@")[0];
@@ -84,7 +76,33 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
     }
 
-    private boolean checkPasswords(String password, String repeatedPassword) {
-        return passwordEncoder.matches(password, repeatedPassword);
+    private void checkEmail(String email) throws AuthenticationException {
+        if (userAccountRepo.findByEmail(email).isPresent()) {
+            throw new AuthenticationException("Email is already taken");
+        }
+    }
+
+    private void checkPasswords(String password, String repeatedPassword) throws AuthenticationException {
+        if (!password.equals(repeatedPassword)) {
+            throw new AuthenticationException("Passwords do not match");
+        }
+    }
+
+    private void checkPasswordLength(String password) throws AuthenticationException {
+        if (password.length() < 8 || password.length() > 16) {
+            throw new AuthenticationException("Password must be between 8 and 16 characters");
+        }
+
+        if (!password.contains("[A-Z]")) {
+            throw new AuthenticationException("Password must contain at least one uppercase letter");
+        }
+
+        if (!password.contains("[0-9]")) {
+            throw new AuthenticationException("Password must contain at least one digit");
+        }
+
+        if (!password.contains("^[a-zA-Z0-9]+$")) {
+            throw new AuthenticationException("Password must contain at least one special character");
+        }
     }
 }
