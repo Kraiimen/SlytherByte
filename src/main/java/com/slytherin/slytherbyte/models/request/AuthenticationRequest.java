@@ -10,8 +10,15 @@ public class AuthenticationRequest {
     private String email;
 
     @NotEmpty(message = "Password is mandatory")
-    @Size(min = 8, max = 16, message = "Password must be at least 8 characters long")
     private String password;
+
+    private boolean rememberMe;
+
+    public AuthenticationRequest(String email, String password, boolean rememberMe) {
+        this.email = email;
+        this.password = password;
+        this.rememberMe = rememberMe;
+    }
 
     public String getEmail() {
         return email;
@@ -21,4 +28,7 @@ public class AuthenticationRequest {
         return password;
     }
 
+    public boolean isRememberMeSelected() {
+        return rememberMe;
+    }
 }

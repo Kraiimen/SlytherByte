@@ -9,6 +9,7 @@ import com.slytherin.slytherbyte.models.request.AuthenticationRequest;
 import com.slytherin.slytherbyte.models.request.RegisterRequest;
 import com.slytherin.slytherbyte.models.response.AuthenticationResponse;
 import com.slytherin.slytherbyte.models.services.security.JwtService;
+import org.apache.catalina.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,22 +41,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     @Transactional
-    public AuthenticationResponse login(AuthenticationRequest input) {
+    public AuthenticationResponse login(AuthenticationRequest input) throws AuthenticationException {
+        UserAccount ua = checkIfAccountIsValid(input.getEmail(), input.getPassword());
+
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(input.getEmail(), input.getPassword())
         );
 
-        UserAccount ua = userAccountRepo.findByEmail(input.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
-
-        String jwtToken = jwtService.generateToken(new HashMap<>(), ua);
-        return new AuthenticationResponse(jwtToken);
+        String jwtToken = jwtService.generateToken(new HashMap<>(), ua, input.isRememberMeSelected());
+        return new AuthenticationResponse(ua.getUserAccountId(), jwtToken);
     }
 
     @Override
     @Transactional
     public void register(RegisterRequest input) throws AuthenticationException {
         checkIfEmailIsTaken(input.getEmail());
+        checkIfUsernameIsValid(input.getUsername());
         checkIfPasswordIsValid(input.getPassword());
         checkIfPasswordsAreEqual(input.getPassword(), input.getRepeatedPassword());
 
@@ -65,19 +66,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Transactional
     private UserAccount buildNewUser(RegisterRequest input) {
-        String username = input.getEmail().split("@")[0];
-
-        UserProfile up = new UserProfile(0, username, null, null);
+        UserProfile up = new UserProfile(0, input.getUsername(), null, null);
         userProfileRepo.save(up);
 
         return new UserAccount(
                 0,
-                username,
+                input.getUsername(),
                 input.getEmail(),
                 passwordEncoder.encode(input.getPassword()),
                 up,
                 "ROLE_USER"
         );
+    }
+
+    private UserAccount checkIfAccountIsValid(String email, String password) throws AuthenticationException{
+        UserAccount ua = checkIfEmailExists(email);
+        if (!passwordEncoder.matches(password, ua.getPassword())) {
+            throw new AuthenticationException(Map.of("login", Map.of("invalidCredentials", "Incorrect email or password")));
+        }
+
+        return ua;
     }
 
     private void checkIfEmailIsTaken(String email) throws AuthenticationException {
@@ -86,9 +94,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
     }
 
-    private void checkIfPasswordsAreEqual(String password, String repeatedPassword) throws AuthenticationException {
-        if (!password.equals(repeatedPassword)) {
-            throw new AuthenticationException(Map.of("repeatedPassword", Map.of("mismatch", "Passwords do not match")));
+    private UserAccount checkIfEmailExists(String email) throws AuthenticationException {
+        return userAccountRepo.findByEmail(email)
+                .orElseThrow(
+                        () -> new AuthenticationException(
+                                Map.of("email", Map.of("notExists", "Email does not exist"))
+                        )
+                );
+    }
+
+    private void checkIfUsernameIsValid(String username) throws AuthenticationException {
+        Map<String, String> errors = new HashMap<>();
+
+        if (username.isEmpty() || username.length() > 16) {
+            errors.put("length", "Username must be between 1 and 16 characters");
+        }
+
+        if (userAccountRepo.findByUsername(username).isPresent()) {
+            errors.put("taken", "Username is already taken");
+        }
+
+        if (!errors.isEmpty()) {
+            throw new AuthenticationException(Map.of("username", errors));
         }
     }
 
@@ -107,11 +134,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         if (!Pattern.matches(".*[^a-zA-Z0-9].*", password)) {
-            errors.put("specialCharacter", "Password must contain at least one special character");
+            errors.put("specialChar", "Password must contain at least one special character");
         }
 
         if (!errors.isEmpty()) {
             throw new AuthenticationException(Map.of("password", errors));
+        }
+    }
+
+    private void checkIfPasswordsAreEqual(String password, String repeatedPassword) throws AuthenticationException {
+        if (!password.equals(repeatedPassword)) {
+            throw new AuthenticationException(Map.of("repeatedPassword", Map.of("mismatch", "Passwords do not match")));
         }
     }
 }
