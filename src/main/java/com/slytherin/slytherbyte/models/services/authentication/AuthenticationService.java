@@ -7,5 +7,5 @@ import com.slytherin.slytherbyte.models.response.AuthenticationResponse;
 
 public interface AuthenticationService {
     void register(RegisterRequest input) throws AuthenticationException;
-    AuthenticationResponse login(AuthenticationRequest input);
+    AuthenticationResponse login(AuthenticationRequest input) throws AuthenticationException;
 }
