@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Filter } from '../../models/filter';
+import { Filter } from '../../../models/filter';
 import { FormsModule } from '@angular/forms';
 
 @Component({
