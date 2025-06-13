@@ -1,0 +1,17 @@
+<div>
+    <div>
+        <input [(ngModel)] = "filters.title" type="text" name="title">
+        <label for="title">Titolo</label>
+    </div>
+
+    <div>
+        <input [(ngModel)] = "filters.tags" type="checkbox" name="tag" value="Action">
+        <label for="tag">Action</label>
+    </div>
+
+    <div>
+        <button (click)="applyFilters()" type="submit">Cerca</button>
+    </div>
+
+</div>
+

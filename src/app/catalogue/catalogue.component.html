@@ -1,1 +1,8 @@
-<p>catalogue works!</p>
+<app-filter-component
+  [filter]="filters"
+  (filtersChanged)="onFiltersChanged($event)">
+</app-filter-component>
+
+<app-catalogue-content
+  [games]="games">
+</app-catalogue-content>

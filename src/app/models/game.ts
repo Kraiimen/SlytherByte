@@ -4,4 +4,6 @@ export interface Game{
     coverImageUrl: string;
     releaseDate: string;
     summary: string;
+
+
 }

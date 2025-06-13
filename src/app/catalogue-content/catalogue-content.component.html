@@ -1,0 +1,15 @@
+@if(games){
+
+    <ul>
+        @for(g of games; track g.gameid){
+
+            <li>
+                {{g.coverImageUrl}} <br>
+                {{g.gameTitle}} 
+            </li>
+
+        }
+        
+    </ul>
+
+}
