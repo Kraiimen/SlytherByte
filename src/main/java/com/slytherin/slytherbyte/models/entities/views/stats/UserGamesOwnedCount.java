@@ -6,7 +6,7 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @Immutable
 @Table(name="owned_games_count")
-public class OwnedUserGamesCount {
+public class UserGamesOwnedCount {
     @Id
     @Column
     private int id;
@@ -14,9 +14,9 @@ public class OwnedUserGamesCount {
     @Column(name="owned_count")
     private int ownedCount;
 
-    public OwnedUserGamesCount(){}
+    public UserGamesOwnedCount(){}
 
-    public OwnedUserGamesCount(int id, int ownedCount) {
+    public UserGamesOwnedCount(int id, int ownedCount) {
         this.id = id;
         this.ownedCount = ownedCount;
     }

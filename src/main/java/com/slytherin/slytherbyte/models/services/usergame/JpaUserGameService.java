@@ -130,7 +130,7 @@ public class JpaUserGameService implements UserGameService {
     public int countOwnedUserGames() throws DataException {
         try {
             return ownedGamesRepo.findById(1)
-                    .map(OwnedUserGamesCount::getOwnedCount)
+                    .map(UserGamesOwnedCount::getOwnedCount)
                     .orElse(0);
         } catch (PersistenceException persistenceException){
             throw new DataException("No owned games found", persistenceException);
