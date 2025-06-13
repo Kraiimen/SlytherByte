@@ -2,11 +2,11 @@ import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Filter } from '../models/filter';
-import { FilterComponentComponent } from '../filter-component/filter-component.component'; // Assicurati che il percorso sia corretto
+import { FilterComponentComponent } from './filter-component/filter-component.component'; // Assicurati che il percorso sia corretto
 import { GameService } from '../services/gameService';
 import { Game } from '../models/game';
 import { Observable } from 'rxjs';
-import { CatalogueContentComponent } from '../catalogue-content/catalogue-content.component';
+import { CatalogueContentComponent } from './catalogue-content/catalogue-content.component';
 
 @Component({
   selector: 'app-catalogue',

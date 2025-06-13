@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Game } from '../models/game';
+import { Game } from '../../models/game';
 
 @Component({
   selector: 'app-catalogue-content',
