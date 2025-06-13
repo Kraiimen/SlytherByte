@@ -2,6 +2,7 @@ export interface ResponseErrors {
     errors?: {
         email?: {
                 taken?: string;
+                notExists?: string;
         };
         username?: {
             length?: string;
@@ -16,5 +17,8 @@ export interface ResponseErrors {
         repeteadPassword?: {
             mismatch?: string;
         };
+        login?: {
+            invalidCredentials?: string;
+        }
     };
 }

@@ -7,9 +7,13 @@
     </header>
     @if (showLoginForm) {
         <app-login></app-login>
-        <a (click)="toggleLoginForm()">Create new account</a>
+        <div>
+            <a (click)="toggleLoginForm()">Create new account</a>
+        </div>
     } @else {
         <app-register (switchToLogin)="toggleLoginForm()"></app-register>
-        <a (click)="toggleLoginForm()">Already have an account?</a>
+        <div>
+            <a (click)="toggleLoginForm()">Already have an account?</a>
+        </div>
     }
 </div>

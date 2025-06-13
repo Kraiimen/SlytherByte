@@ -81,6 +81,8 @@
             <p class="error-message">Passwords do not match</p>
         }
     </div>
-    <button type="submit" (submit)="registerUser()" [disabled]="registerForm.invalid">Continue</button>
+    <div>
+        <button type="submit" [disabled]="registerForm.invalid">Continue</button>
+    </div>    
 </form>
 

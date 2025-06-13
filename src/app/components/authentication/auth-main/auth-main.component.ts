@@ -9,7 +9,7 @@ import { RegisterComponent } from "../register/register.component";
   styleUrl: './auth-main.component.css'
 })
 export class AuthMainComponent {
-  showLoginForm = false;
+  showLoginForm = true;
 
   toggleLoginForm() {
     this.showLoginForm = !this.showLoginForm;

@@ -8,11 +8,10 @@
 }
 
 div {
-    height: max-content;
     width: 40rem;
+    height: fit-content;
     display: grid;
-    grid-template-rows: .5fr 3fr .5fr;
-    row-gap: 1rem;
+    grid-template-rows: .6fr 2fr .2fr;
     background-color: #242629;
     border-radius: 20px;
 }
@@ -36,11 +35,14 @@ header :last-child {
     font-size: 1.3rem;
 }
 
-a {
-    width: fit-content;
-    text-align: center;
-    align-self: center;
+div:last-of-type :has(> a) {
     justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
     color: #7f5af0;
     font-family: "Orbitron", sans-serif;
     font-size: 1rem;
