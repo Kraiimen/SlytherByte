@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { UserProfileService } from '../../services/userProfileService';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserProfile } from '../../models/userProfile';
 import { UserStatsComponent } from "./user-profile-micro-components/user-stats/user-stats.component";
+import { UserProfile } from '../../models/userProfile';
 
 @Component({
   selector: 'app-user-profile',
