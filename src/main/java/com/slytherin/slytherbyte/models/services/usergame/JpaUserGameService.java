@@ -1,15 +1,14 @@
 package com.slytherin.slytherbyte.models.services.usergame;
 
-import com.slytherin.slytherbyte.models.entities.Game;
-import com.slytherin.slytherbyte.models.entities.Review;
-import com.slytherin.slytherbyte.models.entities.UserGame;
-import com.slytherin.slytherbyte.models.entities.UserProfile;
+import com.slytherin.slytherbyte.models.entities.*;
+import com.slytherin.slytherbyte.models.entities.views.stats.*;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import com.slytherin.slytherbyte.models.repositories.JpaUserGameRepository;
 import com.slytherin.slytherbyte.models.repositories.game.JpaGameRepository;
 import com.slytherin.slytherbyte.models.repositories.review.JpaReviewRepository;
 import com.slytherin.slytherbyte.models.repositories.userprofile.JpaUserProfileRepository;
+import com.slytherin.slytherbyte.models.repositories.views.*;
 import jakarta.persistence.PersistenceException;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +21,27 @@ public class JpaUserGameService implements UserGameService {
     private JpaGameRepository gameRepo;
     private JpaUserProfileRepository userProfileRepo;
     private JpaReviewRepository reviewRepo;
+    private JpaOwnedGamesRepository ownedGamesRepo;
+    private JpaTop5TagsRepository top5TagsRepo;
+    private JpaUserGamesPlayingRepository gamesPlayingRepo;
+    private JpaUserGamesBeatenRepository gamesBeatenRepo;
+    private JpaUserReviewCountRepository reviewCountRepo;
+
 
     public JpaUserGameService(JpaUserGameRepository userGameRepo, JpaGameRepository gameRepo,
-                              JpaUserProfileRepository userProfileRepo, JpaReviewRepository reviewRepo) {
+                              JpaUserProfileRepository userProfileRepo, JpaReviewRepository reviewRepo,
+                              JpaOwnedGamesRepository ownedGamesRepo, JpaTop5TagsRepository top5TagsRepo,
+                              JpaUserGamesPlayingRepository gamesPlayingRepo, JpaUserGamesBeatenRepository gamesBeatenRepo,
+                              JpaUserReviewCountRepository reviewCountRepo) {
         this.userGameRepo = userGameRepo;
         this.gameRepo = gameRepo;
         this.userProfileRepo = userProfileRepo;
         this.reviewRepo=reviewRepo;
+        this.ownedGamesRepo=ownedGamesRepo;
+        this.top5TagsRepo=top5TagsRepo;
+        this.gamesPlayingRepo=gamesPlayingRepo;
+        this.gamesBeatenRepo=gamesBeatenRepo;
+        this.reviewCountRepo=reviewCountRepo;
     }
 
     @Override
@@ -110,6 +123,59 @@ public class JpaUserGameService implements UserGameService {
             return true;
         } catch (PersistenceException persistenceException) {
             throw new DataException("Error: failed to delete game", persistenceException);
+        }
+    }
+
+    @Override
+    public int countOwnedUserGames() throws DataException {
+        try {
+            return ownedGamesRepo.findById(1)
+                    .map(OwnedUserGamesCount::getOwnedCount)
+                    .orElse(0);
+        } catch (PersistenceException persistenceException){
+            throw new DataException("No owned games found", persistenceException);
+        }
+    }
+
+    @Override
+    public List<Top5Tags> getTop5Tags() throws DataException {
+        try {
+            return top5TagsRepo.findAll();
+        } catch (PersistenceException persistenceException){
+            throw new DataException("No tags found", persistenceException);
+        }
+    }
+
+    @Override
+    public int countGamesPlaying() throws DataException {
+        try {
+            return gamesPlayingRepo.findById(1)
+                    .map(UserGamesPlayingCount::getPlayingCount)
+                    .orElse(0);
+        } catch (PersistenceException persistenceException){
+            throw new DataException("Cannot find any games with status: playing", persistenceException);
+        }
+    }
+
+    @Override
+    public int countGamesBeaten() throws DataException {
+        try {
+            return gamesBeatenRepo.findById(1)
+                    .map(UserGamesBeatenCount::getBeatenCount)
+                    .orElse(0);
+        } catch (PersistenceException persistenceException){
+            throw new DataException("Cannot find any games with status: beaten", persistenceException);
+        }
+    }
+
+    @Override
+    public int countUserReviews() throws DataException {
+        try {
+            return reviewCountRepo.findById(1)
+                    .map(UserReviewsCount::getReviewsCount)
+                    .orElse(0);
+        } catch (PersistenceException persistenceException){
+            throw new DataException("Cannot find any games with status: beaten", persistenceException);
         }
     }
 }

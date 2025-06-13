@@ -1,8 +1,8 @@
 package com.slytherin.slytherbyte.controllers;
 
 import com.slytherin.slytherbyte.dtos.UserGameDto;
-import com.slytherin.slytherbyte.models.entities.Review;
 import com.slytherin.slytherbyte.models.entities.UserGame;
+import com.slytherin.slytherbyte.models.entities.views.stats.Top5Tags;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import com.slytherin.slytherbyte.models.services.usergame.UserGameService;
@@ -71,5 +71,37 @@ public class UserGameController {
         userGameService.deleteUseGame(ug);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/owned/count")
+    public ResponseEntity<Integer> getOwnedGamesCount() throws DataException {
+        int count= userGameService.countOwnedUserGames();
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/tags/top5")
+    public ResponseEntity<List<Top5Tags>> getTop5Tags() throws DataException{
+        List<Top5Tags> tags=userGameService.getTop5Tags();
+        return ResponseEntity.ok(tags);
+
+    }
+
+    @GetMapping("/playing")
+    public ResponseEntity<Integer> getPlayingGames() throws DataException{
+        Integer count=userGameService.countGamesPlaying();
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/beaten")
+    public ResponseEntity<Integer> getBeatenGames() throws DataException{
+        Integer count=userGameService.countGamesBeaten();
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/reviews/count")
+    public ResponseEntity<Integer> getReviewsCount() throws DataException{
+        Integer count=userGameService.countUserReviews();
+        return ResponseEntity.ok(count);
+    }
+
 
 }

@@ -80,4 +80,6 @@ public class UserProfileController {
         UserProfileDto upDto = UserProfileDto.toDto(userProfileService.updateUserProfile(userProfileDto.toEntity()));
         return ResponseEntity.ok(upDto);
     }
+
+
 }
