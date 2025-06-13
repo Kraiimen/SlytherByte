@@ -5,7 +5,11 @@ import { HomeComponent } from './components/home/home.component';
 import { CatalogueComponent } from './catalogue/catalogue.component';
 
 export const routes: Routes = [
-    {path: 'user-profiles/:id', component: UserProfileComponent}
+    { path: '', redirectTo: 'auth', pathMatch: 'full' },
+    { path: 'auth', component: AuthMainComponent },
+    { path: 'home', component: HomeComponent },
+    { path: 'user-profiles/:id', component: UserProfileComponent },
+    {path: 'games', component: CatalogueComponent}
 ];
 
 
