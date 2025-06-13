@@ -16,6 +16,8 @@ import java.util.function.Function;
 
 @Service
 public class JwtServiceImpl implements JwtService{
+    private static final long SEVEN_DAYS = 7 * 24 * 3600;
+
     @Value("${spring.jwt.secret}")
     private String secretKey;
 
@@ -55,12 +57,14 @@ public class JwtServiceImpl implements JwtService{
     }
 
     @Override
-    public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> claims, UserDetails userDetails, boolean isRememberMeSelected) {
+        long expMs = isRememberMeSelected ? SEVEN_DAYS : jwtExpiration;
+
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .setExpiration(new Date(System.currentTimeMillis() + expMs))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
