@@ -7,9 +7,15 @@
                 @for(us of userStats.top5Tags; track us.tagId){
                     <p>{{us.tagName}}</p>
                 }
-            
-            }
-            
+            } 
+            <br>
+            <p>Games owned: {{userStats.gamesOwned}}</p>
+            <br>
+            <p>Games playing: {{userStats.gamesPlaying}}</p>
+            <br>
+            <p>Games beaten: {{userStats.gamesBeaten}}</p>
+            <br>
+            <p>Reviews: {{userStats.userReviews}}</p>
         </div>
     }
 </div>
