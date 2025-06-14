@@ -2,14 +2,11 @@
 
     <ul>
         @for(g of games; track g.gameid){
-
             <li>
-                {{g.coverImageUrl}} <br>
-                {{g.gameTitle}} 
+                <img [src]="g.coverImageUrl" alt="Game Cover"> 
+                <h3>{{g.gameTitle}} </h3> 
             </li>
-
         }
-        
     </ul>
 
 }

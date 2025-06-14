@@ -1,17 +1,63 @@
+<form [formGroup]="filtersForm">
+    <input type="text" placeholder="Search Game" formControlName="title">
+    <div>
+        <h2>Filter by</h2>
+        <ul>
+            <li>
+                <p>Platform</p>
+                <ul formArrayName="platforms">
+                    @for(p of platforms; track p.platformId){
+                        <li><input type="checkbox" [formControlName]="p.name">{{p.name}}</li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <p>Publisher</p>
+                <ul formArrayName="publishers">
+                    @for(p of publishers; track p.publisherId){
+                        <li><input type="checkbox" [formControlName]="p.name">{{p.name}}</li>
+                    }
+                </ul>
+            </li> 
+            <li>
+                <p>Store</p>
+                <ul formArrayName="stores">
+                    @for(s of stores; track s.storeId){
+                        <li><input type="checkbox" [formControlName]="s.name">{{s.name}}</li>
+                    }
+                </ul> 
+            </li>
+            <li>
+                <p>Developer</p>
+                <ul formArrayName="developers">
+                    @for(d of developers; track d.developerId){
+                        <li><input type="checkbox" [formControlName]="d.name">{{d.name}}</li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <p>Language</p>
+                <ul formArrayName="languages">
+                    @for(l of languages; track l.languageId){
+                        <li><input type="checkbox" [formControlName]="l.name">{{l.name}}</li>
+                    }
+                </ul>
+            </li>
+            <li>
+                <p>Tag</p>
+                <ul formArrayName="tags">
+                    @for(t of tags; track t.tagId){
+                        <li><input type="checkbox" [formControlName]="t.name">{{t.name}}</li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <button type="submit" (submit)="searchGames()">Search</button>
+</form>
+
 <div>
-    <div>
-        <input [(ngModel)] = "filters.title" type="text" name="title">
-        <label for="title">Titolo</label>
-    </div>
-
-    <div>
-        <input [(ngModel)] = "filters.tags" type="checkbox" name="tag" value="Action">
-        <label for="tag">Action</label>
-    </div>
-
-    <div>
-        <button (click)="applyFilters()" type="submit">Cerca</button>
-    </div>
-
+    <h2>Sort By</h2>
+    <button>Alphabetical</button>
+    <button>Release date</button>
 </div>
-

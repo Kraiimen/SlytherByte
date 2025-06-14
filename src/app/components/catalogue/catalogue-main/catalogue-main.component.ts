@@ -13,13 +13,10 @@ import { CatalogueContentComponent } from "../catalogue-content/catalogue-conten
 })
 export class CatalogueMainComponent {
   private _gameService = inject(GameService);
-  filters: Partial<Filter> = {};
   games: Game[] = [];
   
-
   onFiltersChanged(newFilters: Partial<Filter>) {
-    this.filters = newFilters;
-    this._gameService.getGames(this.filters).subscribe({
+    this._gameService.searchGames(newFilters).subscribe({
       next: games => this.games = games,
       error: e => console.log("Service not found")
     });

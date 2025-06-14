@@ -1,12 +1,12 @@
 export interface Filter{
-    title?: string;
-    releaseDate?: string;
-    platform?: string[];
-    languages?: string[];
-    tags?: string[];
-    stores?: string[];
-    publisher?: string[];
-    sortByName?: boolean;
-    sortByDate?: boolean;
+    title: string;
+    platforms: string[];
+    publishers: string[];
+    stores: string[];
+    developers: string[];
+    languages: string[];
+    tags: string[];
+    sortByName: boolean;
+    sortByDate: boolean;
 
 }

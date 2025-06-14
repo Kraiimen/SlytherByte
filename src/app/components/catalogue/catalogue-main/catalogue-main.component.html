@@ -1,8 +1,2 @@
-<app-filter-component
-  [filter]="filters"
-  (filtersChanged)="onFiltersChanged($event)">
-</app-filter-component>
-
-<app-catalogue-content
-  [games]="games">
-</app-catalogue-content>
+<app-filter-component (filtersChanged)="onFiltersChanged($event)"></app-filter-component>
+<app-catalogue-content [games]="games"></app-catalogue-content>
