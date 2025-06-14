@@ -3,10 +3,11 @@ import { UserProfileService } from '../../services/userProfileService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserStatsComponent } from "./user-profile-micro-components/user-stats/user-stats.component";
 import { UserProfile } from '../../models/userProfile';
+import { UserReviewsComponent } from './user-profile-micro-components/user-reviews/user-reviews/user-reviews.component';
 
 @Component({
   selector: 'app-user-profile',
-  imports: [UserStatsComponent],
+  imports: [UserStatsComponent, UserReviewsComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })

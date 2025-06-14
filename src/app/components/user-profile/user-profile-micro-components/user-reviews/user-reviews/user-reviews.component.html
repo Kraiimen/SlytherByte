@@ -1,0 +1,10 @@
+<div class="user-reviews">
+    <h4>Reviews:</h4>
+    @if (reviews){}
+        <div>
+        @if(reviews.length>0){
+        @for(r of reviews; track r.reviewId){
+        <p>{{r.title}}</p>
+        }}
+    </div>
+</div>
