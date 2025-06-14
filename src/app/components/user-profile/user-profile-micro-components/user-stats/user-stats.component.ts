@@ -36,21 +36,20 @@ export class UserStatsComponent implements OnInit{
     this.loading = true;
     this.errorMessage = null;
 
-    // Use forkJoin to run all requests in parallel
-    forkJoin(this._userStatsService.sources)
+    forkJoin([this._userStatsService.getTop5Tags(), this._userStatsService.getNumberGamesOwned(),
+      this._userStatsService.getNumberGamesPlaying(), this._userStatsService.getNumberGamesBeaten(),
+    this._userStatsService.getNumberReviews()
+    ])
       .subscribe({
-      next: (results) => {
-        this.userStats.top5Tags = results[0] as Top5Tags[];
-        this.userStats.gamesOwned = results[1] as number;
-        this.userStats.gamesPlaying = results[2] as number;
-        this.userStats.gamesBeaten = results[3] as number;
-        this.userStats.userReviews = results[4] as number;
-      },
-      error: (err) => {
-        // In principle, forkJoin only errors if something outside our inner catchError happens.
-        this.errorMessage = 'Failed to load user stats';
-      }
-    });
+        next: (results) => {
+          this.userStats.top5Tags = results[0];
+          this.userStats.gamesOwned = results[1];
+          this.userStats.gamesPlaying = results[2];
+          this.userStats.gamesBeaten = results[3];
+          this.userStats.userReviews = results[4];
+        },
+        error: (err) => this.errorMessage = 'Failed to load user stats'
+        });
   }
 }
   

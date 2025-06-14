@@ -19,8 +19,8 @@ export class UserStatsService {
     ];
 
 
-    getTop5Tags(): Observable<string[]> {
-        return this._http.get<string[]>(`${this._url}/tags/top5`);
+    getTop5Tags(): Observable<Top5Tags[]> {
+        return this._http.get<Top5Tags[]>(`${this._url}/tags/top5`);
     }
 
     getNumberGamesOwned(): Observable<number> {

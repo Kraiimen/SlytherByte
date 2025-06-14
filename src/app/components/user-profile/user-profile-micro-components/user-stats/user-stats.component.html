@@ -4,8 +4,8 @@
         <div>
             <p>Top tags:</p>
             @if(userStats.top5Tags.length!=0){
-                @for(us of userStats.top5Tags; track us.name){
-                    <p>{{us.name}}</p>
+                @for(us of userStats.top5Tags; track us.tagId){
+                    <p>{{us.tagName}}</p>
                 }
             
             }

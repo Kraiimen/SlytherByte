@@ -1,4 +1,4 @@
 export interface Top5Tags{
-    top5TagId: number;
-    name: string;
+    tagId: number;
+    tagName: string;
 }
