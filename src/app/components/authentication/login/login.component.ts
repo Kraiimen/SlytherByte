@@ -38,7 +38,7 @@ export class LoginComponent {
           this.loginForm.reset();
 
           this.loadUserAccount(response.userAccountId);
-          this._router.navigate(['/home']);
+          this._router.navigate(['/app']);
       },
       error: e => {
         this.responseErrors = e.error;
