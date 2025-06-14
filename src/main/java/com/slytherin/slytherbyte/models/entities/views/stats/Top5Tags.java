@@ -12,23 +12,23 @@ import org.hibernate.annotations.Immutable;
 public class Top5Tags {
     @Id
     @Column(name="tag_id")
-    private int top5TagsId;
+    private int tagId;
     @Column(name="name")
     private String tagName;
 
     public Top5Tags(){}
 
-    public Top5Tags(int top5TagsId, String tagName) {
-        this.top5TagsId = top5TagsId;
+    public Top5Tags(int tagId, String tagName) {
+        this.tagId = tagId;
         this.tagName = tagName;
     }
 
-    public int getTop5TagsId() {
-        return top5TagsId;
+    public int getTagId() {
+        return tagId;
     }
 
-    public void setTop5TagsId(int top5TagsId) {
-        this.top5TagsId = top5TagsId;
+    public void setTagId(int tagId) {
+        this.tagId = tagId;
     }
 
     public String getTagName() {
@@ -38,4 +38,5 @@ public class Top5Tags {
     public void setTagName(String tagName) {
         this.tagName = tagName;
     }
+
 }
