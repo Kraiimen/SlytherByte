@@ -19,7 +19,7 @@ export class LoginComponent {
   private _userAccountService = inject(UserAccountService);
   private _dataService = inject(DataService);
   responseErrors: ResponseErrors | null = null;
-  loginForm: FormGroup
+  loginForm: FormGroup;
   showPassword = false;
 
   constructor() {
@@ -38,7 +38,7 @@ export class LoginComponent {
           this.loginForm.reset();
 
           this.loadUserAccount(response.userAccountId);
-          this._router.navigate(['/home']);
+          this._router.navigate(['/app']);
       },
       error: e => {
         this.responseErrors = e.error;

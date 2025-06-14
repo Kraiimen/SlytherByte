@@ -1,17 +1,20 @@
-:host {
+ :host {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+
     background-image: url('../../../resources/images/authBg.PNG');
     background-size: cover;
 }
-
+ 
 div {
     width: 40rem;
-    height: fit-content;
-    display: grid;
-    grid-template-rows: .6fr 2fr .2fr;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5rem;
+    margin: 0 1.2rem;
+
     background-color: #242629;
     border-radius: 20px;
 }
@@ -22,49 +25,36 @@ header {
     align-items: center;
     justify-content: flex-start;
     padding: 1.5rem 2rem 1rem 2rem;
-}
-header :first-child {
-    height: 38px;
-    width: 38px;
-    margin-right: 1rem;
-}
-header :last-child {
-    color: #fffffe;
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-size: 1.3rem;
+
+    svg {
+        height: 50px;
+        width: 50px;
+        margin-right: 1rem;
+    }
+
+    h1 {
+        color: #fffffe;
+        font-family: "Press Start 2P", system-ui;
+        font-weight: 400;
+        font-size: 1.3rem;
+    }
 }
 
-div:last-of-type :has(> a) {
-    justify-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+div:has(> a) {
+    width: max-content;
+    align-self: center;
+    margin-bottom: 1.5rem;
 
-a {
-    color: #7f5af0;
-    font-family: "Orbitron", sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-}
-a:hover {
-    color: #7f5af0cb;
-}
-
-@media screen and (max-width: 768px) {
-    header{
-        justify-content: center;
-    }
-    div {
-        width: 90%;
-    }
-    header :last-child {
-        font-size: 1.1rem;
-    }
     a {
-        font-size: 0.9rem;
+        color: #7f5af0;
+        font-family: "Orbitron", sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+            color: #7f5af0cb;
+        }
     }
 }
