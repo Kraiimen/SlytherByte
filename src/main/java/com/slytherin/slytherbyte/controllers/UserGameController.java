@@ -26,7 +26,12 @@ public class UserGameController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserGameDto>> getAll() throws DataException {
+    public ResponseEntity<List<UserGameDto>> getAll(@RequestParam(name="status", required = false) String status) throws DataException {
+        if(status!=null || !status.isBlank()){
+            List<UserGame> userGamesByStatus=userGameService.findUserGamesByStatus(status);
+            List<UserGameDto> ugBySDto=userGamesByStatus.stream().map(UserGameDto::toDto).toList();
+            return ResponseEntity.ok(ugBySDto);
+        }
         List<UserGame> userGames = userGameService.findAllUserGames();
         List<UserGameDto> ugDto = userGames.stream().map(UserGameDto::toDto).toList();
         return ResponseEntity.ok(ugDto);
@@ -102,6 +107,5 @@ public class UserGameController {
         Integer count=userGameService.countUserReviews();
         return ResponseEntity.ok(count);
     }
-
 
 }

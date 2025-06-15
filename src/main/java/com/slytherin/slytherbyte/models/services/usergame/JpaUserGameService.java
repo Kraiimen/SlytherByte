@@ -175,7 +175,16 @@ public class JpaUserGameService implements UserGameService {
                     .map(UserReviewsCount::getReviewsCount)
                     .orElse(0);
         } catch (PersistenceException persistenceException){
-            throw new DataException("Cannot find any games with status: beaten", persistenceException);
+            throw new DataException("Cannot find any reviews", persistenceException);
+        }
+    }
+
+    @Override
+    public List<UserGame> findUserGamesByStatus(String status) throws DataException {
+        try {
+            return userGameRepo.findUserGameByStatus(status);
+        } catch (PersistenceException persistenceException){
+            throw new DataException("Cannot find games with status "+status, persistenceException);
         }
     }
 }

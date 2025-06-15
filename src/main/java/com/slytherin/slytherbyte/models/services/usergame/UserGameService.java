@@ -19,4 +19,5 @@ public interface UserGameService {
     int countGamesPlaying() throws DataException;
     int countGamesBeaten() throws DataException;
     int countUserReviews() throws DataException;
+    List<UserGame> findUserGamesByStatus(String status) throws DataException;
 }
