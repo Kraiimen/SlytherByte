@@ -43,4 +43,21 @@ public class ReviewController {
         Review createdReview = reviewService.createReview(review, dto.gameId(), dto.userProfileId());
         return ResponseEntity.ok(ReviewDto.toDto(createdReview));
     }
+
+    @PutMapping("/{id}")
+    ResponseEntity<ReviewDto> updateReview(@PathVariable ("id") int reviewId, @RequestBody ReviewDto reviewDto) throws DataException, EntityNotFoundException{
+        if(reviewDto.reviewId()!=reviewId){
+            System.out.println("sto cazzo");
+            return ResponseEntity.badRequest().build();
+        }
+        Review review=reviewDto.toEntity();
+        ReviewDto completeRDto=ReviewDto.toDto(reviewService.updateReview(review, reviewDto.gameId(), reviewDto.userProfileId()));
+        return ResponseEntity.ok(completeRDto);
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deleteReview(@PathVariable ("id") int reviewId) throws DataException, EntityNotFoundException {
+        reviewService.deleteReviewById(reviewId);
+        return ResponseEntity.noContent().build();
+    }
 }

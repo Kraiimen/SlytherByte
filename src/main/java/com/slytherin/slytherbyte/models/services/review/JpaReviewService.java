@@ -92,7 +92,16 @@ public class JpaReviewService implements ReviewService {
     }
 
     @Override
-    public boolean deleteReviewById(int reviewId) throws DataException {
-        return false;
+    public boolean deleteReviewById(int reviewId) throws DataException, EntityNotFoundException {
+        try{
+            Optional<Review> review=reviewRepo.findById(reviewId);
+            if(review.isEmpty()){
+                throw new EntityNotFoundException(Review.class, reviewId);
+            }
+            reviewRepo.delete(review.get());
+            return true;
+        } catch(PersistenceException pe){
+            throw new DataException("Failed to delete the review", pe);
+        }
     }
 }
