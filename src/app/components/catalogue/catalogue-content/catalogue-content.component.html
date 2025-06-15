@@ -1,10 +1,10 @@
 @if(games){
 
     <ul>
-        @for(g of games; track g.gameid){
+        @for(g of games; track g.gameId){
             <li>
                 <img [src]="g.coverImageUrl" alt="Game Cover"> 
-                <h3>{{g.gameTitle}} </h3> 
+                <h3>{{g.title}} </h3> 
             </li>
         }
     </ul>

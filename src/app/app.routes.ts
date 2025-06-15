@@ -11,14 +11,14 @@ export const routes: Routes = [
     { path: 'auth', component: AuthMainComponent },
     { path: 'home', component: HomeComponent },
     { path: 'user-profiles/:id', component: UserProfileComponent },
-    { path: 'games', component: CatalogueMainComponent },
     { 
         path: 'app', 
         component: MainContainerComponent, 
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
-            { path: 'expired-session', component: ExpiredSessionComponent}
+            { path: 'expired-session', component: ExpiredSessionComponent},
+            { path: 'catalogue', component: CatalogueMainComponent }
         ]
     }
 ];

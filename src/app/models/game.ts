@@ -1,6 +1,6 @@
 export interface Game{
-    gameid: number;
-    gameTitle: string;
+    gameId: number;
+    title: string;
     coverImageUrl: string;
     releaseDate: string;
     summary: string;

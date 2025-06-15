@@ -1,4 +1,4 @@
-<form [formGroup]="filtersForm">
+<form [formGroup]="filtersForm" (ngSubmit)="searchGames()">
     <input type="text" placeholder="Search Game" formControlName="title">
     <div>
         <h2>Filter by</h2>
@@ -23,7 +23,10 @@
                 <p>Store</p>
                 <ul formArrayName="stores">
                     @for(s of stores; track s.storeId){
-                        <li><input type="checkbox" [formControlName]="s.name">{{s.name}}</li>
+                        <li>
+                            <input type="checkbox" [formControlName]="s.name">
+                            {{replaceUnderscore(s.name)}}
+                        </li>
                     }
                 </ul> 
             </li>
@@ -53,7 +56,7 @@
             </li>
         </ul>
     </div>
-    <button type="submit" (submit)="searchGames()">Search</button>
+    <button type="submit">Search</button>
 </form>
 
 <div>

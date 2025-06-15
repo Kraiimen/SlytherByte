@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { EMPTY, Observable } from "rxjs";
 import { Game } from "../models/game";
@@ -12,7 +12,9 @@ export class GameService{
     private _http = inject(HttpClient);
 
     searchGames(filters: Partial<Filter>): Observable<Game[]>{
-        const result = this._http.post<Game[]>(`${this._url}`, JSON.stringify(filters));
+        const result = this._http.post<Game[]>(`${this._url}/filters`, JSON.stringify(filters), {
+            headers: new HttpHeaders({"Content-Type": "application/json"})
+        });
         return result;
     }
     

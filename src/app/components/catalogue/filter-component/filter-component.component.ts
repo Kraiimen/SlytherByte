@@ -43,6 +43,12 @@ export class FilterComponentComponent implements OnInit{
   constructor(){
     this.filtersForm = this._formBuilder.group({
       title: "",
+      platforms: this._formBuilder.group({}),
+      publishers: this._formBuilder.group({}),
+      stores: this._formBuilder.group({}),
+      developers: this._formBuilder.group({}),
+      languages: this._formBuilder.group({}),
+      tags: this._formBuilder.group({})
     });
   }
 
@@ -59,77 +65,50 @@ export class FilterComponentComponent implements OnInit{
               this.developers = result[3];
               this.languages = result[4];
               this.tags = result[5];
-              this.setPlatformsControls();
-              this.setPublishersControls();
-              this.setStoresControls();
-              this.setDevelopersControls();
-              this.setLanguagesControls();
-              this.setTagsControls();
+              this.setGroupControls("platforms", this.platforms);
+              this.setGroupControls("publishers", this.publishers);
+              this.setGroupControls("stores", this.stores);
+              this.setGroupControls("developers", this.developers);
+              this.setGroupControls("languages", this.languages);
+              this.setGroupControls("tags", this.tags);
+              console.log(this.filtersForm);
+              console.log(this.filtersForm.value);
             },
             error: e => console.log("Fork join error: " + e)
           });
   }
 
   searchGames(){
+    this.setFilters();
+    this.filtersChanged.emit(this.filters);
+  }
+
+  private setFilters(): void{
     const formValue = this.filtersForm.value;
     formValue.title == "" ? this.filters.title = undefined : this.filters.title  = formValue.title;
-    this.filters.platforms = this.platforms.filter((_,i) => formValue.platforms[i]).map(p => p.name);
-    this.filters.publishers = this.publishers.filter((_,i) => formValue.publishers[i]).map(p => p.name);
-    this.filters.stores = this.stores.filter((_,i) => formValue.stores[i]).map(s => s.name);
-    this.filters.developers = this.developers.filter((_,i) => formValue.developer[i]).map(d => d.name);
-    this.filters.languages = this.languages.filter((_,i) => formValue.languages[i]).map(l => l.name);
-    this.filters.tags = this.tags.filter((_,i) => formValue.tags[i]).map(t => t.name);
+    this.filters.platforms = Object.keys(formValue.platforms).filter(pName => formValue.platforms[pName]);
+    this.filters.publishers = Object.keys(formValue.publishers).filter(pName => formValue.publishers[pName]);
+    const storeNames = Object.keys(formValue.stores).filter(sName => formValue.stores[sName]);
+    this.filters.developers = Object.keys(formValue.developers).filter(dName => formValue.stores[dName]);
+    this.filters.languages = Object.keys(formValue.languages).filter(lName => formValue.languages[lName]);
+    this.filters.tags = Object.keys(formValue.tags).filter(tName => formValue.tags[tName]);
+    this.filters.stores = storeNames.map(s => this.replaceUnderscore(s));
   }
-  
-  private setPlatformsControls(): void{
-    this.filtersForm.setControl(
-      'platforms',
-      this._formBuilder.array(
-        this.platforms.map(() => new FormControl(false))
-      )
-    );
-  }
-  
-  private setPublishersControls(): void{
-    this.filtersForm.setControl(
-      'publishers',
-      this._formBuilder.array(
-        this.publishers.map(() => new FormControl(false))
-      )
-    );
-  }
-  private setStoresControls(): void{
-    this.filtersForm.setControl(
-      'stores',
-      this._formBuilder.array(
-        this.stores.map(() => new FormControl(false))
-      )
-    );
-  }
-  private setDevelopersControls(): void{
-    this.filtersForm.setControl(
-      'developers',
-      this._formBuilder.array(
-        this.developers.map(() => new FormControl(false))
-      )
-    );
-  }
-  private setLanguagesControls(): void{
-    this.filtersForm.setControl(
-      'languages',
-      this._formBuilder.array(
-        this.languages.map(() => new FormControl(false))
-      )
-    );
-  }
-  private setTagsControls(): void{
-    this.filtersForm.setControl(
-      'tags',
-      this._formBuilder.array(
-        this.tags.map(() => new FormControl(false))
-      )
-    );
-  }
-  
 
+  private setGroupControls(groupName: string, list: any[]): void{
+    const group = list.reduce((acc: {[key: string]: FormControl}, item) => {
+      item.name = this.replaceDot(item.name);
+      acc[item.name] = new FormControl(false);
+      return acc;
+    }, {});
+    this.filtersForm.setControl(groupName, this._formBuilder.group(group));
+  }
+
+  replaceUnderscore(s: string){
+    return s.replace("_", ".");
+  }
+
+  replaceDot(s: string){
+    return s.replace(".", "_");
+  }
 }
