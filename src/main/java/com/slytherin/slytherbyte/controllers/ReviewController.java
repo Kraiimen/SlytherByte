@@ -47,7 +47,6 @@ public class ReviewController {
     @PutMapping("/{id}")
     ResponseEntity<ReviewDto> updateReview(@PathVariable ("id") int reviewId, @RequestBody ReviewDto reviewDto) throws DataException, EntityNotFoundException{
         if(reviewDto.reviewId()!=reviewId){
-            System.out.println("sto cazzo");
             return ResponseEntity.badRequest().build();
         }
         Review review=reviewDto.toEntity();
