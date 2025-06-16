@@ -1,10 +1,6 @@
-.user-stats {
-    margin: 40px auto;
-        padding: 20px;
-        border: 2px solid #ccc;
-        border-radius: 16px;
-        background-color: #f9f9f9;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        height: 320px;
-        width: 550px;
+:host {
+    width: 100%;
+    font-family: "Orbitron", sans-serif;
+    font-size: larger;
+    line-height: 3rem;
 }

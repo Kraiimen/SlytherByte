@@ -1,17 +1,23 @@
-<nav class="user-profile-side-bar">
-    <ul class="games">
+<nav>
+    <div>
         <h4>Games</h4>
-        <li>
-            <button (click)="navigateTo('playing')">Playing</button>
-        </li>
-        <li>
-            <button (click)="navigateTo('beaten')">Beaten</button>
-        </li>
-        <li>
-            <button (click)="navigateTo('archived')">Archived</button>
-        </li>
-    </ul>
-    <br>
-    <ul class="collections"><h4>Collections</h4>
-    </ul>
+        <ul class="games">
+            <li>
+                <button (click)="navigateTo('playing')">Playing</button>
+            </li>
+            <li>
+                <button (click)="navigateTo('beaten')">Beaten</button>
+            </li>
+            <li>
+                <button (click)="navigateTo('archived')">Archived</button>
+            </li>
+        </ul>
+    </div>
+    <div>
+        <h4>Collections</h4>
+        <ul>
+            <!-- for per caircare i nomi delle collections -->
+        </ul>
+    </div>
+    <h4>Reviews</h4>
 </nav>

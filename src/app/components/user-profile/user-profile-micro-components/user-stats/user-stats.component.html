@@ -1,21 +1,15 @@
-<div class="user-stats">
-    <h4>Stats:</h4>
-    @if (userStats) {
-        <div>
-            <p>Top tags:</p>
-            @if(userStats.top5Tags.length!=0){
-                @for(us of userStats.top5Tags; track us.tagId){
-                    <p>{{us.tagName}}</p>
-                }
-            } 
-            <br>
-            <p>Games owned: {{userStats.gamesOwned}}</p>
-            <br>
-            <p>Games playing: {{userStats.gamesPlaying}}</p>
-            <br>
-            <p>Games beaten: {{userStats.gamesBeaten}}</p>
-            <br>
-            <p>Reviews: {{userStats.userReviews}}</p>
-        </div>
+<h4>Stats:</h4>
+@if (userStats) {
+<div>
+    <p>Top tags:</p>
+    @if(userStats.top5Tags.length!=0){
+        @for(us of userStats.top5Tags; track us.tagId){
+            <p>{{us.tagName}}</p>
+        }
     }
+    <p>Games owned: {{userStats.gamesOwned}}</p>
+    <p>Games playing: {{userStats.gamesPlaying}}</p>
+    <p>Games beaten: {{userStats.gamesBeaten}}</p>
+    <p>Reviews: {{userStats.userReviews}}</p>
 </div>
+}

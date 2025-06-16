@@ -16,14 +16,14 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'expired-session', component: ExpiredSessionComponent },
-            { path: 'catalogue', component: CatalogueMainComponent }
-        ]
-    },
-    {
-        path: 'user-profile', component: UserProfileComponent,
-        children: [
-            { path: '', component: UserProfileContentComponent, pathMatch: 'full' },
-            { path: 'user-games/:status', component: UserGamesComponent }
+            { path: 'catalogue', component: CatalogueMainComponent },
+            {
+                path: 'user-profile', component: UserProfileComponent,
+                children: [
+                    { path: '', component: UserProfileContentComponent, pathMatch: 'full' },
+                    { path: 'user-games/:status', component: UserGamesComponent }
+                ]
+            },
         ]
     },
 ];

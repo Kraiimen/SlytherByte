@@ -1,13 +1,16 @@
-<div class="profile-grid">
+<div class="info">
     @if(userProfile != null){
-    <p class="user-profile-picture">{{userProfile.profilePicUrl}}</p>
-    <p class="profile-name">&#64;{{userProfile.profileName}}</p>
-    <p class="profile-bio">{{userProfile.bio}}</p>
+        <div>
+            <img src="https://www.ristorazioneitalianamagazine.it/CMS/wp-content/uploads/2020/02/provolone.png" alt="profile picture">
+        </div>
+        <h2>{{userProfile.profileName}}Master12</h2>
+        <h3>&#64;Provolone12</h3>
+        <p>{{userProfile.bio}} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam esse eveniet voluptate laboriosam iusto sequi ab necessitatibus neque, dignissimos vitae harum itaque, ipsa quos quaerat corporis tenetur dolorum possimus fuga.</p>
     }
-    <div class="user-stats">
-        <app-user-stats></app-user-stats>
-    </div>
-    <div>
-        <app-user-reviews></app-user-reviews>
-    </div>
+    <app-user-stats></app-user-stats>
+</div>
+<div class="dashboard">
+    <app-user-reviews></app-user-reviews>
+    <app-user-reviews></app-user-reviews>
+    <app-user-reviews></app-user-reviews>
 </div>
