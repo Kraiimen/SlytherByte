@@ -25,22 +25,24 @@ public class GameRestController {
         this.gameService = gameService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<GameDto>> findAll() throws DataException {
+        List<Game> games = gameService.findAllGames();
+        var dtos = games.stream().map(GameDto::toDto).toList();
+        return ResponseEntity.ok(dtos);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<GameDto> findGameById(@PathVariable Integer id) throws DataException, EntityNotFoundException {
         Game foundGame = gameService.findGameById(id);
         return ResponseEntity.ok(GameDto.toDto(foundGame));
     }
 
-    @GetMapping
-    public ResponseEntity<List<GameDto>> findGames(@RequestBody(required = false) GameFilterCriteria filters) throws DataException {
-        List<Game> games = null;
 
-        if(filters != null) {
-            games = gameService.findGameByFilters(filters);
-        } else {
-            games = gameService.findAllGames();
-        }
 
+    @PostMapping("/filters")
+    public ResponseEntity<List<GameDto>> findGames(@RequestBody GameFilterCriteria filters) throws DataException {
+        List<Game> games = gameService.findGameByFilters(filters);
         var dtos = games.stream().map(GameDto::toDto).toList();
         return ResponseEntity.ok(dtos);
     }

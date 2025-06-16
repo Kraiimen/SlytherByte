@@ -4,7 +4,7 @@ import com.slytherin.slytherbyte.models.entities.Tag;
 
 public record TagDto(int tagId, String name) {
 
-    public static TagDto tagDto(Tag tag){
+    public static TagDto toDto(Tag tag){
         return new TagDto(tag.getTagId(), tag.getName());
     }
 
