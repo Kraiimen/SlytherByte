@@ -12,4 +12,5 @@ public interface ReviewService {
     Review createReview(Review review, int gameId, int userProfileId) throws DataException, EntityNotFoundException;
     Review updateReview(Review review, int gameId, int userProfileId) throws DataException, EntityNotFoundException;
     boolean deleteReviewById(int reviewId) throws DataException, EntityNotFoundException;
+    List<Review> findRecentReviews() throws DataException;
 }

@@ -59,4 +59,11 @@ public class ReviewController {
         reviewService.deleteReviewById(reviewId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/recent")
+    ResponseEntity<List<ReviewDto>> getRecentReviews() throws DataException{
+        List<Review> reviews=reviewService.findRecentReviews();
+        List<ReviewDto> rDto=reviews.stream().map(ReviewDto::toDto).toList();
+        return ResponseEntity.ok(rDto);
+    }
 }

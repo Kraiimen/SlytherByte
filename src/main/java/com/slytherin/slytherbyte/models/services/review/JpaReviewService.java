@@ -12,6 +12,7 @@ import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +63,7 @@ public class JpaReviewService implements ReviewService {
                 throw new EntityNotFoundException(UserProfile.class, userProfileId);
             }
             review.setUserProfile(up.get());
+            review.setDate(LocalDate.now());
             review.setGame(gm.get());
             return reviewRepo.save(review);
         } catch(PersistenceException pe){
@@ -84,6 +86,7 @@ public class JpaReviewService implements ReviewService {
                 throw new EntityNotFoundException(UserProfile.class, userProfileId);
             }
             review.setUserProfile(up.get());
+            review.setDate(LocalDate.now());
             review.setGame(gm.get());
             return reviewRepo.save(review);
         } catch(PersistenceException pe){
@@ -102,6 +105,16 @@ public class JpaReviewService implements ReviewService {
             return true;
         } catch(PersistenceException pe){
             throw new DataException("Failed to delete the review", pe);
+        }
+    }
+
+    @Override
+    public List<Review> findRecentReviews() throws DataException {
+        try{
+            List<Review> reviews=reviewRepo.findReviewsByDate();
+            return reviews;
+        } catch(PersistenceException pe){
+            throw new DataException("No recent reviews found", pe);
         }
     }
 }

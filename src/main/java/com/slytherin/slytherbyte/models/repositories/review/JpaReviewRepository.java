@@ -2,7 +2,11 @@ package com.slytherin.slytherbyte.models.repositories.review;
 
 import com.slytherin.slytherbyte.models.entities.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface JpaReviewRepository extends JpaRepository<Review, Integer> {
-
+    @Query("SELECT r FROM Review r ORDER BY date DESC LIMIT 2")
+    List<Review> findReviewsByDate();
 }
