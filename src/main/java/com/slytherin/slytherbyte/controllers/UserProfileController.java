@@ -1,12 +1,14 @@
 package com.slytherin.slytherbyte.controllers;
 
 import com.slytherin.slytherbyte.dtos.UserProfileDto;
+import com.slytherin.slytherbyte.models.entities.UserAccount;
 import com.slytherin.slytherbyte.models.entities.UserProfile;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import com.slytherin.slytherbyte.models.services.userprofile.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -52,6 +54,12 @@ public class UserProfileController {
     @GetMapping("/{id}")
     public ResponseEntity<UserProfileDto> getById(@PathVariable("id") int userProfileId) throws DataException, EntityNotFoundException {
         UserProfileDto upDto = UserProfileDto.toDto(userProfileService.findUserProfileById(userProfileId));
+        return ResponseEntity.ok(upDto);
+    }
+
+    @GetMapping("/logged-user")
+    public ResponseEntity<UserProfileDto> getByLoggedId(@AuthenticationPrincipal UserAccount userAccount) throws DataException, EntityNotFoundException {
+        UserProfileDto upDto = UserProfileDto.toDto(userProfileService.findUserProfileById(userAccount.getUserProfile().getUserProfileId()));
         return ResponseEntity.ok(upDto);
     }
 

@@ -27,7 +27,7 @@ public class UserGameController {
 
     @GetMapping
     public ResponseEntity<List<UserGameDto>> getAll(@RequestParam(name="status", required = false) String status) throws DataException {
-        if(status!=null || !status.isBlank()){
+        if(status!=null && !status.isEmpty()){
             List<UserGame> userGamesByStatus=userGameService.findUserGamesByStatus(status);
             List<UserGameDto> ugBySDto=userGamesByStatus.stream().map(UserGameDto::toDto).toList();
             return ResponseEntity.ok(ugBySDto);
