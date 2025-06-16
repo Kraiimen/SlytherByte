@@ -19,7 +19,7 @@ export class LoginComponent {
   private _userAccountService = inject(UserAccountService);
   private _dataService = inject(DataService);
   responseErrors: ResponseErrors | null = null;
-  loginForm: FormGroup
+  loginForm: FormGroup;
   showPassword = false;
 
   constructor() {
