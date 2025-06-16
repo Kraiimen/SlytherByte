@@ -2,7 +2,7 @@
     <h4>Reviews:</h4>
     @if (reviews){}
         <div>
-        @if(reviews.length>0){
+        @if(reviews){
         @for(r of reviews; track r.reviewId){
         <p>{{r.title}}</p>
         }}

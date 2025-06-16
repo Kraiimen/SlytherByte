@@ -1,15 +1,2 @@
-<div class="main-profile-frame">
-    <div class="profile-grid">
-        @if(userProfile != null){
-        <p class="user-profile-picture">{{userProfile.profilePicUrl}}</p>
-        <p class="profile-name">&#64;{{userProfile.profileName}}</p>
-        <p class="profile-bio">{{userProfile.bio}}</p>
-        }
-        <div class="user-stats">
-            <app-user-stats></app-user-stats>
-        </div>
-        <div>
-            <app-user-reviews></app-user-reviews>
-        </div>
-    </div>
-</div>
+<app-user-profile-side-bar></app-user-profile-side-bar>
+<router-outlet></router-outlet>

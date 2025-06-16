@@ -20,6 +20,10 @@ export class UserProfileService {
         return this.http.get<UserProfile>(`${this._url}/${id}`);
     }
 
+    getLoggedUserProfile(): Observable<UserProfile> {
+        return this.http.get<UserProfile>(`${this._url}/logged-user`);
+    }
+
     createUserProfile(userProfile: Partial<UserProfile>): Observable<UserProfile> {
         return this.http.post<UserProfile>(this._url, userProfile);
     }

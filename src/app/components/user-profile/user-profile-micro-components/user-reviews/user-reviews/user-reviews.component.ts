@@ -22,4 +22,5 @@ export class UserReviewsComponent implements OnInit{
       error: e => alert("Error loading reviews")
     })
   }
+
 }
