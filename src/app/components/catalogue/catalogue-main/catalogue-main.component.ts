@@ -15,6 +15,15 @@ export class CatalogueMainComponent {
   private _gameService = inject(GameService);
   games: Game[] = [];
   
+
+  ngOnInit(){
+
+    this._gameService.getAllGames().subscribe({
+      next: games => this.games = games,
+      error: e => console.log("Service not found")
+    });
+  }
+  
   onFiltersChanged(newFilters: Partial<Filter>) {
     this._gameService.searchGames(newFilters).subscribe({
       next: games => this.games = games,

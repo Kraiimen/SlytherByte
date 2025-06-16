@@ -54,7 +54,8 @@ export class FilterComponentComponent implements OnInit{
       stores: this._formBuilder.group({}),
       developers: this._formBuilder.group({}),
       languages: this._formBuilder.group({}),
-      tags: this._formBuilder.group({})
+      tags: this._formBuilder.group({}),
+      sorts: ""
     });
   }
 
@@ -99,6 +100,8 @@ export class FilterComponentComponent implements OnInit{
     this.filters.languages = Object.keys(formValue.languages).filter(lName => formValue.languages[lName]);
     this.filters.tags = Object.keys(formValue.tags).filter(tName => formValue.tags[tName]);
     this.filters.stores = storeNames.map(s => this.replaceUnderscore(s));
+    this.filters.sortByName = (formValue.sorts && formValue.sorts == "alphabetical" ? true : false);
+    this.filters.sortByDate = (formValue.sorts && formValue.sorts == "date" ? true : false);
   }
 
   private setGroupControls(groupName: string, list: any[]): void{
