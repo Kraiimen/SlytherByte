@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, inject, Input, OnInit, Output } from '@angular/core';
 import { Filter } from '../../../models/filter';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Platform } from '../../../models/platform';
@@ -22,7 +22,6 @@ import { PlatformService } from '../../../services/platformService';
   styleUrl: './filter-component.component.css'
 })
 export class FilterComponentComponent implements OnInit{
-  filters: Partial<Filter> = {};
   private _platformService = inject(PlatformService);
   private _publisherService = inject(PublisherService);
   private _storeService = inject(StoreService);
@@ -31,14 +30,21 @@ export class FilterComponentComponent implements OnInit{
   private _tagService = inject(TagService);
   private _formBuilder = inject(FormBuilder);
   @Output() filtersChanged = new EventEmitter<Partial<Filter>>();
+  filters: Partial<Filter> = {};
   platforms: Platform[] = [];
   publishers: Publisher[] = [];
   stores: Store[] = [];
   developers: Developer[] = [];
   languages: Language[] = [];
   tags: Tag[] = [];
-
   filtersForm: FormGroup;
+  isPlatformOpen = false;
+  isPublisherOpen = false;
+  isStoreOpen = false;
+  isDeveloperOpen = false;
+  isLanguageOpen = false;
+  isTagOpen = false;
+  @HostBinding("class.side-menu-open") isSideMenuOpen = false;
 
   constructor(){
     this.filtersForm = this._formBuilder.group({
@@ -110,5 +116,28 @@ export class FilterComponentComponent implements OnInit{
 
   replaceDot(s: string){
     return s.replace(".", "_");
+  }
+
+
+  toggleSideMenu() {
+    this.isSideMenuOpen = !this.isSideMenuOpen;
+  }
+  togglePlatformMenu() {
+    this.isPlatformOpen = !this.isPlatformOpen;
+  }
+  togglePublisherMenu() {
+    this.isPublisherOpen = !this.isPublisherOpen;
+  }
+  toggleStoreMenu() {
+    this.isStoreOpen = !this.isStoreOpen;
+  }
+  toggleDeveloperMenu() {
+    this.isDeveloperOpen = !this.isDeveloperOpen;
+  }
+  toggleLanguageMenu() {
+    this.isLanguageOpen = !this.isLanguageOpen;
+  }
+  toggleTagMenu() {
+    this.isTagOpen = !this.isTagOpen;
   }
 }
