@@ -7,6 +7,8 @@ import com.slytherin.slytherbyte.models.repositories.collection.JpaCollectionRep
 import com.slytherin.slytherbyte.models.repositories.userprofile.JpaUserProfileRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +49,7 @@ public class JpaCollectionService implements CollectionService {
                 0,
                 collectionDto.name(),
                 collectionDto.description(),
+                LocalDate.now(),
                 userProfile
         );
 
