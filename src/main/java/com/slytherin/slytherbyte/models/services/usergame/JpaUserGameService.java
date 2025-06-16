@@ -4,7 +4,7 @@ import com.slytherin.slytherbyte.models.entities.*;
 import com.slytherin.slytherbyte.models.entities.views.stats.*;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
-import com.slytherin.slytherbyte.models.repositories.JpaUserGameRepository;
+import com.slytherin.slytherbyte.models.repositories.usergame.JpaUserGameRepository;
 import com.slytherin.slytherbyte.models.repositories.game.JpaGameRepository;
 import com.slytherin.slytherbyte.models.repositories.review.JpaReviewRepository;
 import com.slytherin.slytherbyte.models.repositories.userprofile.JpaUserProfileRepository;
@@ -185,6 +185,15 @@ public class JpaUserGameService implements UserGameService {
             return userGameRepo.findUserGameByStatus(status);
         } catch (PersistenceException persistenceException){
             throw new DataException("Cannot find games with status "+status, persistenceException);
+        }
+    }
+
+    @Override
+    public List<UserGame> findRecentlyBeaten() throws DataException {
+        try {
+            return userGameRepo.findUserGamesByCompletionDate();
+        } catch (PersistenceException persistenceException){
+            throw new DataException("Cannot find recently played", persistenceException);
         }
     }
 }

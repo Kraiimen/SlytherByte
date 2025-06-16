@@ -108,4 +108,11 @@ public class UserGameController {
         return ResponseEntity.ok(count);
     }
 
+    @GetMapping("/recently-played")
+    public ResponseEntity<List<UserGameDto>> getRecentlyPlayed() throws DataException{
+        List<UserGame> recentGames=userGameService.findRecentlyBeaten();
+        List<UserGameDto> ugDto=recentGames.stream().map(UserGameDto::toDto).toList();
+        return ResponseEntity.ok(ugDto);
+    }
+
 }

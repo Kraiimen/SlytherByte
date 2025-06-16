@@ -14,4 +14,6 @@ public interface JpaUserProfileRepository extends JpaRepository<UserProfile, Int
 
     @Query("SELECT u FROM UserAccount u WHERE LOWER(username) LIKE LOWER(:username)")
     List<UserProfile> findAllByUserAccountUsernameLike(@Param("username") String username);
+
+
 }
