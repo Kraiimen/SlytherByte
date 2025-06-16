@@ -1,0 +1,6 @@
+@if(gameDetails != null){
+    <h2>Title: {{gameDetails.title}}</h2>
+    <img [src]="gameDetails.coverImageUrl" alt="Game Image">
+    <p>Release Date: {{gameDetails.releaseDate}}</p>
+    <p>Summary: {{gameDetails.summary}}</p>
+}

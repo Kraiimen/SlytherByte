@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { CatalogueMainComponent } from './components/catalogue/catalogue-main/catalogue-main.component';
 import { MainContainerComponent } from './components/main-container/main-container.component';
 import { ExpiredSessionComponent } from './components/expired-session/expired-session.component';
+import { GameDetailsComponent } from './components/game-details/game-details.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'auth', pathMatch: 'full' },
@@ -18,7 +19,8 @@ export const routes: Routes = [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'expired-session', component: ExpiredSessionComponent},
-            { path: 'catalogue', component: CatalogueMainComponent }
+            { path: 'catalogue', component: CatalogueMainComponent },
+            { path: 'game-details/:id', component: GameDetailsComponent}
         ]
     }
 ];
