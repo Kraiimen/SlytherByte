@@ -1,5 +1,4 @@
 @if(games){
-
     <ul>
         @for(g of games; track g.gameId){
             <li (click)="chooseGame(g.gameId)">
@@ -10,5 +9,4 @@
             </li>
         }
     </ul>
-
 }

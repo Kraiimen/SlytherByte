@@ -1,0 +1,178 @@
+:host {
+    z-index: 99;
+    position: absolute;
+    min-height: 100%;
+    width: 0;    
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 0 0 1rem black;
+    padding: 0;
+    background-color: #242629;
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+
+    > form {
+        opacity: 0;
+        transform: translateX(-20px);
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.1s linear, transform 0.1s linear, visibility 0s 0.1s;
+    }
+}
+:host(.side-menu-open) {
+    width: 28rem;
+    padding: 3rem 0 3rem 5rem;
+
+    > form {
+        opacity: 1;
+        transform: translateX(0);
+        visibility: visible;
+        pointer-events: auto;
+        transition: opacity 0.1s ease, transform 0.1s ease, visibility 0s 0.1s;
+    }
+}
+
+form {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+form > div {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+
+    > ul {
+        margin: .5rem 1rem;
+
+        > li {
+            margin: .5rem;
+        }
+    }
+}
+
+form > input {
+    height: 3rem;
+    border: none;
+    border-radius: 10px;
+    padding: 0 1rem;
+    font-size: 1rem;
+    background-color: #16161a;
+    color: #fffffe;
+    &:focus {
+        outline: #588157 1px solid;
+    }
+}
+
+ul {
+    list-style: none;
+    cursor: pointer;
+}
+
+li > label > input {
+    position: absolute;
+    opacity: 0;
+    width: 0; 
+    height: 0;
+    pointer-events: none;
+}
+li > label > span {
+    cursor: pointer;
+
+    &:hover {
+        opacity: .8;
+    }
+}
+li > label > input:checked + span {
+    color: #7f5af0;
+}
+
+
+.dropdown-menu {
+    display: none;
+
+    > ul {
+        margin: .1rem 1rem;
+
+        > li {
+            margin: .5rem;
+        }
+    }
+}
+.dropdown-menu li,  .dropdown-menu li > input {
+    overflow: hidden;
+}
+
+.dropdown-menu.open {
+    display: grid;
+    grid-template-rows: 1fr;
+}
+
+div:has(button[type="submit"]) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button[type="submit"] {
+    width: 10rem;
+    height: 3rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    
+    font-family: "Orbitron", sans-serif;
+    font-weight: 500;
+    background-color: #588157;
+    color: #fffffe;
+
+    &:hover {
+        background-color: #588157cb;
+    }
+}
+
+div:has(button[type="button"]) {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    > button {
+        margin-left: 1rem;
+        width: fit-content;
+        height: fit-content;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: large;
+        font-family: "Orbitron", sans-serif;
+        background: none;
+        color: #fffffe;
+        
+        &:hover {
+            opacity: .8;
+        }
+    }
+}
+
+.side-menu-button {
+    display: none;
+    position: absolute;
+    width: 2rem;
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    right: -2rem;
+    transform: translateY(-50%);
+    background-color: #242629;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+    z-index: 99;
+}

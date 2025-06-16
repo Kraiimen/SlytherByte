@@ -1,66 +1,124 @@
 <form [formGroup]="filtersForm" (ngSubmit)="searchGames()">
     <input type="text" placeholder="Search Game" formControlName="title">
     <div>
+        <h2>Sort By</h2>
+
+        <label>
+            <input type="radio" formControlName="sorts" value="alphabetical" name="sorts">Alphabetical
+        </label>
+        
+        <label>
+            <input type="radio" formControlName="sorts" value="date" name="sorts">Release date
+        </label>    
+    </div>
+
+    <div>
         <h2>Filter by</h2>
         <ul>
             <li>
-                <p>Platform</p>
-                <ul formArrayName="platforms">
-                    @for(p of platforms; track p.platformId){
-                        <li><input type="checkbox" [formControlName]="p.name">{{p.name}}</li>
-                    }
-                </ul>
+                <p (click)="togglePlatformMenu()">Platform</p>
+                <div [class.open]="isPlatformOpen" class="dropdown-menu">
+                    <ul formArrayName="platforms">
+                        @for(p of platforms; track p.platformId){
+                            <li>
+                                <label>
+                                    <input type="checkbox" [formControlName]="p.name">
+                                    <span>{{p.name}}</span>
+                                </label>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </li>
             <li>
-                <p>Publisher</p>
-                <ul formArrayName="publishers">
-                    @for(p of publishers; track p.publisherId){
-                        <li><input type="checkbox" [formControlName]="p.name">{{p.name}}</li>
-                    }
-                </ul>
+                <p (click)="togglePublisherMenu()">Publisher</p>
+                <div [class.open]="isPublisherOpen" class="dropdown-menu">
+                    <ul formArrayName="publishers">
+                        @for(p of publishers; track p.publisherId){
+                            <li>
+                                <label>
+                                    <input type="checkbox" [formControlName]="p.name">
+                                    <span>{{p.name}}</span>
+                                </label>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </li> 
             <li>
-                <p>Store</p>
-                <ul formArrayName="stores">
+                <p (click)="toggleStoreMenu()">Store</p>
+                <div [class.open]="isStoreOpen" class="dropdown-menu">
+                    <ul formArrayName="stores">
                     @for(s of stores; track s.storeId){
                         <li>
-                            <input type="checkbox" [formControlName]="s.name">
-                            {{replaceUnderscore(s.name)}}
+                            <label>
+                                <input type="checkbox" [formControlName]="s.name">
+                                <span>{{ replaceUnderscore(s.name) }}</span>
+                            </label>
                         </li>
                     }
-                </ul> 
+                    </ul> 
+                </div>
             </li>
             <li>
-                <p>Developer</p>
-                <ul formArrayName="developers">
+                <p (click)="toggleDeveloperMenu()">Developer</p>
+                <div [class.open]="isDeveloperOpen" class="dropdown-menu">
+                    <ul formArrayName="developers">
                     @for(d of developers; track d.developerId){
-                        <li><input type="checkbox" [formControlName]="d.name">{{d.name}}</li>
+                        <li>
+                            <label>
+                                <input type="checkbox" [formControlName]="d.name">
+                                <span>{{d.name}}</span>
+                            </label>
+                        </li>
                     }
-                </ul>
+                    </ul>
+                </div>
             </li>
             <li>
-                <p>Language</p>
-                <ul formArrayName="languages">
+                <p (click)="toggleLanguageMenu()">Language</p>
+                <div [class.open]="isLanguageOpen" class="dropdown-menu">
+                    <ul formArrayName="languages">
                     @for(l of languages; track l.languageId){
-                        <li><input type="checkbox" [formControlName]="l.name">{{l.name}}</li>
+                        <li>
+                            <label>
+                                <input type="checkbox" [formControlName]="l.name">
+                                <span>{{l.name}}</span>
+                            </label>
+                        </li>
                     }
-                </ul>
+                    </ul>
+                </div>
             </li>
             <li>
-                <p>Tag</p>
-                <ul formArrayName="tags">
+                <p (click)="toggleTagMenu()">Tag</p>
+                <div [class.open]="isTagOpen" class="dropdown-menu">
+                    <ul formArrayName="tags">
                     @for(t of tags; track t.tagId){
-                        <li><input type="checkbox" [formControlName]="t.name">{{t.name}}</li>
+                        <li>
+                            <label>
+                                <input type="checkbox" [formControlName]="t.name">
+                                <span>{{t.name}}</span>
+                            </label>
+                        </li>
                     }
-                </ul>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>
-    <button type="submit">Search</button>
+    <div>
+        <button type="submit">Search</button>
+    </div>
 </form>
-
-<div>
-    <h2>Sort By</h2>
-    <button>Alphabetical</button>
-    <button>Release date</button>
+<div class="side-menu-button" (click)="toggleSideMenu()">
+    @if (isSideMenuOpen) {
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fffffe">
+            <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z"/>
+        </svg>
+    } @else {
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fffffe">
+            <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/>
+        </svg>
+    }
 </div>
