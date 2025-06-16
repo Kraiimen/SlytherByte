@@ -15,7 +15,7 @@ export const routes: Routes = [
         component: MainContainerComponent,
         children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
-            { path: 'expired-session', component: ExpiredSessionComponent }
+            { path: 'expired-session', component: ExpiredSessionComponent },
             { path: 'catalogue', component: CatalogueMainComponent }
         ]
     },
