@@ -16,10 +16,9 @@ export class UserGamesComponent implements OnInit {
 
   ngOnInit(): void {
     this._route.paramMap.subscribe(paramMap => {
-      const status=paramMap.get('status');
+      const status = paramMap.get('status');
       this.loadGames(status!);
     })
-
   }
 
   loadGames(status: string): void {
