@@ -1,6 +1,6 @@
 export interface UserAccount {
     userAccountId: number;
-    username: string;
+    usernameAccount: string;
     email: string;
     password: string;
     userProfileId: number;

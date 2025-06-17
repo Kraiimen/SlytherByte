@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../services/dataService';
 
@@ -8,13 +8,16 @@ import { DataService } from '../../services/dataService';
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css'
 })
-export class NavBarComponent {
+export class NavBarComponent implements OnInit {
   private _dataService = inject(DataService);
-  loggedUserUsername: string | null = null ;
+  loggedUserUsername: string | undefined = undefined ;
   isMenuOpen = false;
 
-  constructor() {
-    this.loggedUserUsername = this._dataService.loggedUser?.username || null;
+  ngOnInit(): void {
+    this._dataService.loggedUser$.subscribe({
+      next: user => this.loggedUserUsername = user?.usernameAccount,
+      error: err => console.log(err)
+    });
   }
 
   toggleMenu() {
