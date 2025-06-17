@@ -16,7 +16,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtServiceImpl implements JwtService{
-    private static final long SEVEN_DAYS = 7 * 24 * 3600;
+    private static final long SEVEN_DAYS = 604800000;
 
     @Value("${spring.jwt.secret}")
     private String secretKey;

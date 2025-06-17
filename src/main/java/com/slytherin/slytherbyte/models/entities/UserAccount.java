@@ -15,7 +15,8 @@ public class UserAccount implements UserDetails, GrantedAuthority {
     @Column(name = "user_account_id")
     private int userAccountId;
 
-    private String username;
+    @Column(name = "username_account")
+    private String usernameAccount;
 
     private String email;
 
@@ -30,10 +31,10 @@ public class UserAccount implements UserDetails, GrantedAuthority {
     public UserAccount() {
     }
 
-    public UserAccount(int userAccountId, String username, String email,
+    public UserAccount(int userAccountId, String usernameAccount, String email,
                        String password, UserProfile userProfile, String authority) {
         this.userAccountId = userAccountId;
-        this.username = username;
+        this.usernameAccount = usernameAccount;
         this.email = email;
         this.password = password;
         this.userProfile = userProfile;
@@ -74,12 +75,12 @@ public class UserAccount implements UserDetails, GrantedAuthority {
         return userAccountId;
     }
 
-    @Override
-    public String getUsername() {
-        return email;
+    public String getUsernameAccount() {
+        return usernameAccount;
     }
 
-    public String getEmail() {
+    @Override
+    public String getUsername() {
         return email;
     }
 

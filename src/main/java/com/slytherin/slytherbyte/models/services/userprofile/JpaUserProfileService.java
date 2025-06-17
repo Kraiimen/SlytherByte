@@ -58,10 +58,35 @@ public class JpaUserProfileService implements UserProfileService {
             if (!userProfileRepo.existsById(userProfile.getUserProfileId())) {
                 throw new EntityNotFoundException(UserProfile.class, userProfile.getUserProfileId());
             }
-
             return userProfileRepo.save(userProfile);
         } catch (PersistenceException persistenceException) {
             throw new DataException("Error: failed to update user profile", persistenceException);
+        }
+    }
+
+    @Override
+    public List<UserProfile> findAllUserProfilesByName(String profileName) throws DataException, EntityNotFoundException {
+        try {
+            List<UserProfile> userProfilesFound= userProfileRepo.findAllByProfileNameLike(profileName+'%');
+            if(userProfilesFound.isEmpty()){
+                throw new EntityNotFoundException("No profiles with such criteria found");
+            }
+            return userProfilesFound;
+        } catch (PersistenceException persistenceException) {
+            throw new DataException("Error: no profiles found", persistenceException);
+        }
+    }
+
+    @Override
+    public List<UserProfile> findAllUserProfilesByUsername(String username) throws DataException, EntityNotFoundException {
+        try {
+            List<UserProfile> userProfilesFound= userProfileRepo.findAllByUserAccountUsernameLike(username+'%');
+            if(userProfilesFound.isEmpty()){
+                throw new EntityNotFoundException("No profiles with such criteria found");
+            }
+            return userProfilesFound;
+        } catch (PersistenceException persistenceException) {
+            throw new DataException("Error: no profiles found", persistenceException);
         }
     }
 }
