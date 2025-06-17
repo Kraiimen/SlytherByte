@@ -14,6 +14,7 @@ import { filter } from 'rxjs';
 export class ReviewComponent implements OnInit {
   private _userGameService = inject(UserGameService);
   private _route = inject(ActivatedRoute);
+  private _router = inject(Router);
   @Input() review!: Review;
   userGame!: UserGame;
   @HostBinding('class') hostClass = '';
@@ -28,4 +29,6 @@ export class ReviewComponent implements OnInit {
       this.hostClass = data['bgType'];
     });
   }
+
+
 }
