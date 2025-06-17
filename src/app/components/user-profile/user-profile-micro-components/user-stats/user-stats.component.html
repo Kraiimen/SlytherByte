@@ -1,1 +1,15 @@
-<p class="user-stats">This is my user stats component! </p>
+<h4>Stats:</h4>
+@if (userStats) {
+<div>
+    <p>Top tags:</p>
+    @if(userStats.top5Tags.length!=0){
+        @for(us of userStats.top5Tags; track us.tagId){
+            <p>{{us.tagName}}</p>
+        }
+    }
+    <p>Games owned: {{userStats.gamesOwned}}</p>
+    <p>Games playing: {{userStats.gamesPlaying}}</p>
+    <p>Games beaten: {{userStats.gamesBeaten}}</p>
+    <p>Reviews: {{userStats.userReviews}}</p>
+</div>
+}
