@@ -13,4 +13,8 @@ export class DeveloperService{
     getDevelopers(): Observable<Developer[]>{
         return this._http.get<Developer[]>(this._url);
     }
+
+    getDevelopersByGameId(id: number): Observable<Developer[]>{
+        return this._http.get<Developer[]>(`${this._url}/by-game/${id}`);
+    }
 }

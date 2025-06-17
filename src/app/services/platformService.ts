@@ -13,4 +13,8 @@ export class PlatformService{
     getPlatforms(): Observable<Platform[]>{
         return this._http.get<Platform[]>(this._url);
     }
+
+    getPlatformsByGameId(id: number): Observable<Platform[]>{
+        return this._http.get<Platform[]>(`${this._url}/by-game/${id}`);
+    }
 }

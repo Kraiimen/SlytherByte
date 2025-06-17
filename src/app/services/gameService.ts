@@ -26,6 +26,10 @@ export class GameService{
         return this._http.get<Game>(`${this._url}/${id}`);
     }
 
+    findGameStats(id: number): Observable<Game> {
+        return this._http.get<Game>(`${this._url}/game-details/${id}`);
+    }
+
     updateGame(gameToUpdate: Partial<Game>): Observable<Game>{
         return this._http.post<Game>(`${this._url}`, gameToUpdate);
     }
