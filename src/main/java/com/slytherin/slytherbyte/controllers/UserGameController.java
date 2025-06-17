@@ -1,6 +1,7 @@
 package com.slytherin.slytherbyte.controllers;
 
 import com.slytherin.slytherbyte.dtos.UserGameDto;
+import com.slytherin.slytherbyte.models.entities.UserAccount;
 import com.slytherin.slytherbyte.models.entities.UserGame;
 import com.slytherin.slytherbyte.models.entities.views.stats.Top5Tags;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
@@ -8,6 +9,7 @@ import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import com.slytherin.slytherbyte.models.services.usergame.UserGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,13 +28,26 @@ public class UserGameController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserGameDto>> getAll(@RequestParam(name="status", required = false) String status) throws DataException {
-        if(status!=null && !status.isEmpty()){
-            List<UserGame> userGamesByStatus=userGameService.findUserGamesByStatus(status);
-            List<UserGameDto> ugBySDto=userGamesByStatus.stream().map(UserGameDto::toDto).toList();
+    public ResponseEntity<List<UserGameDto>> getAll(@RequestParam(name = "status", required = false) String status) throws DataException {
+        if (status != null && !status.isEmpty()) {
+            List<UserGame> userGamesByStatus = userGameService.findUserGamesByStatus(status);
+            List<UserGameDto> ugBySDto = userGamesByStatus.stream().map(UserGameDto::toDto).toList();
             return ResponseEntity.ok(ugBySDto);
         }
         List<UserGame> userGames = userGameService.findAllUserGames();
+        List<UserGameDto> ugDto = userGames.stream().map(UserGameDto::toDto).toList();
+        return ResponseEntity.ok(ugDto);
+    }
+
+    @GetMapping("/logged-user")
+    public ResponseEntity<List<UserGameDto>> getAllForLoggedUser(@AuthenticationPrincipal UserAccount ua, @RequestParam(name = "status", required = false) String status) throws DataException, EntityNotFoundException {
+        if (status != null && !status.isEmpty()) {
+            List<UserGame> userGamesByStatus = userGameService.findUserGamesByStatus(ua.getUserProfile().getUserProfileId(), status);
+            List<UserGameDto> ugBySDto = userGamesByStatus.stream().map(UserGameDto::toDto).toList();
+            return ResponseEntity.ok(ugBySDto);
+        }
+
+        List<UserGame> userGames = userGameService.findAllByUserProfileId(ua.getUserProfile().getUserProfileId());
         List<UserGameDto> ugDto = userGames.stream().map(UserGameDto::toDto).toList();
         return ResponseEntity.ok(ugDto);
     }
@@ -86,39 +101,39 @@ public class UserGameController {
 
     @GetMapping("/owned/count")
     public ResponseEntity<Integer> getOwnedGamesCount() throws DataException {
-        int count= userGameService.countOwnedUserGames();
+        int count = userGameService.countOwnedUserGames();
         return ResponseEntity.ok(count);
     }
 
     @GetMapping("/tags/top5")
-    public ResponseEntity<List<Top5Tags>> getTop5Tags() throws DataException{
-        List<Top5Tags> tags=userGameService.getTop5Tags();
+    public ResponseEntity<List<Top5Tags>> getTop5Tags() throws DataException {
+        List<Top5Tags> tags = userGameService.getTop5Tags();
         return ResponseEntity.ok(tags);
 
     }
 
     @GetMapping("/playing")
-    public ResponseEntity<Integer> getPlayingGames() throws DataException{
-        Integer count=userGameService.countGamesPlaying();
+    public ResponseEntity<Integer> getPlayingGames() throws DataException {
+        Integer count = userGameService.countGamesPlaying();
         return ResponseEntity.ok(count);
     }
 
     @GetMapping("/beaten")
-    public ResponseEntity<Integer> getBeatenGames() throws DataException{
-        Integer count=userGameService.countGamesBeaten();
+    public ResponseEntity<Integer> getBeatenGames() throws DataException {
+        Integer count = userGameService.countGamesBeaten();
         return ResponseEntity.ok(count);
     }
 
     @GetMapping("/reviews/count")
-    public ResponseEntity<Integer> getReviewsCount() throws DataException{
-        Integer count=userGameService.countUserReviews();
+    public ResponseEntity<Integer> getReviewsCount() throws DataException {
+        Integer count = userGameService.countUserReviews();
         return ResponseEntity.ok(count);
     }
 
     @GetMapping("/recently-played")
-    public ResponseEntity<List<UserGameDto>> getRecentlyPlayed() throws DataException{
-        List<UserGame> recentGames=userGameService.findRecentlyBeaten();
-        List<UserGameDto> ugDto=recentGames.stream().map(UserGameDto::toDto).toList();
+    public ResponseEntity<List<UserGameDto>> getRecentlyPlayed() throws DataException {
+        List<UserGame> recentGames = userGameService.findRecentlyBeaten();
+        List<UserGameDto> ugDto = recentGames.stream().map(UserGameDto::toDto).toList();
         return ResponseEntity.ok(ugDto);
     }
 

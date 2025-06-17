@@ -14,7 +14,7 @@ public record UserGameDto(int userGameId, int userProfileId, String status, Bool
         }
 
         return new UserGameDto(userGame.getUserGameId(), userGame.getUserProfile().getUserProfileId(),
-                userGame.getStatus(), userGame.isOwned(), reviewId, userGame.getCompletionDate(), userGame.getUserGameId());
+                userGame.getStatus(), userGame.isOwned(), reviewId, userGame.getCompletionDate(), userGame.getGame().getGameId());
     }
 
     public UserGame toEntity() {

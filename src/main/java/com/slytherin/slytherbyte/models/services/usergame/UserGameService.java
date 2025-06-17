@@ -20,6 +20,8 @@ public interface UserGameService {
     int countGamesBeaten() throws DataException;
     int countUserReviews() throws DataException;
     List<UserGame> findUserGamesByStatus(String status) throws DataException;
+    List<UserGame> findUserGamesByStatus(int userProfileId, String status) throws DataException;
     List<UserGame> findRecentlyBeaten() throws DataException;
     UserGame findUserGameByReviewId(int reviewId) throws DataException, EntityNotFoundException;
+    List<UserGame> findAllByUserProfileId(int userProfileId) throws DataException, EntityNotFoundException;
 }

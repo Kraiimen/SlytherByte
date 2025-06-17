@@ -17,4 +17,10 @@ public interface JpaUserGameRepository extends JpaRepository<UserGame, Integer> 
 
     @Query("SELECT ug FROM UserGame ug WHERE review.reviewId = :reviewId")
     Optional<UserGame> findByReviewId(int reviewId);
+
+    @Query("SELECT ug FROM UserGame ug WHERE ug.userProfile.userProfileId = :userProfileId")
+    List<UserGame> findAllByUserProfileId(int userProfileId);
+
+    @Query("SELECT ug FROM UserGame ug WHERE ug.userProfile.userProfileId = :userProfileId AND LOWER(ug.status)=LOWER(:status)")
+    List<UserGame> findUserGamesUserProfileIdAndByStatus(int userProfileId, String status);
 }

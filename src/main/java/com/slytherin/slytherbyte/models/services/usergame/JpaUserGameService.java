@@ -189,6 +189,15 @@ public class JpaUserGameService implements UserGameService {
     }
 
     @Override
+    public List<UserGame> findUserGamesByStatus(int userProfileId, String status) throws DataException {
+        try {
+            return userGameRepo.findUserGamesUserProfileIdAndByStatus(userProfileId, status);
+        } catch (PersistenceException persistenceException){
+            throw new DataException(String.format("Cannot find games with status %s for user profile id %d", status, userProfileId), persistenceException);
+        }
+    }
+
+    @Override
     public List<UserGame> findRecentlyBeaten() throws DataException {
         try {
             return userGameRepo.findUserGamesByCompletionDate();
@@ -208,6 +217,19 @@ public class JpaUserGameService implements UserGameService {
                     .orElseThrow(() -> new DataException("Cannot find user game by review id "+reviewId));
         } catch (PersistenceException persistenceException){
             throw new DataException("Cannot find user game by review id "+reviewId, persistenceException);
+        }
+    }
+
+    @Override
+    public List<UserGame> findAllByUserProfileId(int userProfileId) throws DataException, EntityNotFoundException {
+        try {
+            if(!userProfileRepo.existsById(userProfileId)) {
+                throw new EntityNotFoundException(UserProfile.class, userProfileId);
+            }
+
+            return userGameRepo.findAllByUserProfileId(userProfileId);
+        } catch (PersistenceException persistenceException){
+            throw new DataException("Cannot find user games by profile id "+userProfileId, persistenceException);
         }
     }
 }
