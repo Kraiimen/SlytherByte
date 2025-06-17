@@ -22,6 +22,9 @@ public class Media {
     @JoinColumn(name = " game_id")
     private Game game;
 
+    public Media(){
+    }
+
     public Media(int mediaId, String mediaUrl) {
         this.mediaId = mediaId;
         this.mediaUrl = mediaUrl;
