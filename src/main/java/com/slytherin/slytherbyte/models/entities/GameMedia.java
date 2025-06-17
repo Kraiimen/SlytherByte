@@ -2,11 +2,9 @@ package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "game_media")
-public class Media {
+public class GameMedia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "game_media_id")
@@ -22,10 +20,10 @@ public class Media {
     @JoinColumn(name = " game_id")
     private Game game;
 
-    public Media(){
+    public GameMedia(){
     }
 
-    public Media(int mediaId, String mediaUrl) {
+    public GameMedia(int mediaId, String mediaUrl) {
         this.mediaId = mediaId;
         this.mediaUrl = mediaUrl;
     }
