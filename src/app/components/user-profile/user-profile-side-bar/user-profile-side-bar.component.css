@@ -42,3 +42,9 @@ button {
         color: #588157;
     }
 }
+
+div:has(> button){
+    > button {
+        font-size: 1.8rem;
+    }
+}

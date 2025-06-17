@@ -5,7 +5,11 @@
         </div>
         <h2>{{userProfile.profileName}}</h2>
         <h3>&#64;{{userProfile.profileName}}</h3>
-        <p>{{userProfile.bio}}</p>
+        @if (userProfile.bio) {
+            <p>{{userProfile.bio}}</p>
+        } @else {
+            <p>Write a bio!</p>
+        }
     }
     <app-user-stats></app-user-stats>
 </div>
