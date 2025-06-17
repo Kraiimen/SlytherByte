@@ -11,4 +11,6 @@ public interface UserProfileService {
     UserProfile createUserProfile(UserProfile userProfile) throws DataException;
     UserProfile findUserProfileById(int userProfileId) throws DataException, EntityNotFoundException;
     UserProfile updateUserProfile(UserProfile userProfile) throws DataException, EntityNotFoundException;
+    List<UserProfile> findAllUserProfilesByName(String profileName) throws DataException, EntityNotFoundException;
+    List<UserProfile> findAllUserProfilesByUsername(String username) throws DataException, EntityNotFoundException;
 }

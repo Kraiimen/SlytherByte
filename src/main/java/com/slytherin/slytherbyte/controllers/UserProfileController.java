@@ -1,12 +1,14 @@
 package com.slytherin.slytherbyte.controllers;
 
 import com.slytherin.slytherbyte.dtos.UserProfileDto;
+import com.slytherin.slytherbyte.models.entities.UserAccount;
 import com.slytherin.slytherbyte.models.entities.UserProfile;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import com.slytherin.slytherbyte.models.services.userprofile.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,20 +27,39 @@ public class UserProfileController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserProfileDto>> getAll() {
+    public ResponseEntity<List<UserProfileDto>> getAll(@RequestParam(required = false) String nameLike) throws EntityNotFoundException {
         try {
-            List<UserProfile> userProfiles = userProfileService.findAllUserProfiles();
-            return ResponseEntity.ok(userProfiles.stream().map(UserProfileDto::toDto).toList());
+            if( nameLike==null || nameLike.isEmpty()){
+                List<UserProfile> userProfiles = userProfileService.findAllUserProfiles();
+                return ResponseEntity.ok(userProfiles.stream().map(UserProfileDto::toDto).toList());
+            }
+            char first=nameLike.charAt(0);
+            if(first=='@'){
+                nameLike=nameLike.replace("@", "");
+                List<UserProfile> userProfiles=userProfileService.findAllUserProfilesByUsername(nameLike);
+                if(userProfiles.isEmpty()){
+                    return ResponseEntity.noContent().build();
+                }
+                List<UserProfileDto> upDto=userProfiles.stream().map(UserProfileDto::toDto).toList();
+                return ResponseEntity.ok(upDto);
+            }
+            List<UserProfile> userProfiles=userProfileService.findAllUserProfilesByName(nameLike);
+            List<UserProfileDto> upDto=userProfiles.stream().map(UserProfileDto::toDto).toList();
+            return ResponseEntity.ok(upDto);
         } catch (DataException e) {
             throw new RuntimeException(e);
         }
-
-        // TODO: create query params to find user by name like
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserProfileDto> getById(@PathVariable("id") int userProfileId) throws DataException, EntityNotFoundException {
         UserProfileDto upDto = UserProfileDto.toDto(userProfileService.findUserProfileById(userProfileId));
+        return ResponseEntity.ok(upDto);
+    }
+
+    @GetMapping("/logged-user")
+    public ResponseEntity<UserProfileDto> getByLoggedId(@AuthenticationPrincipal UserAccount userAccount) throws DataException, EntityNotFoundException {
+        UserProfileDto upDto = UserProfileDto.toDto(userProfileService.findUserProfileById(userAccount.getUserProfile().getUserProfileId()));
         return ResponseEntity.ok(upDto);
     }
 
@@ -67,4 +88,6 @@ public class UserProfileController {
         UserProfileDto upDto = UserProfileDto.toDto(userProfileService.updateUserProfile(userProfileDto.toEntity()));
         return ResponseEntity.ok(upDto);
     }
+
+
 }
