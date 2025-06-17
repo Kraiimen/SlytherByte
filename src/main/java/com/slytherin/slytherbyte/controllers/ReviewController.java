@@ -2,12 +2,14 @@ package com.slytherin.slytherbyte.controllers;
 
 import com.slytherin.slytherbyte.dtos.ReviewDto;
 import com.slytherin.slytherbyte.models.entities.Review;
+import com.slytherin.slytherbyte.models.entities.UserAccount;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
 import com.slytherin.slytherbyte.models.services.review.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +28,13 @@ public class ReviewController {
     @GetMapping
     public ResponseEntity<List<ReviewDto>> getAll() throws DataException {
         List<Review> reviews = reviewService.findAllReviews();
+        List<ReviewDto> dtos = reviews.stream().map(review -> ReviewDto.toDto(review)).toList();
+        return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/logged-user")
+    public ResponseEntity<List<ReviewDto>> getAllForLoggedUser(@AuthenticationPrincipal UserAccount ua) throws DataException, EntityNotFoundException {
+        List<Review> reviews = reviewService.findAllByProfileId(ua.getUserProfile().getUserProfileId());
         List<ReviewDto> dtos = reviews.stream().map(review -> ReviewDto.toDto(review)).toList();
         return ResponseEntity.ok(dtos);
     }

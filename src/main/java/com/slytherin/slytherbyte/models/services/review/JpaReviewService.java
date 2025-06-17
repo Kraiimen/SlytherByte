@@ -117,4 +117,17 @@ public class JpaReviewService implements ReviewService {
             throw new DataException("No recent reviews found", pe);
         }
     }
+
+    @Override
+    public List<Review> findAllByProfileId(int profileId) throws DataException, EntityNotFoundException {
+        try{
+            if (!profileRepo.existsById(profileId)) {
+                throw new EntityNotFoundException(UserProfile.class, profileId);
+            }
+
+            return reviewRepo.findAllByProfileId(profileId);
+        } catch(PersistenceException pe){
+            throw new DataException("Failed to find reviews by profile id " + profileId, pe);
+        }
+    }
 }
