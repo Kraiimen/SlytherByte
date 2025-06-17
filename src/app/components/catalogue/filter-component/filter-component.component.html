@@ -2,14 +2,20 @@
     <input type="text" placeholder="Search Game" formControlName="title">
     <div>
         <h2>Sort By</h2>
-
-        <label>
-            <input type="radio" formControlName="sorts" value="alphabetical" name="sorts">Alphabetical
-        </label>
-        
-        <label>
-            <input type="radio" formControlName="sorts" value="date" name="sorts">Release date
-        </label>    
+        <ul>
+            <li>
+                <label>
+                    <input type="radio" formControlName="sorts" value="alphabetical" name="sorts">
+                    <span>Alphabetical</span>
+                </label>
+            </li>
+            <li>
+                <label>
+                    <input type="radio" formControlName="sorts" value="date" name="sorts">
+                    <span>Release date</span>
+                </label>  
+            </li>
+        </ul>
     </div>
 
     <div>

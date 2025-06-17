@@ -1,9 +1,5 @@
 :host {
-    display: block;
     height: 100%;
+    display: grid;
 }
 
-div {
-    height: 100%;
-    display: flex;
-}
