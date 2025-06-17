@@ -74,6 +74,20 @@ form > input {
 ul {
     list-style: none;
     cursor: pointer;
+
+    > li > p {
+        &:hover {
+            color: #588157;
+        }
+    }
+}
+
+div > label {
+    margin: .5rem 1rem;
+
+    > span {
+        height: fit-content;
+    }
 }
 
 li > label > input {
@@ -87,11 +101,11 @@ li > label > span {
     cursor: pointer;
 
     &:hover {
-        opacity: .8;
+        color: #588157;
     }
 }
 li > label > input:checked + span {
-    color: #7f5af0;
+    color: #588157;
 }
 
 
