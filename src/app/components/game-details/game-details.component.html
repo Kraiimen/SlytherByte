@@ -4,3 +4,39 @@
     <p>Release Date: {{gameDetails.releaseDate}}</p>
     <p>Summary: {{gameDetails.summary}}</p>
 }
+@if(languages){
+    <div>
+        <h3>Languages:</h3>
+        @for (l of languages; track l.languageId) {
+            <p>{{l.name}}</p>
+        }
+
+        <h3>Developers:</h3>
+        @for (d of developers; track d.developerId) {
+            <p>{{d.name}}</p>
+        }
+
+        <h3>Platforms:</h3>
+        @for (p of platforms; track p.platformId) {
+            <p>{{p.name}}</p>
+        }
+
+        <h3>Publishers:</h3>
+        @for (p of publishers; track p.publisherId) {
+            <p>{{p.name}}</p>
+        }
+
+        <h3>Stores:</h3>
+        @for (s of stores; track s.storeId) {
+            <img src="{{s.iconUrl}}" alt="Store Icon">
+            <a href="{{s.siteUrl}}">{{s.name}}</a>
+        }
+
+        <h3>Tags:</h3>
+        @for (t of tags; track t.tagId) {
+            <p>{{t.name}}</p>
+        }
+
+
+    </div>
+}

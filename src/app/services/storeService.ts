@@ -14,4 +14,8 @@ export class StoreService{
     getStores(): Observable<Store[]>{
         return this._http.get<Store[]>(this._url);
     }
+
+    getStoresByGameId(id: number): Observable<Store[]>{
+        return this._http.get<Store[]>(`${this._url}/by-game/${id}`);
+    }
 }

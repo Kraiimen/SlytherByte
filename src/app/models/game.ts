@@ -5,4 +5,10 @@ export interface Game{
     releaseDate: string;
     summary: string;
     franchiseId: number;
+    publishers: string[],
+    platforms: string[],
+    developers: string[],
+    stores: string[],
+    tags: string[],
+    languages: string[]
 }

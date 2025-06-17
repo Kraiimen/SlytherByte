@@ -15,4 +15,8 @@ export class LanguageService{
         return this._http.get<Language[]>(this._url);
     }
 
+    getLanguagesByGameId(id: number): Observable<Language[]>{
+        return this._http.get<Language[]>(`${this._url}/by-game/${id}`)
+    }
+
 }

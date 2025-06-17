@@ -15,4 +15,8 @@ export class PublisherService{
         return this._http.get<Publisher[]>(this._url);
     }
 
+    getPublishersByGameId(id: number): Observable<Publisher[]>{
+        return this._http.get<Publisher[]>(`${this._url}/by-game/${id}`);
+    }
+
 }
