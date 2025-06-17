@@ -3,25 +3,20 @@
         <h4>Games</h4>
         <ul class="games">
             <li>
-                <button (click)="navigateTo('playing')">Playing</button>
+                <button (click)="navigateToUserGames('playing')">Playing</button>
             </li>
             <li>
-                <button (click)="navigateTo('beaten')">Beaten</button>
+                <button (click)="navigateToUserGames('beaten')">Beaten</button>
             </li>
             <li>
-                <button (click)="navigateTo('archived')">Archived</button>
+                <button (click)="navigateToUserGames('archived')">Archived</button>
             </li>
         </ul>
     </div>
     <div>
-        <h4>Collections</h4>
-        <ul>
-            <!-- for per caircare i nomi delle collections -->
-        </ul>
+        <button (click)="navigateTo('collections')">Collections</button>
     </div>
     <div>
-    <ul>
-        <button (click)="navigateToReviews()"><h4>Reviews</h4></button>
-    </ul>
+        <button (click)="navigateTo('reviews')">Reviews</button>
     </div>
 </nav>

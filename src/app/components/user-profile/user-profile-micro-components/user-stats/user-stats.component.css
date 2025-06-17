@@ -3,4 +3,31 @@
     font-family: "Orbitron", sans-serif;
     font-size: larger;
     line-height: 3rem;
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+    }
+}
+
+.tags {
+    > div {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    > div > p {
+        background-color: #242629;
+        width: fit-content;
+        height: fit-content;
+        padding: 0 1rem;
+        border-radius: 20px;
+        font-size: medium;
+    }
+}
+
+span {
+    margin-left: .5rem;
 }

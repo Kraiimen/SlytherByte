@@ -22,6 +22,10 @@ export class UserGameService {
         return this._http.get<UserGame>(`${this._url}/${id}`);
     }
 
+    getUserGameByReviewId(id: number): Observable<UserGame>{
+        return this._http.get<UserGame>(`${this._url}/by-review/${id}`);
+    }
+
     createUserGame(userGame: Partial<UserGame>):Observable<UserGame> {
         return this._http.post<UserGame>(this._url, userGame);
     }
@@ -30,7 +34,7 @@ export class UserGameService {
         return this._http.put<UserGame>(`${this._url}/${id}`, userGame);
     }
 
-    deleteUserGane(id: number): Observable<UserGame>{
+    deleteUserGame(id: number): Observable<UserGame>{
         return this._http.delete<UserGame>(`${this._url}/${id}`);
     }
 

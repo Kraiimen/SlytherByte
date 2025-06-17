@@ -121,6 +121,19 @@ export class FilterComponentComponent implements OnInit{
     return s.replace(".", "_");
   }
 
+  resetFilters(){
+    this.filtersForm.reset({
+      title:"",
+      sorts: "",
+      platforms: [],
+      publishers: [],
+      stores: [],
+      developers: [],
+      languages: [],
+      tags: []
+    })
+  }
+
 
   toggleSideMenu() {
     this.isSideMenuOpen = !this.isSideMenuOpen;

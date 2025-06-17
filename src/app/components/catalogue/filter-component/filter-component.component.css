@@ -71,9 +71,47 @@ form > input {
     }
 }
 
+form > div:last-of-type  {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > button {
+        width: 10rem;
+        height: 3rem;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        
+        font-family: "Orbitron", sans-serif;
+        font-weight: 500;
+        background-color: rgb(170, 6, 6);
+        color: #fffffe;
+
+        &:hover {
+            background-color: rgb(170, 6, 6, 0.8);
+        }
+    }
+}
+
 ul {
     list-style: none;
     cursor: pointer;
+
+    > li > p {
+        &:hover {
+            color: #588157;
+        }
+    }
+}
+
+div > label {
+    margin: .5rem 1rem;
+
+    > span {
+        height: fit-content;
+    }
 }
 
 li > label > input {
@@ -87,11 +125,11 @@ li > label > span {
     cursor: pointer;
 
     &:hover {
-        opacity: .8;
+        color: #588157;
     }
 }
 li > label > input:checked + span {
-    color: #7f5af0;
+    color: #588157;
 }
 
 

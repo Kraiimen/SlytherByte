@@ -12,11 +12,11 @@ import { UserGame } from '../../../models/userGame';
 export class UserProfileSideBarComponent {
   private _router = inject(Router);
 
-  navigateTo(status: string) {
+  navigateToUserGames(status: string) {
     this._router.navigate(['/app/user-profile/user-games', status]);
   }
 
-  navigateToReviews() {
-    this._router.navigate(['/app/user-profile/reviews']);
+  navigateTo(route: string) {
+    this._router.navigate(['/app/user-profile/'+route]);
   }
 }

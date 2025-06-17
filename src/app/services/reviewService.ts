@@ -15,6 +15,10 @@ export class ReviewService {
         return this._http.get<Review[]>(this._url);
     }
 
+    getAllForLoggedUser(): Observable<Review[]> {
+        return this._http.get<Review[]>(`${this._url}/logged-user`);
+    } 
+
     getReviewById(id: number): Observable<Review> {
         return this._http.get<Review>(`this._url/${id}`);
     }

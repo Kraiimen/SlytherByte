@@ -1,2 +1,8 @@
 <app-filter-component (filtersChanged)="onFiltersChanged($event)"></app-filter-component>
-<app-catalogue-content [games]="games"></app-catalogue-content>
+<app-catalogue-content [games]="games" (selectGame)="getGameDetails($event)"></app-catalogue-content>
+@if (showDetails) {
+    <div class="backdrop" (click)="hideDetails()"></div>
+    <app-game-details [gameDetails]="game" [developers]="developers"  [languages]="languages" [platforms]="platforms"
+                  [publishers]="publishers" [stores]="stores" [tags]="tags" (toggleDetails)="showDetails=$event"
+></app-game-details>
+}

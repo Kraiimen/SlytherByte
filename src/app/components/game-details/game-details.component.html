@@ -1,0 +1,77 @@
+<div class="close-button" (click)="hideDetails()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fffffe">
+        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+    </svg>
+</div>
+@if(gameDetails != null){
+    <div class="info">
+        <div>
+            <img [src]="gameDetails.coverImageUrl" alt="Game Image">
+            <h2>{{gameDetails.title}}</h2>
+            <p>{{gameDetails.releaseDate}}</p>
+            <p>{{gameDetails.summary}}</p>
+        </div>
+
+        <div>
+            <h3>Tags</h3>
+            <div>
+                @for (t of tags; track t.tagId) {
+                    <p>{{t.name}}</p>
+                }
+            </div>
+        </div>
+
+        <div class="buttons">
+            <div>
+                <button>Add to profile</button>
+            </div>
+            <div>
+                <button>Add to collection</button>
+            </div>
+        </div>
+    </div>
+}
+<div class="details">
+    <div>
+        <h3>Languages</h3>
+        <div>
+            @for (l of languages; track l.languageId) {
+                <p>{{l.name}}</p>
+            }
+        </div>
+    </div>
+    <div>
+        <h3>Developers</h3>
+        <div>
+            @for (d of developers; track d.developerId) {
+            <p>{{d.name}}</p>
+            }
+        </div>
+    </div>
+    <div>
+        <h3>Platforms</h3>
+        <div>
+            @for (p of platforms; track p.platformId) {
+                <p>{{p.name}}</p>
+            }
+        </div>
+    </div>
+    <div>
+        <h3>Publishers</h3>
+        <div>
+            @for (p of publishers; track p.publisherId) {
+                <p>{{p.name}}</p>
+            }
+        </div>
+    </div>
+    <div>
+        <h3>Stores</h3>
+        <div>
+            @for (s of stores; track s.storeId) {
+                <a href="{{s.siteUrl}}">
+                    <img src="{{s.iconUrl}}" alt="Store Icon">
+                </a>
+            }
+        </div>
+    </div>
+</div>
