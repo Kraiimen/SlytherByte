@@ -123,6 +123,8 @@ export class FilterComponentComponent implements OnInit{
 
   resetFilters(){
     this.filtersForm.reset({
+      title:"",
+      sorts: "",
       platforms: [],
       publishers: [],
       stores: [],
