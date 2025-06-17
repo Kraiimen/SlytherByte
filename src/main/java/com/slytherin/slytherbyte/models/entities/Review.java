@@ -56,6 +56,10 @@ public class Review {
         return date;
     }
 
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public UserProfile getUserProfile() {
         return userProfile;
     }
