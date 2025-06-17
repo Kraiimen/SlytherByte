@@ -15,4 +15,8 @@ export class TagService{
         return this._http.get<Tag[]>(this._url);
     }
 
+    getTagsByGameId(id: number): Observable<Tag[]>{
+        return this._http.get<Tag[]>(`${this._url}/by-game/${id}`);
+    }
+
 } 
