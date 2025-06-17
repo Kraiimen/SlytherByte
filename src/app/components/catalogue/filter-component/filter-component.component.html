@@ -110,6 +110,9 @@
     <div>
         <button type="submit">Search</button>
     </div>
+    <div>
+        <button (click)="resetFilters()">Reset Filters</button>
+    </div>
 </form>
 <div class="side-menu-button" (click)="toggleSideMenu()">
     @if (isSideMenuOpen) {
