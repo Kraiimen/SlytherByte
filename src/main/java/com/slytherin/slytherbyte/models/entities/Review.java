@@ -1,6 +1,8 @@
 package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 import java.time.LocalDate;
 
@@ -26,18 +28,23 @@ public class Review {
     @JoinColumn(name = "game_id")
     private Game game;
 
+    @Min(1)
+    @Max(10)
+    private int rating;
+
     @OneToOne(mappedBy = "review")
     private UserGame userGame;
 
     public Review(){}
 
-    public Review(int reviewId, String title, String description, LocalDate date, UserProfile userProfile, Game game){
+    public Review(int reviewId, String title, String description, LocalDate date, UserProfile userProfile, Game game, int rating) {
         this.reviewId = reviewId;
         this.title = title;
         this.description = description;
         this.date = date;
         this.userProfile = userProfile;
         this.game = game;
+        this.rating = rating;
     }
 
     public int getReviewId() {
@@ -73,5 +80,9 @@ public class Review {
     }
     public void setGame(Game game){
         this.game = game;
+    }
+
+    public int getRating() {
+        return rating;
     }
 }

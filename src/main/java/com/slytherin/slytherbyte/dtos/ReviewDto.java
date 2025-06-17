@@ -7,13 +7,14 @@ import org.apache.catalina.User;
 
 import java.time.LocalDate;
 
-public record ReviewDto(int reviewId, String title, String description, LocalDate date, int userProfileId, int gameId) {
+public record ReviewDto(int reviewId, String title, String description, LocalDate date, int userProfileId, int gameId, int rating) {
 
     public static ReviewDto toDto(Review review){
-        return new ReviewDto(review.getReviewId(), review.getTitle(), review.getDescription(), review.getDate(), review.getUserProfile().getUserProfileId(), review.getGame().getGameId());
+        return new ReviewDto(review.getReviewId(), review.getTitle(), review.getDescription(), review.getDate(),
+                review.getUserProfile().getUserProfileId(), review.getGame().getGameId(), review.getRating());
     }
 
     public Review toEntity(){
-        return new Review(this.reviewId, this.title, this.description, this.date, null, null);
+        return new Review(this.reviewId, this.title, this.description, this.date, null, null, this.rating);
     }
 }
