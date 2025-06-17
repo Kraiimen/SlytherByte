@@ -9,16 +9,13 @@ import com.slytherin.slytherbyte.models.request.AuthenticationRequest;
 import com.slytherin.slytherbyte.models.request.RegisterRequest;
 import com.slytherin.slytherbyte.models.response.AuthenticationResponse;
 import com.slytherin.slytherbyte.models.services.security.JwtService;
-import org.apache.catalina.User;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -110,7 +107,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             errors.put("length", "Username must be between 1 and 16 characters");
         }
 
-        if (userAccountRepo.findByUsername(username).isPresent()) {
+        if (userAccountRepo.findByUsernameAccount(username).isPresent()) {
             errors.put("taken", "Username is already taken");
         }
 
