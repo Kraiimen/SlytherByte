@@ -6,6 +6,7 @@ import { MainContainerComponent } from './components/main-container/main-contain
 import { ExpiredSessionComponent } from './components/expired-session/expired-session.component';
 import { UserGamesComponent } from './components/user-profile/user-games/user-games.component';
 import { UserProfileContentComponent } from './components/user-profile/user-profile-content/user-profile-content.component';
+import { ReviewComponent } from './components/user-profile/review/review.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'auth', pathMatch: 'full' },
@@ -21,7 +22,8 @@ export const routes: Routes = [
                 path: 'user-profile', component: UserProfileComponent,
                 children: [
                     { path: '', component: UserProfileContentComponent, pathMatch: 'full' },
-                    { path: 'user-games/:status', component: UserGamesComponent }
+                    { path: 'user-games/:status', component: UserGamesComponent },
+                    {path: 'reviews', component: ReviewComponent}
                 ]
             },
         ]
