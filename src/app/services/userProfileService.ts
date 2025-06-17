@@ -29,9 +29,7 @@ export class UserProfileService {
     }
 
     updateUserProfile(userProfile: UserProfile): Observable<UserProfile> {
-        return this.http.put<UserProfile>(this._url, userProfile);
+        return this.http.put<UserProfile>(`${this._url}/${userProfile.userProfileId}`, userProfile);
     }
-
-
 
 }

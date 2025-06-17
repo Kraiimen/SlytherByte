@@ -24,7 +24,7 @@ export class ReviewService {
     }
 
     updateReview(review: Partial<Review>, reviewid: number): Observable<Review>{
-        return this._http.put<Review>(`this._url/${reviewid}`, review);
+        return this._http.put<Review>(`${this._url}/${reviewid}`, review);
     }
 
     deleteReview(reviewId: number): Observable<void>{

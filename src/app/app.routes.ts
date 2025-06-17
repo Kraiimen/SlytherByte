@@ -23,7 +23,7 @@ export const routes: Routes = [
                 children: [
                     { path: '', component: UserProfileContentComponent, pathMatch: 'full' },
                     { path: 'user-games/:status', component: UserGamesComponent },
-                    {path: 'reviews', component: ReviewComponent}
+                    { path: 'reviews', component: ReviewComponent }
                 ]
             },
         ]

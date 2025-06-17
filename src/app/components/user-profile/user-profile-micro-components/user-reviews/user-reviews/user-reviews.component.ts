@@ -13,8 +13,6 @@ export class UserReviewsComponent implements OnInit{
   reviews!: Review[];
   private _reviewService = inject(ReviewService);
   private _route = inject(ActivatedRoute);
-
-  constructor(){}
   
   ngOnInit(): void {
     this._reviewService.getAll().subscribe({
