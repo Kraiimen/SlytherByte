@@ -20,6 +20,11 @@ export class NavBarComponent implements OnInit {
     });
   }
 
+  logout() {
+    this._dataService.clearData();
+    localStorage.removeItem('token');
+  }
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
