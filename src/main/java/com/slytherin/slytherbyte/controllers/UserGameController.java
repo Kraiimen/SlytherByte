@@ -44,6 +44,13 @@ public class UserGameController {
         return ResponseEntity.ok(ugDto);
     }
 
+    @GetMapping("/by-review/{id}")
+    public ResponseEntity<UserGameDto> getByReviewId(@PathVariable("id") int reviewId) throws DataException, EntityNotFoundException {
+        UserGame ug = userGameService.findUserGameByReviewId(reviewId);
+        UserGameDto ugDto = UserGameDto.toDto(ug);
+        return ResponseEntity.ok(ugDto);
+    }
+
     @PostMapping
     public ResponseEntity<UserGameDto> createUserGame(@RequestBody UserGameDto userGameDto) throws DataException, EntityNotFoundException {
         UserGame userGame = userGameDto.toEntity();

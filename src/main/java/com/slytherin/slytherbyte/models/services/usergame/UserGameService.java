@@ -21,4 +21,5 @@ public interface UserGameService {
     int countUserReviews() throws DataException;
     List<UserGame> findUserGamesByStatus(String status) throws DataException;
     List<UserGame> findRecentlyBeaten() throws DataException;
+    UserGame findUserGameByReviewId(int reviewId) throws DataException, EntityNotFoundException;
 }

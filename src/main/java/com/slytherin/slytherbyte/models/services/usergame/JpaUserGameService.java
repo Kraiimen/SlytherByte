@@ -193,7 +193,21 @@ public class JpaUserGameService implements UserGameService {
         try {
             return userGameRepo.findUserGamesByCompletionDate();
         } catch (PersistenceException persistenceException){
-            throw new DataException("Cannot find recently played", persistenceException);
+            throw new DataException("Cannot find recently beaten", persistenceException);
+        }
+    }
+
+    @Override
+    public UserGame findUserGameByReviewId(int reviewId) throws DataException, EntityNotFoundException {
+        try {
+            if(!reviewRepo.existsById(reviewId)) {
+                throw new EntityNotFoundException(Review.class, reviewId);
+            }
+
+            return userGameRepo.findByReviewId(reviewId)
+                    .orElseThrow(() -> new DataException("Cannot find user game by review id "+reviewId));
+        } catch (PersistenceException persistenceException){
+            throw new DataException("Cannot find user game by review id "+reviewId, persistenceException);
         }
     }
 }

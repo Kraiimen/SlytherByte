@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface JpaUserGameRepository extends JpaRepository<UserGame, Integer> {
     @Query("SELECT ug FROM UserGame ug WHERE LOWER(status)=LOWER(:status)")
@@ -13,4 +14,7 @@ public interface JpaUserGameRepository extends JpaRepository<UserGame, Integer> 
 
     @Query("SELECT ug FROM UserGame ug ORDER BY completionDate DESC LIMIT 2")
     List<UserGame> findUserGamesByCompletionDate();
+
+    @Query("SELECT ug FROM UserGame ug WHERE review.reviewId = :reviewId")
+    Optional<UserGame> findByReviewId(int reviewId);
 }
