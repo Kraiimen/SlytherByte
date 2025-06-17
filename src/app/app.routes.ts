@@ -14,7 +14,7 @@ export const routes: Routes = [
         path: 'app',
         component: MainContainerComponent,
         children: [
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: '', redirectTo: 'catalogue', pathMatch: 'full' },
             { path: 'expired-session', component: ExpiredSessionComponent },
             { path: 'catalogue', component: CatalogueMainComponent },
             {
