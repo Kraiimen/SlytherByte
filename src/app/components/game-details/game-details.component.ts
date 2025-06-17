@@ -1,7 +1,5 @@
-import { Component, inject, Input } from '@angular/core';
-import { GameDetails } from '../../models/gameDetails';
-import { GameService } from '../../services/gameService';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, HostBinding, inject, Input, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Language } from '../../models/language';
 import { Game } from '../../models/game';
 import { Developer } from '../../models/developer';
@@ -17,9 +15,9 @@ import { Tag } from '../../models/tag';
   styleUrl: './game-details.component.css'
 })
 export class GameDetailsComponent {
-  private _gameService = inject(GameService);
+  private _router = inject(Router);
   private _route = inject(ActivatedRoute);
-  
+  @Output() toggleDetails = new EventEmitter<boolean>();
   @Input() gameDetails!: Game;
   @Input() developers!: Developer[];
   @Input() languages!: Language[];
@@ -27,6 +25,11 @@ export class GameDetailsComponent {
   @Input() publishers!: Publisher[];
   @Input() stores!: Store[];
   @Input() tags!: Tag[];
+
+  hideDetails() {
+    this.toggleDetails.emit(false);
+    document.body.classList.remove('modal-open');
+  }
 }
   
 

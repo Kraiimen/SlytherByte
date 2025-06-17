@@ -5,7 +5,7 @@ import { ReviewComponent } from '../../../../review/review.component';
 
 @Component({
   selector: 'app-user-reviews',
-  imports: [ReviewComponent],
+  imports: [],
   templateUrl: './user-reviews.component.html',
   styleUrl: './user-reviews.component.css'
 })

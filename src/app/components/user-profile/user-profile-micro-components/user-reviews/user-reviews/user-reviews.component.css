@@ -1,4 +1,17 @@
-:host {
+.no-reviews {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: .6;
+
+    svg {
+        width: 10rem;
+    }
+}
+
+.reviews {
     margin: 5rem;
     display: flex;
     flex-wrap: wrap;

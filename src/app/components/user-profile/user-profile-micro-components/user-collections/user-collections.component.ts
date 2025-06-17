@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './user-collections.component.css'
 })
 export class UserCollectionsComponent {
-
+  
 }

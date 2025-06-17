@@ -4,10 +4,15 @@
     justify-content: space-between;
     width: 26rem;
     height: 15rem;
-    background-color: #242629;
     padding: 1rem 1.5rem;
     border-radius: 10px;
     font-size: larger;
+}
+:host(.review-section) {
+    background-color: #242629;
+}
+:host(.profile-section) {
+    background-color: #16161a;
 }
 
 div:has(> svg) {

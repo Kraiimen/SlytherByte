@@ -23,11 +23,11 @@ export const routes: Routes = [
             { path: 'catalogue', component: CatalogueMainComponent },
             { path: 'game-details/:id', component: GameDetailsComponent},
             {
-                path: 'user-profile', component: UserProfileComponent,
+                path: 'user-profile', component: UserProfileComponent, data: { bgType: 'profile-section' },
                 children: [
                     { path: '', component: UserProfileContentComponent, pathMatch: 'full' },
                     { path: 'user-games/:status', component: UserGamesComponent },
-                    { path: 'reviews', component: UserReviewsComponent },
+                    { path: 'reviews', component: UserReviewsComponent, data: { bgType: 'review-section' } },
                     { path: 'collections', component: UserCollectionsComponent }
                 ]
             },

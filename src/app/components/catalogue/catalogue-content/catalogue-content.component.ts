@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Game } from '../../../models/game';
 
@@ -11,7 +11,7 @@ import { Game } from '../../../models/game';
 })
 export class CatalogueContentComponent {
   @Input() games!: Game[];
-  @Output() selectGame = new EventEmitter<number>()
+  @Output() selectGame = new EventEmitter<number>();
 
   chooseGame(gameId: number){
     this.selectGame.emit(gameId);

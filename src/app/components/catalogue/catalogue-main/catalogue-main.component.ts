@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostBinding, inject } from '@angular/core';
 import { GameService } from '../../../services/gameService';
 import { Filter } from '../../../models/filter';
 import { Game } from '../../../models/game';
@@ -33,8 +33,6 @@ export class CatalogueMainComponent {
   private _publisherService = inject(PublisherService);
   private _storeService = inject(StoreService);
   private _tagService = inject(TagService);
- 
-
   games: Game[] = [];
   game!: Game;
   developers: Developer[] = [];
@@ -43,10 +41,9 @@ export class CatalogueMainComponent {
   publishers: Publisher[] = [];
   stores: Store[] = [];
   tags: Tag[] = [];
-  
+  showDetails: boolean = false;
 
   ngOnInit(){
-
     this._gameService.getAllGames().subscribe({
       next: games => this.games = games,
       error: e => console.log("Service not found")
@@ -61,6 +58,7 @@ export class CatalogueMainComponent {
   }
 
   getGameDetails(gameId: number){
+    document.body.classList.add('modal-open');
     forkJoin([this._gameService.findGameById(gameId), this._developerService.getDevelopersByGameId(gameId), this._languageService.getLanguagesByGameId(gameId),
               this._platformService.getPlatformsByGameId(gameId), this._publisherService.getPublishersByGameId(gameId), this._storeService.getStoresByGameId(gameId),
               this._tagService.getTagsByGameId(gameId)])
@@ -73,8 +71,14 @@ export class CatalogueMainComponent {
               this.publishers = result[4];
               this.stores = result[5];
               this.tags = result[6];
+              this.showDetails = true;
             },
             error: e => console.log("Fork Join error" + e)
           });
+  }
+
+  hideDetails() {
+    this.showDetails = false;
+    document.body.classList.remove('modal-open');
   }
 }
