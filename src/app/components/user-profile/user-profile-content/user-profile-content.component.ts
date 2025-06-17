@@ -6,7 +6,7 @@ import { UserProfileService } from '../../../services/userProfileService';
 
 @Component({
   selector: 'app-user-profile-content',
-  imports: [UserStatsComponent, UserReviewsComponent],
+  imports: [UserStatsComponent],
   templateUrl: './user-profile-content.component.html',
   styleUrl: './user-profile-content.component.css'
 })

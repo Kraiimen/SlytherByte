@@ -18,6 +18,10 @@ export class UserGameService {
         return this._http.get<UserGame[]>(`${this._url}?status=`+status);
     }
 
+    getAllByStatusForLoggedUser(status: string): Observable<UserGame[]>{
+        return this._http.get<UserGame[]>(`${this._url}/logged-user?status=`+status);
+    }
+
     getUserGameById(id: number): Observable<UserGame>{
         return this._http.get<UserGame>(`${this._url}/${id}`);
     }
