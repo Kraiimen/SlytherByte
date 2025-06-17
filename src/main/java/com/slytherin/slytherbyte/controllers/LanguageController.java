@@ -2,13 +2,11 @@ package com.slytherin.slytherbyte.controllers;
 
 import com.slytherin.slytherbyte.dtos.LanguageDto;
 import com.slytherin.slytherbyte.models.entities.Language;
+import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.services.language.LanguageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,10 +22,16 @@ public class LanguageController {
     }
 
     @GetMapping
-    ResponseEntity<List<LanguageDto>> findAll(){
+    ResponseEntity<List<LanguageDto>> findAll() throws DataException {
         List<Language> languages = languageService.findAllLanguages();
         var dtos = languages.stream().map(LanguageDto::toDto).toList();
         return ResponseEntity.ok(dtos);
+    }
 
+    @GetMapping("/by-game/{id}")
+    ResponseEntity<List<LanguageDto>> searchLanguagesBYGameId(@PathVariable Integer id) throws DataException {
+        List<Language> languages = languageService.findLanguagesByGameId(id);
+        var dtos = languages.stream().map(LanguageDto::toDto).toList();
+        return ResponseEntity.ok(dtos);
     }
 }

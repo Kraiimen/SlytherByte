@@ -98,21 +98,13 @@ public class JpaGameRepositoryCustomImpl implements JpaGameRepositoryCustom {
 
         query.select(root).where(criteriaBuilder.and(queryFilters.toArray(new Predicate[0])));
 
-        if (filters.isSortedByName() != null) {
-            if (!filters.isSortedByName()) {
-                query.orderBy(criteriaBuilder.asc(root.get("title")));
-            } else {
-                query.orderBy(criteriaBuilder.desc(root.get("title")));
-            }
-        }
 
-        if (filters.isSortedByDate() != null) {
-            if (!filters.isSortedByDate()) {
-                query.orderBy(criteriaBuilder.asc(root.get("releaseDate")));
-            } else {
-                query.orderBy(criteriaBuilder.desc(root.get("releaseDate")));
+            if (filters.isSortedByName()) {
+                query.orderBy(criteriaBuilder.asc(root.get("title")));
             }
-        }
+            if (filters.isSortedByDate()) {
+                query.orderBy(criteriaBuilder.asc(root.get("releaseDate")));
+            }
 
         return entityManager.createQuery(query).getResultList();
     }

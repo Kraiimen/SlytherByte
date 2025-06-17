@@ -38,8 +38,6 @@ public class GameRestController {
         return ResponseEntity.ok(GameDto.toDto(foundGame));
     }
 
-
-
     @PostMapping("/filters")
     public ResponseEntity<List<GameDto>> findGames(@RequestBody GameFilterCriteria filters) throws DataException {
         List<Game> games = gameService.findGameByFilters(filters);

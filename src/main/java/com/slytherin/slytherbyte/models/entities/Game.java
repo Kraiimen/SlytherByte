@@ -91,6 +91,26 @@ public class Game {
         this.franchise = franchise;
     }
 
+//    public Game(int gameId, String coverImageUrl, String title,
+//                LocalDate releaseDate, String summary, Franchise franchise,
+//                List<Review> reviews, List<Platform> platforms, List<Store> stores,
+//                List<Developer> developers, List<Publisher> publishers, List<Tag> tags,
+//                List<Language> languages) {
+//        this.gameId = gameId;
+//        this.coverImageUrl = coverImageUrl;
+//        this.title = title;
+//        this.releaseDate = releaseDate;
+//        this.summary = summary;
+//        this.franchise = franchise;
+//        this.reviews = reviews;
+//        this.platforms = platforms;
+//        this.stores = stores;
+//        this.developers = developers;
+//        this.publishers = publishers;
+//        this.tags = tags;
+//        this.languages = languages;
+//    }
+
     public int getGameId() {
         return gameId;
     }
@@ -117,6 +137,30 @@ public class Game {
 
     public String getCoverImageUrl() {
         return coverImageUrl;
+    }
+
+    public List<Platform> getPlatforms() {
+        return platforms;
+    }
+
+    public List<Store> getStores() {
+        return stores;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public List<Publisher> getPublishers() {
+        return publishers;
+    }
+
+    public List<Developer> getDevelopers() {
+        return developers;
+    }
+
+    public List<Language> getLanguages() {
+        return languages;
     }
 
     public void setGameId(int gameId) {

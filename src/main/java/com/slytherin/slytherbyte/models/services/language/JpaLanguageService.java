@@ -1,6 +1,7 @@
 package com.slytherin.slytherbyte.models.services.language;
 
 import com.slytherin.slytherbyte.models.entities.Language;
+import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.repositories.language.JpaLanguageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,12 @@ public class JpaLanguageService implements LanguageService{
     }
 
     @Override
-    public List<Language> findAllLanguages() {
+    public List<Language> findAllLanguages() throws DataException{
         return languageRepo.findAll();
+    }
+
+    @Override
+    public List<Language> findLanguagesByGameId(int id) throws DataException {
+        return languageRepo.getLanguagesByGameId(id);
     }
 }

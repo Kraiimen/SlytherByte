@@ -2,6 +2,9 @@ package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "publisher")
 public class Publisher {
@@ -11,6 +14,9 @@ public class Publisher {
     private int publisherId;
 
     private String name;
+
+    @ManyToMany(mappedBy = "publishers")
+    List<Game> games = new ArrayList<>();
 
     public Publisher() {
     }

@@ -3,11 +3,18 @@ package com.slytherin.slytherbyte.models.services.game;
 import com.slytherin.slytherbyte.models.entities.*;
 import com.slytherin.slytherbyte.models.exceptions.DataException;
 import com.slytherin.slytherbyte.models.exceptions.EntityNotFoundException;
+import com.slytherin.slytherbyte.models.repositories.developer.JpaDeveloperRepository;
 import com.slytherin.slytherbyte.models.repositories.franchise.JpaFranchiseRepository;
 import com.slytherin.slytherbyte.models.repositories.game.JpaGameRepository;
+import com.slytherin.slytherbyte.models.repositories.language.JpaLanguageRepository;
+import com.slytherin.slytherbyte.models.repositories.platform.JpaPlatformRepository;
+import com.slytherin.slytherbyte.models.repositories.publisher.JpaPublisherRepository;
 import com.slytherin.slytherbyte.models.repositories.searchcriteria.GameFilterCriteria;
+import com.slytherin.slytherbyte.models.repositories.store.JpaStoreRepository;
+import com.slytherin.slytherbyte.models.repositories.tag.JpaTagRepository;
 import jakarta.persistence.PersistenceException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,12 +24,26 @@ import java.util.Optional;
 public class JpaGameService implements GameService {
     private JpaGameRepository gameRepo;
     private JpaFranchiseRepository franchiseRepo;
+    private JpaPlatformRepository platformRepo;
+    private JpaPublisherRepository publisherRepo;
+    private JpaStoreRepository storeRepo;
+    private JpaDeveloperRepository developerRepo;
+    private JpaLanguageRepository languageRepo;
+    private JpaTagRepository tagRepo;
 
-    public JpaGameService(JpaGameRepository gameRepo, JpaFranchiseRepository franchiseRepo) {
+    @Autowired
+    public JpaGameService(JpaGameRepository gameRepo, JpaFranchiseRepository franchiseRepo, JpaPlatformRepository platformRepo,
+                          JpaPublisherRepository publisherRepo, JpaStoreRepository storeRepo, JpaDeveloperRepository developerRepo,
+                          JpaLanguageRepository languageRepo, JpaTagRepository tagRepo) {
         this.gameRepo = gameRepo;
         this.franchiseRepo = franchiseRepo;
+        this.platformRepo = platformRepo;
+        this.publisherRepo = publisherRepo;
+        this.storeRepo = storeRepo;
+        this.developerRepo = developerRepo;
+        this.languageRepo = languageRepo;
+        this.tagRepo = tagRepo;
     }
-
 
     @Override
     public Game findGameById(int id) throws DataException, EntityNotFoundException {
@@ -37,6 +58,8 @@ public class JpaGameService implements GameService {
         }
 
     }
+
+
 
     @Override
     public List<Game> findAllGames() throws DataException {

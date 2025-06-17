@@ -2,6 +2,9 @@ package com.slytherin.slytherbyte.models.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "store")
 public class Store {
@@ -18,6 +21,9 @@ public class Store {
 
     @Column(name = "site_url")
     private String siteUrl;
+
+    @ManyToMany(mappedBy = "stores")
+    List<Game> games = new ArrayList<>();
 
     public Store() {
     }
