@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Review } from '../../../models/review';
 import { ReviewService } from '../../../services/reviewService';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-review',
@@ -13,6 +13,7 @@ export class ReviewComponent {
   review!: Review;
   private _reviewService = inject(ReviewService);
   private _route = inject(ActivatedRoute);
+  private _router = inject(Router);
 
   ngOnInit(): void {
     const reviewId = Number(this._route.snapshot.paramMap.get('id'));
@@ -21,5 +22,9 @@ export class ReviewComponent {
         next: (data) => this.review = data,
         error: e => console.log('Error getting a review', e)
       });
+  }
+
+  onSumbit() {
+    this._router.navigate(["/add-review"]);
   }
 }
