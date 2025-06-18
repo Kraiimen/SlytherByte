@@ -134,7 +134,7 @@
         <div class="reviews">
             <h2>Reviews</h2>
             @for (r of reviews; track r.reviewId; let i = $index) {
-                <app-review [review]="r" [game]="gameDetails" [userGame]="userGames[i]"></app-review>
+                <app-review [review]="r" [game]="gameDetails"></app-review>
             }
         </div>
     }

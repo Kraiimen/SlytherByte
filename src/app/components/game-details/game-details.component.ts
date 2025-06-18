@@ -47,7 +47,6 @@ export class GameDetailsComponent implements OnInit {
   @Input() gameId!: number;
   gameDetails!: Game;
   userGame!: UserGame;
-  userGames!: UserGame[];
   developers: Developer[] = [];
   languages: Language[] = [];
   platforms: Platform[] = [];
@@ -74,8 +73,8 @@ export class GameDetailsComponent implements OnInit {
     this.resetStatusVariables();
     this.getGameDetails(this.gameId);   
     this.checkIfGameIsInStatus();
+    this.checkIfGameIsInUserGames();
     this.loadReviews();
-    this.loadUserGames();
   }
 
   getGameDetails(gameId: number){
@@ -122,21 +121,11 @@ export class GameDetailsComponent implements OnInit {
     
       this._userGameService.createUserGameForLoggedUser(userGame).subscribe({
       next: ug => {
+        this.checkIfGameIsInUserGames();
         console.log('Game added to profile in status ' + status);
         console.log(ug);
       },
       error: e => console.log(e)
-    });
-
-    this.checkIfGameIsInUserGames();
-  }
-
-  loadUserGames() {
-    this.reviews.forEach(r => {
-      this._userGameService.getUserGameByReviewId(r.reviewId).subscribe({
-        next: ug => this.userGames.push(ug),
-        error: e => console.log(e)
-      });
     });
   }
 
