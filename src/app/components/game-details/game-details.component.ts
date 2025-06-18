@@ -53,7 +53,7 @@ export class GameDetailsComponent implements OnInit {
   @ViewChild('sliderMain', {static: false}) sliderMain!: ElementRef<HTMLDivElement>;
   isAddProfileOpen = false;
   areThereCollections = false;
-  userGame!: UserGame;
+  userGame: Partial<UserGame> = {};
   
   getGameDetails(gameId: number){
     document.body.classList.add('modal-open');
@@ -92,7 +92,8 @@ export class GameDetailsComponent implements OnInit {
   }
 
   addGameTo(stauts: string) {
-    this.userGame.gameId = this.gameId;
+    this.userGame.gameId = this.gameDetails.gameId;
+    this.userGame.status = stauts;
     this._userGameService.createUserGameForLoggedUser(this.userGame).subscribe({
       next: ug => {
         console.log('Game added to profile');
