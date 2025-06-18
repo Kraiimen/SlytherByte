@@ -11,6 +11,10 @@ export class ReviewService {
     private _url: string = 'http://localhost:8080/api/reviews';
     private _http = inject(HttpClient);
 
+    getLatestReviews(): Observable<Review[]> {
+        return this._http.get<Review[]>(`${this._url}/recent`);
+    }
+
     getAll(): Observable<Review[]> {
         return this._http.get<Review[]>(this._url);
     }

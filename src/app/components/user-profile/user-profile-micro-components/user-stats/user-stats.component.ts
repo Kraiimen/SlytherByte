@@ -36,17 +36,18 @@ export class UserStatsComponent implements OnInit{
     this.loading = true;
     this.errorMessage = null;
 
-    forkJoin([this._userStatsService.getTop5Tags(), this._userStatsService.getNumberGamesOwned(),
-      this._userStatsService.getNumberGamesPlaying(), this._userStatsService.getNumberGamesBeaten(),
-    this._userStatsService.getNumberReviews()
+    forkJoin([
+      this._userStatsService.getTop5Tags(),
+      this._userStatsService.getNumberGamesPlaying(), 
+      this._userStatsService.getNumberGamesBeaten(),
+      this._userStatsService.getCountReviews()
     ])
       .subscribe({
         next: (results) => {
           this.userStats.top5Tags = results[0];
-          this.userStats.gamesOwned = results[1];
-          this.userStats.gamesPlaying = results[2];
-          this.userStats.gamesBeaten = results[3];
-          this.userStats.userReviews = results[4];
+          this.userStats.gamesPlaying = results[1];
+          this.userStats.gamesBeaten = results[2];
+          this.userStats.userReviews = results[3];
         },
         error: (err) => this.errorMessage = 'Failed to load user stats'
         });

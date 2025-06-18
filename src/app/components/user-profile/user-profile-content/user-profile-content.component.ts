@@ -7,10 +7,13 @@ import { UserGameService } from '../../../services/userGameService';
 import { UserGame } from '../../../models/userGame';
 import { Game } from '../../../models/game';
 import { GameService } from '../../../services/gameService';
+import { ReviewService } from '../../../services/reviewService';
+import { Review } from '../../../models/review';
+import { ReviewComponent } from '../../review-component/review/review.component';
 
 @Component({
   selector: 'app-user-profile-content',
-  imports: [UserStatsComponent],
+  imports: [UserStatsComponent, ReviewComponent],
   templateUrl: './user-profile-content.component.html',
   styleUrl: './user-profile-content.component.css'
 })
@@ -18,13 +21,17 @@ export class UserProfileContentComponent {
   private _userProfileService = inject(UserProfileService);
   private _userGameService = inject(UserGameService);
   private _gameService = inject(GameService);
+  private _reviewService = inject(ReviewService);
   userProfile!: UserProfile;
   recentlyBeaten: UserGame[] = [];
   recentlyBeatenGames: Game[] = [];
+  latestReviews: Review[] = [];
+  latestReviewGames: Game[] = [];
   
   ngOnInit(): void {
     this.loadUserProfile();
     this.loadRecentGameBeaten();
+    this.loadLatestReviews();
   }
 
   loadUserProfile(): void {
@@ -44,6 +51,22 @@ export class UserProfileContentComponent {
           })
         });
       },
+      error: e => console.log(e)
+    });
+  }
+
+  loadLatestReviews(): void {
+    this._reviewService.getLatestReviews().subscribe({
+      next: reviews => {
+        this.latestReviews = reviews;
+        console.log(reviews);
+        
+        reviews.forEach(r => {
+          this._gameService.findGameById(r.gameId).subscribe(game => {
+            this.latestReviewGames.push(game);
+          });
+        });
+    },
       error: e => console.log(e)
     });
   }

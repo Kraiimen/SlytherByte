@@ -23,7 +23,7 @@ export const routes: Routes = [
             { path: 'catalogue', component: CatalogueMainComponent },
             { path: 'game-details/:id', component: GameDetailsComponent},
             {
-                path: 'user-profile', component: UserProfileComponent, data: { bgType: 'profile-section' },
+                path: 'user-profile', component: UserProfileComponent, data: { bgType: 'profile-section'},
                 children: [
                     { path: '', component: UserProfileContentComponent, pathMatch: 'full' },
                     { path: 'user-games/:status', component: UserGamesComponent },

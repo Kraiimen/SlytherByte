@@ -1,7 +1,7 @@
 <div class="info">
     @if(userProfile != null){
         <div>
-            <img src="https://www.ristorazioneitalianamagazine.it/CMS/wp-content/uploads/2020/02/provolone.png" alt="profile picture">
+            <img [src]="userProfile.profilePicUrl" alt="">
         </div>
         <h2>{{userProfile.profileName}}</h2>
         <h3>&#64;{{userProfile.profileName}}</h3>
@@ -14,11 +14,21 @@
     <app-user-stats></app-user-stats>
 </div>
 <div class="dashboard">
-    <div>
+    <div class="collections">
         <h3>Latest collections</h3>
+        <div>
+            COMING SOON
+        </div>
     </div>
-    <div>
+    <div class="lat-rev">
         <h3>Latest reviews</h3>
+        <div>
+            @if (latestReviews && latestReviews.length > 0) {
+                @for (r of latestReviews; track r.reviewId; let i = $index) {
+                    <app-review [review]="r" [game]="latestReviewGames[i]"></app-review>
+                }
+            }
+        </div>
     </div>
     <div>
         <h3>Recent game beaten</h3>

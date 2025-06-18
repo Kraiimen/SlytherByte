@@ -9,6 +9,7 @@ import { Top5Tags } from "../models/top5Tags";
 
 export class UserStatsService {
     private _url: string = 'http://localhost:8080/api/user-games';
+    private _url2: string = 'http://localhost:8080/api/reviews';
     private _http = inject(HttpClient);
     public sources = [
         this._http.get<Top5Tags[]>(`${this._url}/tags/top5`),
@@ -39,6 +40,8 @@ export class UserStatsService {
         return this._http.get<number>(`${this._url}/reviews/count`);
     }
     
-
+    getCountReviews(): Observable<number> {
+        return this._http.get<number>(`${this._url2}/logged-user/reviews-count`);
+    }
 
 }
