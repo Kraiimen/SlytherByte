@@ -8,10 +8,12 @@
                     </svg>
                 </i>
                 <img [src]="games[i].coverImageUrl" alt="Game cover">
-                <h2>{{ games[i].title }}</h2>
-                @if (status == 'beaten') {
-                    <p>Beaten on <span>{{ ug.completionDate }}</span></p>
-                }
+                <footer>
+                    <h2>{{ games[i].title }}</h2>
+                    @if (status == 'beaten') {
+                        <p>Beaten on <span>{{ ug.completionDate }}</span></p>
+                    }
+                </footer>
             </li>
         }
     </ul>

@@ -50,5 +50,7 @@ export class UserGameService {
         return this._http.delete<void>(`${this._url}/${id}`);
     }
 
-
+    getRecentlyBeaten(): Observable<UserGame[]> {
+        return this._http.get<UserGame[]>(`${this._url}/recently-beaten`);
+    }
 }

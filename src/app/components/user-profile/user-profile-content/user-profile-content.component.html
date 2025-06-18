@@ -22,5 +22,12 @@
     </div>
     <div>
         <h3>Recent game beaten</h3>
+        <div>
+            @if (recentlyBeaten && recentlyBeaten.length > 0) {
+            @for (game of recentlyBeaten; track game.userGameId; let i = $index) {
+                <img [src]="recentlyBeatenGames[i].coverImageUrl" alt="Game cover image">
+            }
+            }
+        </div>
     </div>
 </div>
