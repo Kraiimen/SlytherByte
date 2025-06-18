@@ -82,3 +82,28 @@
         </div>
     </div>
 </div>
+
+@if (media && media.length > 0) {
+    <div class="media">
+        <h3>Media</h3>
+        <div class="slider-wrap">
+            <div #sliderMain class="slider-main">
+                @for (m of media; track m.mediaId) {
+                    <div class="item">
+                        @if (m.mediaUrl.includes('www.youtube.com')) {
+                            <iframe width="440" height="235" [src]="safe(m.mediaUrl)" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+                                encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                            </iframe>
+                        } @else {
+                            <img [src]="m.mediaUrl" alt="Game image">
+                        }
+                    </div>
+                }
+            </div>
+            <div class="button-area">
+                <button class="prev" (click)="move(-2)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fffffe"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z"/></svg></button>
+                <button class="next" (click)="move(2)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fffffe"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg></button>
+            </div>
+        </div>
+    </div>
+}
