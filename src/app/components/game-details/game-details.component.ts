@@ -103,7 +103,6 @@ export class GameDetailsComponent implements OnInit {
         this.gameImages = result[1];
         this.media.push(this.gameTrailer);
         this.gameImages.forEach(element => this.media.push(element));
-        console.log(this.media)
       },
       error: e => console.log("Media service error" + e)
     });
@@ -121,6 +120,7 @@ export class GameDetailsComponent implements OnInit {
     
       this._userGameService.createUserGameForLoggedUser(userGame).subscribe({
       next: ug => {
+        this.userGame = ug;
         this.checkIfGameIsInUserGames();
         console.log('Game added to profile in status ' + status);
         console.log(ug);

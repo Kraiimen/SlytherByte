@@ -5,21 +5,6 @@ import { Game } from '../../../models/game';
 import { FilterComponentComponent } from "../filter-component/filter-component.component";
 import { CatalogueContentComponent } from "../catalogue-content/catalogue-content.component";
 import { GameDetailsComponent } from "../../game-details/game-details.component";
-import { DeveloperService } from '../../../services/developerService';
-import { LanguageService } from '../../../services/languageService';
-import { PlatformService } from '../../../services/platformService';
-import { PublisherService } from '../../../services/publisherService';
-import { StoreService } from '../../../services/storeService';
-import { TagService } from '../../../services/tagService';
-import { Developer } from '../../../models/developer';
-import { Language } from '../../../models/language';
-import { Platform } from '../../../models/platform';
-import { Publisher } from '../../../models/publisher';
-import { Store } from '../../../models/store';
-import { Tag } from '../../../models/tag';
-import { forkJoin } from 'rxjs';
-import { GameMediaService } from '../../../services/gameMediaService';
-import { GameMedia } from '../../../models/gameMedia';
 
 @Component({
   selector: 'app-catalogue-main',
@@ -30,9 +15,8 @@ import { GameMedia } from '../../../models/gameMedia';
 export class CatalogueMainComponent {
   private _gameService = inject(GameService);
   games: Game[] = [];
-  @Input() gameId!: number;
+  gameId!: number;
   showDetails: boolean = false;
-  
   
   ngOnInit(){
     this._gameService.getAllGames().subscribe({
@@ -49,6 +33,7 @@ export class CatalogueMainComponent {
   }
 
   getGameDetails(gameId: number){
+    console.log('CATALOGUE-MAIN:' + gameId)
     this.gameId = gameId;
     this.showDetails = true;
   }
