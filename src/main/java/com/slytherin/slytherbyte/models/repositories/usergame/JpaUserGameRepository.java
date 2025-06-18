@@ -12,8 +12,8 @@ public interface JpaUserGameRepository extends JpaRepository<UserGame, Integer> 
     @Query("SELECT ug FROM UserGame ug WHERE LOWER(status)=LOWER(:status)")
     List<UserGame> findUserGameByStatus(@Param("status") String status);
 
-    @Query("SELECT ug FROM UserGame ug ORDER BY completionDate DESC LIMIT 2")
-    List<UserGame> findUserGamesByCompletionDate();
+    @Query("SELECT ug FROM UserGame ug WHERE ug.status = 'Beaten' AND ug.userProfile.userProfileId = :userProfileId ORDER BY completionDate DESC LIMIT 5")
+    List<UserGame> findRecentlyBeatenByProfileId(int userProfileId);
 
     @Query("SELECT ug FROM UserGame ug WHERE review.reviewId = :reviewId")
     Optional<UserGame> findByReviewId(int reviewId);

@@ -80,6 +80,20 @@ public class UserGameController {
         return ResponseEntity.created(location).body(ugDto);
     }
 
+    @PostMapping("/logged-user")
+    public ResponseEntity<UserGameDto> createUserGameForLoggedUser(@AuthenticationPrincipal UserAccount ua, @RequestBody UserGameDto userGameDto) throws DataException, EntityNotFoundException {
+        UserGame userGame = userGameDto.toEntity();
+        UserGameDto ugDto = UserGameDto.toDto(userGameService.createUserGame(userGame, userGameDto.gameId(), ua.getUserProfile().getUserProfileId(), userGameDto.reviewId()));
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(ugDto.userGameId())
+                .toUri();
+
+        return ResponseEntity.created(location).body(ugDto);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<UserGameDto> updateById(@PathVariable("id") int userGameId, @RequestBody UserGameDto userGameDto) throws DataException, EntityNotFoundException {
         if (userGameDto.userGameId() != userGameId) {
@@ -94,8 +108,7 @@ public class UserGameController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable("id") int userGameId) throws DataException, EntityNotFoundException {
-        UserGame ug = userGameService.findUserGameById(userGameId);
-        userGameService.deleteUseGame(ug);
+        userGameService.deleteUserGameById(userGameId);
         return ResponseEntity.noContent().build();
     }
 
@@ -130,9 +143,9 @@ public class UserGameController {
         return ResponseEntity.ok(count);
     }
 
-    @GetMapping("/recently-played")
-    public ResponseEntity<List<UserGameDto>> getRecentlyPlayed() throws DataException {
-        List<UserGame> recentGames = userGameService.findRecentlyBeaten();
+    @GetMapping("/recently-beaten")
+    public ResponseEntity<List<UserGameDto>> getRecentlyBeaten(@AuthenticationPrincipal UserAccount ua) throws DataException {
+        List<UserGame> recentGames = userGameService.findRecentlyBeatenByProfileId(ua.getUserProfile().getUserProfileId());
         List<UserGameDto> ugDto = recentGames.stream().map(UserGameDto::toDto).toList();
         return ResponseEntity.ok(ugDto);
     }

@@ -114,12 +114,12 @@ public class JpaUserGameService implements UserGameService {
     }
 
     @Override
-    public boolean deleteUseGame(UserGame userGame) throws DataException, EntityNotFoundException {
+    public boolean deleteUserGameById(int userGameId) throws DataException, EntityNotFoundException {
         try {
-            if (!userGameRepo.existsById(userGame.getUserGameId())) {
-                throw new EntityNotFoundException(UserGame.class, userGame.getUserGameId());
+            if (!userGameRepo.existsById(userGameId)) {
+                throw new EntityNotFoundException(UserGame.class, userGameId);
             }
-            userGameRepo.delete(userGame);
+            userGameRepo.deleteById(userGameId);
             return true;
         } catch (PersistenceException persistenceException) {
             throw new DataException("Error: failed to delete game", persistenceException);
@@ -198,9 +198,9 @@ public class JpaUserGameService implements UserGameService {
     }
 
     @Override
-    public List<UserGame> findRecentlyBeaten() throws DataException {
+    public List<UserGame> findRecentlyBeatenByProfileId(int userProfileId) throws DataException {
         try {
-            return userGameRepo.findUserGamesByCompletionDate();
+            return userGameRepo.findRecentlyBeatenByProfileId(userProfileId);
         } catch (PersistenceException persistenceException){
             throw new DataException("Cannot find recently beaten", persistenceException);
         }
