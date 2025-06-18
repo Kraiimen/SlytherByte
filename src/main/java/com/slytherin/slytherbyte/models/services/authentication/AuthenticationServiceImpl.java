@@ -63,7 +63,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Transactional
     private UserAccount buildNewUser(RegisterRequest input) {
-        UserProfile up = new UserProfile(0, input.getUsername(), null, null);
+        UserProfile up = new UserProfile(0, input.getUsername(), null, "https://static.vecteezy.com/system/resources/previews/004/511/281/original/default-avatar-photo-placeholder-profile-picture-vector.jpg");
         userProfileRepo.save(up);
 
         return new UserAccount(
