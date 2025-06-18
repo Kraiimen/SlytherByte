@@ -81,4 +81,10 @@ public class ReviewController {
         List<ReviewDto> rDto=reviews.stream().map(ReviewDto::toDto).toList();
         return ResponseEntity.ok(rDto);
     }
+
+    @GetMapping("/logged-user/reviews-count")
+    ResponseEntity<Integer> countReviews(@AuthenticationPrincipal UserAccount ua) throws DataException{
+        int n = reviewService.countReviews(ua.getUserProfile().getUserProfileId());
+        return ResponseEntity.ok(n);
+    }
 }

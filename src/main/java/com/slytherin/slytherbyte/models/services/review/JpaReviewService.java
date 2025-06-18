@@ -143,4 +143,9 @@ public class JpaReviewService implements ReviewService {
             throw new DataException("Failed to find reviews by game id " + gameId, pe);
         }
     }
+
+    @Override
+    public int countReviews(int id) throws DataException {
+        return reviewRepo.countReviewsByProfileId(id);
+    }
 }

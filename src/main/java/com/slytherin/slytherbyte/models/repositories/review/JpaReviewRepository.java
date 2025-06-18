@@ -15,4 +15,7 @@ public interface JpaReviewRepository extends JpaRepository<Review, Integer> {
 
     @Query("SELECT r FROM Review r WHERE r.game.gameId = :gameId")
     List<Review> findAllByGameId(int gameId);
+
+    @Query("SELECT COUNT(r) FROM Review r WHERE r.userProfile.userProfileId = :userProfileId")
+    int countReviewsByProfileId(int userProfileId);
 }

@@ -147,22 +147,18 @@ public class JpaUserGameService implements UserGameService {
     }
 
     @Override
-    public int countGamesPlaying() throws DataException {
+    public int countGamesPlaying(int id) throws DataException {
         try {
-            return gamesPlayingRepo.findById(1)
-                    .map(UserGamesPlayingCount::getPlayingCount)
-                    .orElse(0);
+            return userGameRepo.countUserGameByStatus(id, "Playing");
         } catch (PersistenceException persistenceException){
             throw new DataException("Cannot find any games with status: playing", persistenceException);
         }
     }
 
     @Override
-    public int countGamesBeaten() throws DataException {
+    public int countGamesBeaten(int id) throws DataException {
         try {
-            return gamesBeatenRepo.findById(1)
-                    .map(UserGamesBeatenCount::getBeatenCount)
-                    .orElse(0);
+            return userGameRepo.countUserGameByStatus(id, "Beaten");
         } catch (PersistenceException persistenceException){
             throw new DataException("Cannot find any games with status: beaten", persistenceException);
         }

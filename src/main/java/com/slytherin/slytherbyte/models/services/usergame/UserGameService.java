@@ -15,8 +15,8 @@ public interface UserGameService {
     boolean deleteUserGameById(int userGameId) throws DataException, EntityNotFoundException;
     int countOwnedUserGames() throws DataException;
     List<Top5Tags> getTop5Tags() throws DataException;
-    int countGamesPlaying() throws DataException;
-    int countGamesBeaten() throws DataException;
+    int countGamesPlaying(int id) throws DataException;
+    int countGamesBeaten(int id) throws DataException;
     int countUserReviews() throws DataException;
     List<UserGame> findUserGamesByStatus(String status) throws DataException;
     List<UserGame> findUserGamesByStatus(int userProfileId, String status) throws DataException;

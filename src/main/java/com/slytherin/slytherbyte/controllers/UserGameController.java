@@ -126,14 +126,14 @@ public class UserGameController {
     }
 
     @GetMapping("/playing")
-    public ResponseEntity<Integer> getPlayingGames() throws DataException {
-        Integer count = userGameService.countGamesPlaying();
+    public ResponseEntity<Integer> getPlayingGames(@AuthenticationPrincipal UserAccount ua) throws DataException {
+        Integer count = userGameService.countGamesPlaying(ua.getUserProfile().getUserProfileId());
         return ResponseEntity.ok(count);
     }
 
     @GetMapping("/beaten")
-    public ResponseEntity<Integer> getBeatenGames() throws DataException {
-        Integer count = userGameService.countGamesBeaten();
+    public ResponseEntity<Integer> getBeatenGames(@AuthenticationPrincipal UserAccount ua) throws DataException {
+        Integer count = userGameService.countGamesBeaten(ua.getUserProfile().getUserProfileId());
         return ResponseEntity.ok(count);
     }
 

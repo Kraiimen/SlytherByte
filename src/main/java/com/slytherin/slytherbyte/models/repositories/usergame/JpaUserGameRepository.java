@@ -23,4 +23,7 @@ public interface JpaUserGameRepository extends JpaRepository<UserGame, Integer> 
 
     @Query("SELECT ug FROM UserGame ug WHERE ug.userProfile.userProfileId = :userProfileId AND LOWER(ug.status)=LOWER(:status)")
     List<UserGame> findUserGamesUserProfileIdAndByStatus(int userProfileId, String status);
+
+    @Query("SELECT COUNT(ug) FROM UserGame ug WHERE ug.userProfile.userProfileId = :id AND LOWER(ug.status) = LOWER(:status)")
+    int countUserGameByStatus(int id, String status);
 }

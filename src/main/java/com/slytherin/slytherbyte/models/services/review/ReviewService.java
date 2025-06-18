@@ -15,4 +15,5 @@ public interface ReviewService {
     List<Review> findRecentReviews() throws DataException;
     List<Review> findAllByProfileId(int profileId) throws DataException, EntityNotFoundException;
     List<Review> findAllByGameId(int gameId) throws  DataException, EntityNotFoundException;
+    int countReviews(int id) throws  DataException;
 }
