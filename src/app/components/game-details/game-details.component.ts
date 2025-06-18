@@ -7,6 +7,8 @@ import { Platform } from '../../models/platform';
 import { Publisher } from '../../models/publisher';
 import { Store } from '../../models/store';
 import { Tag } from '../../models/tag';
+import { UserGameService } from '../../services/userGameService';
+import { UserGame } from '../../models/userGame';
 
 @Component({
   selector: 'app-game-details',
@@ -15,8 +17,7 @@ import { Tag } from '../../models/tag';
   styleUrl: './game-details.component.css'
 })
 export class GameDetailsComponent {
-  private _router = inject(Router);
-  private _route = inject(ActivatedRoute);
+  private _userGameService = inject(UserGameService);
   @Output() toggleDetails = new EventEmitter<boolean>();
   @Input() gameDetails!: Game;
   @Input() developers!: Developer[];
@@ -25,6 +26,22 @@ export class GameDetailsComponent {
   @Input() publishers!: Publisher[];
   @Input() stores!: Store[];
   @Input() tags!: Tag[];
+  isAddProfileOpen = false;
+  areThereCollections = false;
+  userGame!: UserGame;
+
+  addGameTo(stauts: string) {
+    this.userGame.gameId = this.gameDetails.gameId;
+    console.log("yoooooooooooo")
+    console.log(this.userGame);
+    this._userGameService.createUserGameForLoggedUser(this.userGame).subscribe({
+      next: ug => {
+        console.log('Game added to profile');
+        console.log(ug);
+      },
+      error: e => console.log(e)
+    });
+  }
 
   hideDetails() {
     this.toggleDetails.emit(false);

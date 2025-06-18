@@ -23,10 +23,17 @@
 
         <div class="buttons">
             <div>
-                <button>Add to profile</button>
+                <button (click)="isAddProfileOpen = !isAddProfileOpen">Add to profile</button>
+                <div [class.add-profile-open]="isAddProfileOpen" class="add-to-profile-dropdown">
+                    <ul>
+                        <li (click)="addGameTo('Playing')">Playing</li>
+                        <li (click)="addGameTo('Beaten')">Beaten</li>
+                        <li (click)="addGameTo('Wishlist')">Wishlist</li>
+                    </ul>
+                </div>
             </div>
             <div>
-                <button>Add to collection</button>
+                <button [disabled]="!areThereCollections">Add to collection</button>
             </div>
         </div>
     </div>

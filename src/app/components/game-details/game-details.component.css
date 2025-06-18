@@ -116,16 +116,62 @@ img {
     margin-top: 3rem;
 
     button {
-        width: 10rem;
-        height: 3rem;
+        font-size: 1rem;
+        padding: 1rem 2rem;
         background-color: #588157;
         border: none;
-        border-radius: 10px;
         cursor: pointer;
         color: #fffffe;
 
         &:hover {
             background-color: #588157cb;
         }
+    }
+}
+
+.buttons > div:first-of-type { 
+    display: flex;
+    flex-direction: column;
+}
+
+
+.add-to-profile-dropdown  {
+    display: grid;
+    grid-template-rows: 0fr;
+
+    > ul {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+
+        li {
+            width: 100%;
+            text-align: center;
+            padding: 1rem 0;
+            border-top: 1px solid #16161a;
+            background-color: #588157;
+            text-align: center;
+            list-style: none;
+            margin-right: 2rem;
+            color: #fffffe;
+            cursor: pointer;
+            font-size: large;
+        }
+    }
+}
+.add-to-profile-dropdown > ul > li:hover {
+    background-color: #588157cb;
+}
+.add-to-profile-dropdown.add-profile-open {
+    grid-template-rows: 1fr;
+    transition: all 0.3s ease-in-out;
+}
+
+.buttons > div:nth-of-type(2) > button:disabled {
+    opacity: .5;
+
+    &:hover {
+        background-color: #588157;
+        cursor: not-allowed;
     }
 }

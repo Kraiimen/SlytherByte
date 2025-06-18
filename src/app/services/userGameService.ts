@@ -34,6 +34,10 @@ export class UserGameService {
         return this._http.post<UserGame>(this._url, userGame);
     }
 
+    createUserGameForLoggedUser(userGame: Partial<UserGame>):Observable<UserGame> {
+        return this._http.post<UserGame>(`${this._url}/logged-user`, userGame);
+    }
+
     updateUserGame(userGame: Partial<UserGame>, id: number): Observable<UserGame>{
         return this._http.put<UserGame>(`${this._url}/${id}`, userGame);
     }
