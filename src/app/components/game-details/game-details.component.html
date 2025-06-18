@@ -133,9 +133,11 @@
     @if (reviews && reviews.length > 0) {
         <div class="reviews">
             <h2>Reviews</h2>
-            @for (r of reviews; track r.reviewId; let i = $index) {
-                <app-review [review]="r" [game]="gameDetails"></app-review>
-            }
+            <div>
+                @for (r of reviews; track r.reviewId; let i = $index) {
+                    <app-review [review]="r" [game]="gameDetails"></app-review>
+                }
+            </div>
         </div>
     }
 </div>

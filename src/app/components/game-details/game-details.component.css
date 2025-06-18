@@ -296,4 +296,10 @@ app-review-form {
     > h2 {
         margin-left: .5rem;
     }
+
+    > div {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 }
