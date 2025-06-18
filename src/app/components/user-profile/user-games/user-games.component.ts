@@ -46,4 +46,12 @@ export class UserGamesComponent implements OnInit {
       error: e => alert('Failed to find games with status ' + status)
     });
   }
+
+  removeGame(id: number) {
+    this.userGames = this.userGames.filter(ug => ug.userGameId != id);
+    this._userGameService.deleteUserGame(id).subscribe({
+      next: () => console.log("Game deleted"),
+      error: e => console.log("Failed to delete game")
+    });
+  }
 }

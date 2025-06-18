@@ -46,8 +46,8 @@ export class UserGameService {
         return this._http.put<UserGame>(`${this._url}/${id}`, userGame);
     }
 
-    deleteUserGame(id: number): Observable<UserGame>{
-        return this._http.delete<UserGame>(`${this._url}/${id}`);
+    deleteUserGame(id: number): Observable<void>{
+        return this._http.delete<void>(`${this._url}/${id}`);
     }
 
 

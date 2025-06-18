@@ -2,7 +2,7 @@ import { Review } from "./review";
 
 export interface UserGame{
     userGameId: number;
-    status: string;
+    status: string | null;
     isOwned: boolean;
     review: Review;
     completionDate: Date;
