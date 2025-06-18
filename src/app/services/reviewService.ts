@@ -15,6 +15,10 @@ export class ReviewService {
         return this._http.get<Review[]>(this._url);
     }
 
+    getAllByGameId(id: number) {
+        return this._http.get<Review[]>(`${this._url}?gameId=`+id);
+    }
+
     getAllForLoggedUser(): Observable<Review[]> {
         return this._http.get<Review[]>(`${this._url}/logged-user`);
     } 

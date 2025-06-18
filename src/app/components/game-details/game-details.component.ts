@@ -20,10 +20,14 @@ import { EMPTY, forkJoin, map, switchMap } from 'rxjs';
 import { UserGameService } from '../../services/userGameService';
 import { UserGame } from '../../models/userGame';
 import { escapeRegExp } from '@angular/compiler';
+import { ReviewFormComponent } from '../review-component/review-form/review-form.component';
+import { Review } from '../../models/review';
+import { ReviewService } from '../../services/reviewService';
+import { ReviewComponent } from "../review-component/review/review.component";
 
 @Component({
   selector: 'app-game-details',
-  imports: [],
+  imports: [ReviewFormComponent, ReviewComponent],
   templateUrl: './game-details.component.html',
   styleUrl: './game-details.component.css'
 })
@@ -38,9 +42,12 @@ export class GameDetailsComponent implements OnInit {
   private _tagService = inject(TagService);
   private _gameMediaService = inject(GameMediaService);
   private _userGameService = inject(UserGameService);
+  private _reviewService = inject(ReviewService);
   @Output() toggleDetails = new EventEmitter<boolean>();
   @Input() gameId!: number;
   gameDetails!: Game;
+  userGame!: UserGame;
+  userGames!: UserGame[];
   developers: Developer[] = [];
   languages: Language[] = [];
   platforms: Platform[] = [];
@@ -50,6 +57,7 @@ export class GameDetailsComponent implements OnInit {
   gameTrailer!: GameMedia;
   gameImages!: GameMedia[];
   media: GameMedia[] = [];
+  reviews: Review[] = [];
   sliderPos = 0;   
   @ViewChild('sliderMain', {static: false}) sliderMain!: ElementRef<HTMLDivElement>;
   isAddProfileOpen = false;
@@ -57,11 +65,17 @@ export class GameDetailsComponent implements OnInit {
   isGameInPlaying = false;
   isGameInBeaten = false;
   isGameInWishlist = false;
-  
+  isReviewFormShown = false;
+  showIFrame = false;
+  isInUserGames = false;
+
   ngOnInit(): void {
-      this.resetStatusVariables();
-      this.getGameDetails(this.gameId);   
-      this.checkIfGameIsInStatus();
+    this.isInUserGames = false;
+    this.resetStatusVariables();
+    this.getGameDetails(this.gameId);   
+    this.checkIfGameIsInStatus();
+    this.loadReviews();
+    this.loadUserGames();
   }
 
   getGameDetails(gameId: number){
@@ -113,6 +127,24 @@ export class GameDetailsComponent implements OnInit {
       },
       error: e => console.log(e)
     });
+
+    this.checkIfGameIsInUserGames();
+  }
+
+  loadUserGames() {
+    this.reviews.forEach(r => {
+      this._userGameService.getUserGameByReviewId(r.reviewId).subscribe({
+        next: ug => this.userGames.push(ug),
+        error: e => console.log(e)
+      });
+    });
+  }
+
+  loadReviews() {
+    this._reviewService.getAllByGameId(this.gameId).subscribe({
+      next: r => this.reviews = r,
+      error: e => console.log(e)
+    });
   }
 
   checkIfGameIsInStatus() {
@@ -126,6 +158,18 @@ export class GameDetailsComponent implements OnInit {
         } else if (game?.status == 'Wishlist') {
           this.isGameInWishlist = true;
         }
+      }
+    });
+  }
+
+  checkIfGameIsInUserGames() {
+    this._userGameService.getAllForLoggedUser().subscribe({
+      next: userGames => {
+        userGames.forEach(ug => {
+          if (ug.gameId == this.gameId) {
+            this.isInUserGames = true;
+          }
+        });
       }
     });
   }
@@ -156,6 +200,11 @@ export class GameDetailsComponent implements OnInit {
     this.isGameInPlaying = false;
     this.isGameInBeaten = false;
     this.isGameInWishlist = false;
+  }
+
+  getThumbnail(url: String): string {
+    const vid = url.split('embed/')[1].split('?')[0];
+    return `https://i.ytimg.com/vi/${vid}/hqdefault.jpg`;
   }
 }
   

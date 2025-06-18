@@ -1,10 +1,10 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import { UserGameService } from '../../../services/userGameService';
+import { UserGameService } from '../../../../services/userGameService';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { UserGame } from '../../../models/userGame';
+import { UserGame } from '../../../../models/userGame';
 import { map, switchMap } from 'rxjs';
-import { GameService } from '../../../services/gameService';
-import { Game } from '../../../models/game';
+import { GameService } from '../../../../services/gameService';
+import { Game } from '../../../../models/game';
 
 @Component({
   selector: 'app-user-games',
@@ -48,9 +48,11 @@ export class UserGamesComponent implements OnInit {
   }
 
   removeGame(id: number) {
-    this.userGames = this.userGames.filter(ug => ug.userGameId != id);
     this._userGameService.deleteUserGame(id).subscribe({
-      next: () => console.log("Game deleted"),
+      next: () => {
+        this.userGames = this.userGames.filter(ug => ug.userGameId != id);
+        console.log("Game deleted");
+      },
       error: e => console.log("Failed to delete game")
     });
   }

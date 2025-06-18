@@ -69,6 +69,7 @@
     > div {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
         gap: .8rem;
         margin: 1rem 3rem;
     }
@@ -246,4 +247,53 @@ li.already-in-status {
 
 a:has(.store-icon) {
     padding: 0 1rem;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #00000050;  
+  z-index: 97;            
+}
+
+app-review-form {
+    z-index: 98;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fake-yt {
+    position: relative;
+    cursor: pointer;
+    
+    > img:first-of-type {
+        width: 400px;
+        height: 235px;
+    }
+
+    > img:last-of-type {
+        position: absolute;
+        width: 50px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.reviews {
+    background-color: #16161a;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+
+    > h2 {
+        margin-left: .5rem;
+    }
 }
