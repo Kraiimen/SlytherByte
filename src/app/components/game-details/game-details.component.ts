@@ -16,9 +16,10 @@ import { StoreService } from '../../services/storeService';
 import { TagService } from '../../services/tagService';
 import { GameMediaService } from '../../services/gameMediaService';
 import { GameService } from '../../services/gameService';
-import { forkJoin } from 'rxjs';
+import { EMPTY, forkJoin, map, switchMap } from 'rxjs';
 import { UserGameService } from '../../services/userGameService';
 import { UserGame } from '../../models/userGame';
+import { escapeRegExp } from '@angular/compiler';
 
 @Component({
   selector: 'app-game-details',
@@ -53,8 +54,16 @@ export class GameDetailsComponent implements OnInit {
   @ViewChild('sliderMain', {static: false}) sliderMain!: ElementRef<HTMLDivElement>;
   isAddProfileOpen = false;
   areThereCollections = false;
-  userGame: Partial<UserGame> = {};
+  isGameInPlaying = false;
+  isGameInBeaten = false;
+  isGameInWishlist = false;
   
+  ngOnInit(): void {
+      this.resetStatusVariables();
+      this.getGameDetails(this.gameId);   
+      this.checkIfGameIsInStatus();
+  }
+
   getGameDetails(gameId: number){
     document.body.classList.add('modal-open');
     forkJoin([
@@ -87,19 +96,32 @@ export class GameDetailsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-      this.getGameDetails(this.gameId);   
-  }
-
-  addGameTo(stauts: string) {
-    this.userGame.gameId = this.gameDetails.gameId;
-    this.userGame.status = stauts;
-    this._userGameService.createUserGameForLoggedUser(this.userGame).subscribe({
+  addGameTo(status: string) {
+    const userGame: Partial<UserGame> = { 
+      gameId: this.gameDetails.gameId,
+      status
+    };
+    this._userGameService.createUserGameForLoggedUser(userGame).subscribe({
       next: ug => {
-        console.log('Game added to profile');
+        console.log('Game added to profile in status ' + status);
         console.log(ug);
       },
       error: e => console.log(e)
+    });
+  }
+
+  checkIfGameIsInStatus() {
+    this._userGameService.getAllForLoggedUser().subscribe({
+      next: userGames => {
+        const game = userGames.find(g => g.gameId == this.gameDetails.gameId);
+        if (game?.status == 'Playing') {
+          this.isGameInPlaying = true;
+        } else if (game?.status == 'Beaten') {
+          this.isGameInBeaten = true;
+        } else if (game?.status == 'Wishlist') {
+          this.isGameInWishlist = true;
+        }
+      }
     });
   }
 
@@ -123,6 +145,12 @@ export class GameDetailsComponent implements OnInit {
   hideDetails() {
     this.toggleDetails.emit(false);
     document.body.classList.remove('modal-open');
+  }
+
+  resetStatusVariables() {
+    this.isGameInPlaying = false;
+    this.isGameInBeaten = false;
+    this.isGameInWishlist = false;
   }
 }
   

@@ -22,6 +22,10 @@ export class UserGameService {
         return this._http.get<UserGame[]>(`${this._url}/logged-user?status=`+status);
     }
 
+    getAllForLoggedUser(): Observable<UserGame[]>{
+        return this._http.get<UserGame[]>(`${this._url}/logged-user`);
+    }
+
     getUserGameById(id: number): Observable<UserGame>{
         return this._http.get<UserGame>(`${this._url}/${id}`);
     }

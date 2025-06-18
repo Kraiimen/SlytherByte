@@ -167,13 +167,9 @@ img {
     transition: all 0.3s ease-in-out;
 }
 
-.buttons > div:nth-of-type(2) > button:disabled {
+button:disabled {
     opacity: .5;
-
-    &:hover {
-        background-color: #588157;
-        cursor: not-allowed;
-    }
+    pointer-events: none;
 }
 
 .media {
@@ -196,9 +192,6 @@ img {
 }
 .slider-main{
     transform: translateX(0%);
-}
-.item {
-   
 }
 .prev {
     cursor: pointer;
@@ -225,4 +218,9 @@ img {
     > svg {
         height: 2rem;
     }
+}
+
+li.already-in-status {
+    opacity: .5;
+    pointer-events: none;
 }
