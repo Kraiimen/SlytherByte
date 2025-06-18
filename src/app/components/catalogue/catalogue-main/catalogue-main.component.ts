@@ -1,4 +1,4 @@
-import { Component, HostBinding, inject } from '@angular/core';
+import { Component, HostBinding, inject, Input } from '@angular/core';
 import { GameService } from '../../../services/gameService';
 import { Filter } from '../../../models/filter';
 import { Game } from '../../../models/game';
@@ -18,6 +18,8 @@ import { Publisher } from '../../../models/publisher';
 import { Store } from '../../../models/store';
 import { Tag } from '../../../models/tag';
 import { forkJoin } from 'rxjs';
+import { GameMediaService } from '../../../services/gameMediaService';
+import { GameMedia } from '../../../models/gameMedia';
 
 @Component({
   selector: 'app-catalogue-main',
@@ -27,22 +29,11 @@ import { forkJoin } from 'rxjs';
 })
 export class CatalogueMainComponent {
   private _gameService = inject(GameService);
-  private _developerService = inject(DeveloperService);
-  private _languageService = inject(LanguageService);
-  private _platformService = inject(PlatformService);
-  private _publisherService = inject(PublisherService);
-  private _storeService = inject(StoreService);
-  private _tagService = inject(TagService);
   games: Game[] = [];
-  game!: Game;
-  developers: Developer[] = [];
-  languages: Language[] = [];
-  platforms: Platform[] = [];
-  publishers: Publisher[] = [];
-  stores: Store[] = [];
-  tags: Tag[] = [];
+  @Input() gameId!: number;
   showDetails: boolean = false;
-
+  
+  
   ngOnInit(){
     this._gameService.getAllGames().subscribe({
       next: games => this.games = games,
@@ -58,23 +49,8 @@ export class CatalogueMainComponent {
   }
 
   getGameDetails(gameId: number){
-    document.body.classList.add('modal-open');
-    forkJoin([this._gameService.findGameById(gameId), this._developerService.getDevelopersByGameId(gameId), this._languageService.getLanguagesByGameId(gameId),
-              this._platformService.getPlatformsByGameId(gameId), this._publisherService.getPublishersByGameId(gameId), this._storeService.getStoresByGameId(gameId),
-              this._tagService.getTagsByGameId(gameId)])
-          .subscribe({
-            next: result => {
-              this.game = result[0];
-              this.developers = result[1];
-              this.languages = result[2];
-              this.platforms = result[3];
-              this.publishers = result[4];
-              this.stores = result[5];
-              this.tags = result[6];
-              this.showDetails = true;
-            },
-            error: e => console.log("Fork Join error" + e)
-          });
+    this.gameId = gameId;
+    this.showDetails = true;
   }
 
   hideDetails() {

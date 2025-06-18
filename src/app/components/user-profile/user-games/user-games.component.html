@@ -1,1 +1,20 @@
-<p>user-games works!</p>
+@if (userGames && userGames.length > 0) {
+    <ul>
+        @for (ug of userGames; track ug.userGameId; let i = $index) {
+            <li>
+                <i (click)="removeGame(ug.userGameId)">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fffffe">
+                        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+                    </svg>
+                </i>
+                <img [src]="games[i].coverImageUrl" alt="Game cover">
+                <footer>
+                    <h2>{{ games[i].title }}</h2>
+                    @if (status == 'beaten') {
+                        <p>Beaten on <span>{{ ug.completionDate }}</span></p>
+                    }
+                </footer>
+            </li>
+        }
+    </ul>
+} 
