@@ -2,16 +2,31 @@
     cursor: default;
     z-index: 90;
     position: fixed;
+    top: 5vh;       
     left: 50%;
     transform: translateX(-50%);
-    width: 62rem;
+    width: 70rem;
+    max-height: 90vh;
     padding: 1rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1rem 2fr 1fr;
+    grid-template-rows: auto 1fr auto;
     border-radius: 20px;
     margin-top: 1rem;
-    background-color: #242629;
+    background-color: #242629;   
+}
+
+.scroll-wrap {
+  grid-row: 2 / 3;
+  overflow-y: auto;           
+  padding-right: 1rem;   
+  scrollbar-color: #588157 #1f2023;
+  scrollbar-width: thin;   
+}
+
+.info-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1rem 2fr 1fr;    
 }
 
 .close-button {
@@ -223,4 +238,12 @@ button:disabled {
 li.already-in-status {
     opacity: .5;
     pointer-events: none;
+}
+
+.store-icon {
+    width: 50px;
+}
+
+a:has(.store-icon) {
+    padding: 0 1rem;
 }

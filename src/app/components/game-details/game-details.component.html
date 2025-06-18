@@ -1,112 +1,125 @@
 <div class="close-button" (click)="hideDetails()">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fffffe">
-        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
     </svg>
 </div>
-@if(gameDetails != null){
-    <div class="info">
-        <div>
-            <img [src]="gameDetails.coverImageUrl" alt="Game Image">
-            <h2>{{gameDetails.title}}</h2>
-            <p>{{gameDetails.releaseDate}}</p>
-            <p>{{gameDetails.summary}}</p>
-        </div>
-
-        <div>
-            <h3>Tags</h3>
+<div class="scroll-wrap">
+    <div class="info-wrapper">
+        @if(gameDetails != null){
+        <div class="info">
             <div>
-                @for (t of tags; track t.tagId) {
+                <img [src]="gameDetails.coverImageUrl" alt="Game Image">
+                <h2>{{gameDetails.title}}</h2>
+                <p>{{gameDetails.releaseDate}}</p>
+                <p>{{gameDetails.summary}}</p>
+            </div>
+
+            <div>
+                <h3>Tags</h3>
+                <div>
+                    @for (t of tags; track t.tagId) {
                     <p>{{t.name}}</p>
-                }
+                    }
+                </div>
+            </div>
+
+            <div class="buttons">
+                <div>
+                    <button (click)="isAddProfileOpen = !isAddProfileOpen">Add to profile</button>
+                    <div [class.add-profile-open]="isAddProfileOpen" class="add-to-profile-dropdown">
+                        <ul>
+                            <li (click)="addGameTo('Playing')" [class.already-in-status]="isGameInPlaying">Playing</li>
+                            <li (click)="addGameTo('Beaten')" [class.already-in-status]="isGameInPlaying">Beaten</li>
+                            <li (click)="addGameTo('Wishlist')" [class.already-in-status]="isGameInWishlist">Wishlist
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <button [disabled]="!areThereCollections">Add to collection</button>
+                </div>
+                <div>
+                    <button>Add Review</button>
+                </div>
             </div>
         </div>
-
-        <div class="buttons">
+        }
+        <div class="details">
             <div>
-                <button (click)="isAddProfileOpen = !isAddProfileOpen">Add to profile</button>
-                <div [class.add-profile-open]="isAddProfileOpen" class="add-to-profile-dropdown">
-                    <ul>
-                        <li (click)="addGameTo('Playing')" [class.already-in-status]="isGameInPlaying">Playing</li>
-                        <li (click)="addGameTo('Beaten')" [class.already-in-status]="isGameInPlaying">Beaten</li>
-                        <li (click)="addGameTo('Wishlist')" [class.already-in-status]="isGameInWishlist">Wishlist</li>
-                    </ul>
+                <h3>Languages</h3>
+                <div>
+                    @for (l of languages; track l.languageId) {
+                    <p>{{l.name}}</p>
+                    }
                 </div>
             </div>
             <div>
-                <button [disabled]="!areThereCollections">Add to collection</button>
+                <h3>Developers</h3>
+                <div>
+                    @for (d of developers; track d.developerId) {
+                    <p>{{d.name}}</p>
+                    }
+                </div>
             </div>
             <div>
-                <button>Add Review</button>
+                <h3>Platforms</h3>
+                <div>
+                    @for (p of platforms; track p.platformId) {
+                    <p>{{p.name}}</p>
+                    }
+                </div>
+            </div>
+            <div>
+                <h3>Publishers</h3>
+                <div>
+                    @for (p of publishers; track p.publisherId) {
+                    <p>{{p.name}}</p>
+                    }
+                </div>
+            </div>
+            <div>
+                <h3>Stores</h3>
+                <div>
+                    @for (s of stores; track s.storeId) {
+                    <a href="{{s.siteUrl}}">
+                        <img src="{{s.iconUrl}}" alt="Store Icon" class="store-icon">
+                    </a>
+                    }
+                </div>
             </div>
         </div>
     </div>
-}
-<div class="details">
-    <div>
-        <h3>Languages</h3>
-        <div>
-            @for (l of languages; track l.languageId) {
-                <p>{{l.name}}</p>
-            }
-        </div>
-    </div>
-    <div>
-        <h3>Developers</h3>
-        <div>
-            @for (d of developers; track d.developerId) {
-            <p>{{d.name}}</p>
-            }
-        </div>
-    </div>
-    <div>
-        <h3>Platforms</h3>
-        <div>
-            @for (p of platforms; track p.platformId) {
-                <p>{{p.name}}</p>
-            }
-        </div>
-    </div>
-    <div>
-        <h3>Publishers</h3>
-        <div>
-            @for (p of publishers; track p.publisherId) {
-                <p>{{p.name}}</p>
-            }
-        </div>
-    </div>
-    <div>
-        <h3>Stores</h3>
-        <div>
-            @for (s of stores; track s.storeId) {
-                <a href="{{s.siteUrl}}">
-                    <img src="{{s.iconUrl}}" alt="Store Icon">
-                </a>
-            }
-        </div>
-    </div>
-</div>
 
-@if (media && media.length > 0) {
+    @if (media && media.length > 0) {
     <div class="media">
         <h3>Media</h3>
         <div class="slider-wrap">
             <div #sliderMain class="slider-main">
                 @for (m of media; track m.mediaId) {
-                    <div class="item">
-                        @if (m.mediaUrl.includes('www.youtube.com')) {
-                            <iframe width="440" height="235" [src]="safe(m.mediaUrl)" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
-                                encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                            </iframe>
-                        } @else {
-                            <img [src]="m.mediaUrl" alt="Game image">
-                        }
-                    </div>
+                <div class="item">
+                    @if (m.mediaUrl.includes('www.youtube.com')) {
+                    <iframe width="440" height="235" [src]="safe(m.mediaUrl)" title="YouTube video player"
+                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+                                encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                    </iframe>
+                    } @else {
+                    <img [src]="m.mediaUrl" alt="Game image">
+                    }
+                </div>
                 }
             </div>
             <div class="button-area">
-                <button class="prev" (click)="move(-3)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fffffe"><path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z"/></svg></button>
-                <button class="next" (click)="move(3)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="#fffffe"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg></button>
+                <button class="prev" (click)="move(-3)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+                        fill="#fffffe">
+                        <path d="M640-80 240-480l400-400 71 71-329 329 329 329-71 71Z" />
+                    </svg></button>
+                <button class="next" (click)="move(3)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+                        fill="#fffffe">
+                        <path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z" />
+                    </svg></button>
             </div>
         </div>
     </div>
-}
+    }
+</div>
