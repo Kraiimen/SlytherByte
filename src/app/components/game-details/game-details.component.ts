@@ -101,7 +101,12 @@ export class GameDetailsComponent implements OnInit {
       gameId: this.gameDetails.gameId,
       status
     };
-    this._userGameService.createUserGameForLoggedUser(userGame).subscribe({
+
+    if(status == 'Beaten') {
+      userGame.completionDate = new Date().toISOString().split('T')[0];
+    }
+    
+      this._userGameService.createUserGameForLoggedUser(userGame).subscribe({
       next: ug => {
         console.log('Game added to profile in status ' + status);
         console.log(ug);
