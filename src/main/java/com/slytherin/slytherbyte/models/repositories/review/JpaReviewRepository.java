@@ -12,4 +12,7 @@ public interface JpaReviewRepository extends JpaRepository<Review, Integer> {
 
     @Query("SELECT r FROM Review r WHERE r.userProfile.userProfileId = :profileId")
     List<Review> findAllByProfileId(int profileId);
+
+    @Query("SELECT r FROM Review r WHERE r.game.gameId = :gameId")
+    List<Review> findAllByGameId(int gameId);
 }

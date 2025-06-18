@@ -26,7 +26,13 @@ public class ReviewController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ReviewDto>> getAll() throws DataException {
+    public ResponseEntity<List<ReviewDto>> getAll(@RequestParam(required = false) Integer gameId) throws DataException, EntityNotFoundException {
+        if (gameId != null && gameId > 0) {
+            List<Review> reviews = reviewService.findAllByGameId(gameId);
+            List<ReviewDto> dtos = reviews.stream().map(ReviewDto::toDto).toList();
+            return ResponseEntity.ok(dtos);
+        }
+
         List<Review> reviews = reviewService.findAllReviews();
         List<ReviewDto> dtos = reviews.stream().map(review -> ReviewDto.toDto(review)).toList();
         return ResponseEntity.ok(dtos);
@@ -47,9 +53,9 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<ReviewDto> createReview(@RequestBody ReviewDto dto) throws DataException, EntityNotFoundException {
+    public ResponseEntity<ReviewDto> createReview(@AuthenticationPrincipal UserAccount ua, @RequestBody ReviewDto dto) throws DataException, EntityNotFoundException {
         Review review = dto.toEntity();
-        Review createdReview = reviewService.createReview(review, dto.gameId(), dto.userProfileId());
+        Review createdReview = reviewService.createReview(review, dto.gameId(), ua.getUserProfile().getUserProfileId());
         return ResponseEntity.ok(ReviewDto.toDto(createdReview));
     }
 

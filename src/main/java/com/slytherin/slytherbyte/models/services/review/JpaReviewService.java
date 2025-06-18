@@ -130,4 +130,17 @@ public class JpaReviewService implements ReviewService {
             throw new DataException("Failed to find reviews by profile id " + profileId, pe);
         }
     }
+
+    @Override
+    public List<Review> findAllByGameId(int gameId) throws DataException, EntityNotFoundException {
+        try{
+            if (!gameRepo.existsById(gameId)) {
+                throw new EntityNotFoundException(Game.class, gameId);
+            }
+
+            return reviewRepo.findAllByGameId(gameId);
+        } catch(PersistenceException pe){
+            throw new DataException("Failed to find reviews by game id " + gameId, pe);
+        }
+    }
 }
