@@ -49,6 +49,24 @@
     }
 }
 
+.no-reviews {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: .6;
+
+    h2 {
+        font-weight: lighter;
+        font-family: "Orbitron", sans-serif;
+    }
+
+    svg {
+        width: 10rem;
+    }
+}
+
 .no-games {
     height: 100%;
     display: flex;
