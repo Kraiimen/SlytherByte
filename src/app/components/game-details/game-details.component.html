@@ -143,5 +143,5 @@
 </div>
 @if (isReviewFormShown) {
     <div class="backdrop"></div>
-    <app-review-form (closeForm)="isReviewFormShown = false" [gameId]="gameId" [userGameId]="userGame.userGameId"></app-review-form>
+    <app-review-form (closeForm)="closeForm($event)" [gameId]="gameId" [userGameId]="userGame.userGameId"></app-review-form>
 }

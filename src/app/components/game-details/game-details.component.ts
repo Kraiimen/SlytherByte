@@ -163,6 +163,11 @@ export class GameDetailsComponent implements OnInit {
     });
   }
 
+  closeForm(event: boolean) {
+    this.isReviewFormShown = false;
+    this.ngOnInit();
+  }
+
   move(dir: number) {
     this.sliderPos += dir;
     if (this.sliderPos < 0) {
