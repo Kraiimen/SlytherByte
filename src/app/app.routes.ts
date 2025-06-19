@@ -20,7 +20,7 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'catalogue', pathMatch: 'full' },
             { path: 'expired-session', component: ExpiredSessionComponent },
-            { path: 'catalogue', component: CatalogueMainComponent },
+            { path: 'catalogue', component: CatalogueMainComponent, data: { bgType: 'review-section'} },
             { path: 'game-details/:id', component: GameDetailsComponent},
             {
                 path: 'user-profile', component: UserProfileComponent, data: { bgType: 'profile-section'},
