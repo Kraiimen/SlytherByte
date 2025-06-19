@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface JpaReviewRepository extends JpaRepository<Review, Integer> {
-    @Query("SELECT r FROM Review r ORDER BY date DESC LIMIT 2")
-    List<Review> findReviewsByDate();
+    @Query("SELECT r FROM Review r WHERE r.userProfile.userProfileId = :userProfileId ORDER BY date DESC LIMIT 2")
+    List<Review> findReviewsByDate(int userProfileId);
 
     @Query("SELECT r FROM Review r WHERE r.userProfile.userProfileId = :profileId")
     List<Review> findAllByProfileId(int profileId);

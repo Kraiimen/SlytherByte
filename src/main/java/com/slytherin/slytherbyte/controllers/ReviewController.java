@@ -76,8 +76,8 @@ public class ReviewController {
     }
 
     @GetMapping("/recent")
-    ResponseEntity<List<ReviewDto>> getRecentReviews() throws DataException{
-        List<Review> reviews=reviewService.findRecentReviews();
+    ResponseEntity<List<ReviewDto>> getRecentReviews(@AuthenticationPrincipal UserAccount ua) throws DataException{
+        List<Review> reviews=reviewService.findRecentReviews(ua.getUserProfile().getUserProfileId());
         List<ReviewDto> rDto=reviews.stream().map(ReviewDto::toDto).toList();
         return ResponseEntity.ok(rDto);
     }

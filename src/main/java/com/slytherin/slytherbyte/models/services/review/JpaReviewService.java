@@ -109,9 +109,9 @@ public class JpaReviewService implements ReviewService {
     }
 
     @Override
-    public List<Review> findRecentReviews() throws DataException {
+    public List<Review> findRecentReviews(int id) throws DataException {
         try{
-            List<Review> reviews=reviewRepo.findReviewsByDate();
+            List<Review> reviews=reviewRepo.findReviewsByDate(id);
             return reviews;
         } catch(PersistenceException pe){
             throw new DataException("No recent reviews found", pe);
