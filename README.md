@@ -2,8 +2,8 @@
 
 <p>This is the login page.</p>
 <div float="left">
-  <img src="https://github.com/user-attachments/assets/5731714b-fcd6-429a-823d-91b7ace48a0a" alt="Login image" width="600">
-  <img src="https://github.com/user-attachments/assets/499a8bee-0f9a-46cc-bcc9-3e342ee8329e" alt="Login gif"  width="300">
+  <img src="https://github.com/user-attachments/assets/5731714b-fcd6-429a-823d-91b7ace48a0a" alt="Login image" width="550">
+  <img src="https://github.com/user-attachments/assets/499a8bee-0f9a-46cc-bcc9-3e342ee8329e" alt="Login gif"  width="273">
 </div>
 
 <br/>
