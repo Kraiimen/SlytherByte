@@ -8,8 +8,8 @@
 <h3>Login</h3>
 <p>This is the login page.</p>
 <div float="left">
-  <img src="https://github.com/user-attachments/assets/5731714b-fcd6-429a-823d-91b7ace48a0a" alt="Login image" width="650">
-  <img src="https://github.com/user-attachments/assets/97abba85-bcbb-47da-84da-ee1e61ee7474" alt="Login gif"  width="325">
+  <img src="https://github.com/user-attachments/assets/5731714b-fcd6-429a-823d-91b7ace48a0a" alt="Login image" width="550">
+  <img src="https://github.com/user-attachments/assets/97abba85-bcbb-47da-84da-ee1e61ee7474" alt="Login gif"  width="273">
 </div>
 
 <br/>
@@ -34,8 +34,8 @@
 <h3>Register</h3>
 <p>This is the register page.</p>
 <div float="left">
-  <img src="https://github.com/user-attachments/assets/94d4d1f4-7f2f-47ea-bc4a-5666f51a6d11" alt="Register image" width="650">
-  <img src="https://github.com/user-attachments/assets/76f16b5e-43dc-4cb8-a0e9-4a31c1949e77" alt="Register gif"  width="325">
+  <img src="https://github.com/user-attachments/assets/94d4d1f4-7f2f-47ea-bc4a-5666f51a6d11" alt="Register image" width="550">
+  <img src="https://github.com/user-attachments/assets/76f16b5e-43dc-4cb8-a0e9-4a31c1949e77" alt="Register gif"  width="273">
 </div>
 
 <p>
