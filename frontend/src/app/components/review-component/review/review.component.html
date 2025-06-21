@@ -1,0 +1,23 @@
+@if (review) {
+    <header>
+        <img [src]="game.coverImageUrl" alt="Cover image">
+        <div>
+            <h2>{{ game.title }}</h2>
+            <span>{{ review.rating }} ⭐</span>
+        </div>
+    </header>
+    <section>
+        <div>
+            <h2>{{ review.title }}</h2>
+        </div>
+        <div>
+            <p>{{ review.description }}</p>
+        </div>
+    </section>
+    <footer>
+        <div>
+            <p>Created at</p>
+            <span><i>{{review.date}}</i></span>
+        </div>
+    </footer>
+}

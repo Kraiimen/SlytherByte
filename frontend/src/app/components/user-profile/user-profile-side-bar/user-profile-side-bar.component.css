@@ -1,0 +1,58 @@
+:host {
+    height: 100%;
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 20px 20px 0;
+    border: 1px solid #16161a;
+    background-color: #242629;
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.8rem;
+    cursor: default;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    padding: 3rem 0 3rem 5rem;
+    
+}
+
+ul {
+    list-style: none;
+    padding: .5rem 0;
+
+    > li {
+        margin-left: 1rem;
+        padding: .5rem;
+    }
+}
+
+button {
+    background: none;
+    border: none;
+    color: #fffffe;
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+        color: #588157;
+    }
+}
+
+div:has(> button){
+    > button {
+        font-size: 1.8rem;
+    }
+}
+
+button:disabled {
+    pointer-events: none;
+}
+
+.collections-btn > button {
+    text-align: left;
+}

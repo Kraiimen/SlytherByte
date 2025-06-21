@@ -1,0 +1,18 @@
+<h4>Stats</h4>
+@if (userStats) {
+<div>
+    <div class="tags">
+        <p>Top tags</p>
+        <div>
+            @if(userStats.top5Tags.length!=0){
+                @for(us of userStats.top5Tags; track us.tagId){
+                <p>{{us.tagName}}</p>
+                }
+            }
+        </div>
+    </div>
+    <p>Games playing: <span>{{userStats.gamesPlaying}}</span></p>
+    <p>Games beaten: <span>{{userStats.gamesBeaten}}</span></p>
+    <p>Reviews: <span>{{userStats.userReviews}}</span></p>
+</div>
+}

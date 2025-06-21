@@ -1,0 +1,12 @@
+@if(games){
+    <ul>
+        @for(g of games; track g.gameId){
+            <li (click)="chooseGame(g.gameId)">
+                <div>
+                    <img [src]="g.coverImageUrl" alt="Game Cover"> 
+                    <h3>{{g.title}} </h3>
+                </div>
+            </li>
+        }
+    </ul>
+}

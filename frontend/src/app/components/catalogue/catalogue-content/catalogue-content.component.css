@@ -1,0 +1,37 @@
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin: 5rem;
+    padding-bottom: 5rem;
+    list-style: none;
+}
+
+li {
+    width: 240px;
+    padding: 20px 0;
+    border-radius: 10px;
+    background-color: #242629;
+    text-align: center;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        transform: scale(1.10);
+    }
+}
+
+img {
+    width: 210px;
+    border-radius: .5rem;
+}
+
+h3 {
+    padding: 0 .3rem;
+    margin-top: 20px;
+    align-self: flex-end;
+    font-family: "Orbitron", sans-serif;
+    font-size: .85rem;
+    font-weight: normal;
+}

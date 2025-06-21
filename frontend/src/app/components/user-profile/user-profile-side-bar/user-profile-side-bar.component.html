@@ -1,0 +1,22 @@
+<nav>
+    <div>
+        <h4>Games</h4>
+        <ul class="games">
+            <li>
+                <button (click)="navigateToUserGames('playing')">Playing</button>
+            </li>
+            <li>
+                <button (click)="navigateToUserGames('beaten')">Beaten</button>
+            </li>
+            <li>
+                <button (click)="navigateToUserGames('wishlist')">Wishlist</button>
+            </li>
+        </ul>
+    </div>
+    <div class="collections-btn">
+        <button (click)="navigateTo('collections')" disabled>Collections <br>(Coming soon)</button>
+    </div>
+    <div>
+        <button (click)="navigateTo('reviews')">Reviews</button>
+    </div>
+</nav>

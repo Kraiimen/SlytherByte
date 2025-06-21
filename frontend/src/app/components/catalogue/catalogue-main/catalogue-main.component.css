@@ -1,0 +1,19 @@
+:host {
+    display: flex;
+    height: 100%;
+    color: #fffffe;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #00000080;  
+  z-index: 99;            
+}
+
+app-game-details {
+    z-index: 150;
+}
