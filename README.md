@@ -45,7 +45,7 @@
 </p>
 
 <br/>
-<p>The form shows an error message if the user: </p>
+<p>The form shows an error message if: </p>
 <ul>
   <li>
     <p>A required field is missing</p>
